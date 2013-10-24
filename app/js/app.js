@@ -16,7 +16,8 @@ require.config({
 	    underscore: 'libs/underscore/underscore.min',
 	    backbone: 'libs/backbone/backbone.min',
 	    text: 'libs/require/text',
-	    bootstrap: 'libs/bootstrap/bootstrap.min'
+	    bootstrap: 'libs/bootstrap/bootstrap.min',
+	    i18next: 'libs/i18next/i18next'
   },
   shim: {
       'underscore': {
@@ -32,8 +33,17 @@ require.config({
   }
 });
 
+var i18n_options = { 
+		resGetPath: 'locales/__lng__.json',
+		useCookie: false,
+		fallbackLng: 'en',
+		getAsync: false // Synchronous loading in order to avoid uninitialized errors.
+};
 
-define(['jquery', 'bootstrap', 'views/home'], function($, _bootstrap, HomeView){
+
+define(['jquery', 'bootstrap', 'i18next', 'views/home'], function($, _bootstrap, i18n, HomeView){
+	i18n.init(i18n_options);
+	window.i18n = i18n;
 	var home_view = new HomeView;
 	home_view.render();
 });
