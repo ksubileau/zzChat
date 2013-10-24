@@ -1,3 +1,10 @@
 {
-	"welcome": "Bienvenue"
+	"welcome": "Bienvenue",
+	"log_in": "Connexion",
+	"female": "Femme",
+	"male": "Homme",
+	"remember_me": "Se souvenir de moi",
+	"gender": "Sexe",
+	"nickname": "Pseudo",
+	"age": "Age"
 }
