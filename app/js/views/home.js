@@ -7,18 +7,42 @@
 * @link https://github.com/ksubileau/zzChat
 * @license GNU GPLv3 (http://www.gnu.org/licenses/gpl-3.0.html also in /LICENSE)
 */
-define(['jquery', 'backbone', 'underscore', 'text!templates/home.html'],
-    function($, Backbone, _, homeView){
+define(['jquery', 'backbone', 'underscore', 'i18next', 'text!templates/home.html'],
+    function($, Backbone, _, i18n, homeView){
 		var HomeView = Backbone.View.extend({
+			
 		    el: $('#main'),
 	
-		    // Our template for the line of statistics at the bottom of the app.
 		    template: _.template(homeView),
+		    
+		    events : {
+		        "click #langAvailable li a": "changeLanguageEvent"
+		    },
 
 		    render: function() {
-		      this.$el.html(this.template());
-		      return this;
+		    	// Render view
+		    	this.$el.html(this.template({
+		    		i18n: i18n,
+		    		currentLangCode: options.currentLang,
+		    		currentLangName: options.langAvailable[options.currentLang],
+		    		langList: _.omit(options.langAvailable, options.currentLang)
+	    		}));
+	    		
+		    	return this;
 		    },
+		    
+		    // Triggered when the user selects a new language.
+		    changeLanguageEvent : function(e){
+		    	this.changeLanguage($(e.currentTarget).prop("hash").substr(1));
+		    	e.preventDefault();
+		    },
+		    
+		    changeLanguage : function(langCode){
+		    	// Record the new language code
+		    	options.currentLang = langCode;
+		    	// Load the translation file and re-render the view.
+				i18n.setLng(langCode, $.proxy(this.render, this));
+		    }
 		});
 		return HomeView;
     }
