@@ -43,6 +43,7 @@ window.options = {
 	langAvailable : {
 		"en":"English",
 		"fr":"Français",
+		"es":"Español",
 	},
 	currentLang : "fr",
 };
