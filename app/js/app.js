@@ -46,11 +46,28 @@ window.options = {
 		"es":"Español",
 	},
 	currentLang : "fr",
-	apiRoot : "/core",
+    api: {
+        url: '/core',
+        
+        // Turn on `emulateHTTP` to support legacy HTTP servers. Setting this option
+        // will fake `"PATCH"`, `"PUT"` and `"DELETE"` requests via the `_method` parameter and
+        // set a `X-Http-Method-Override` header.
+        emulateHTTP : false,
+        
+        // Turn on `emulateJSON` to support legacy servers that can't deal with direct
+        // `application/json` requests ... will encode the body as
+        // `application/x-www-form-urlencoded` instead and will send the model in a
+        // form param named `model`.
+        emulateJSON : false,
+    },
 };
 
 define(['jquery', 'bootstrap', 'i18next', 'views/home'], function($, _bootstrap, i18n, HomeView){
-    'use strict';
+    'use strict';  
+    
+    // Set Backbone options
+    Backbone.emulateHTTP = window.options.api.emulateHTTP;
+    Backbone.emulateJSON = window.options.api.emulateJSON;
 
     /* 
      * Override Backbone.sync in order to add a root URL to all Backbone API request.
@@ -59,7 +76,7 @@ define(['jquery', 'bootstrap', 'i18next', 'views/home'], function($, _bootstrap,
     // Store the original version of Backbone.sync
     var backboneSync = Backbone.sync;
     Backbone.sync = function (method, model, options) {
-    	var rootUrl = window.options.apiRoot;
+    	var rootUrl = window.options.api.url;
     	var url = _.isFunction(model.url) ? model.url() : model.url;
 
     	// If no url, don't override, let Backbone.sync do its normal fail
