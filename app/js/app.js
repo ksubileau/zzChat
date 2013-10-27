@@ -46,9 +46,34 @@ window.options = {
 		"es":"Español",
 	},
 	currentLang : "fr",
+	apiRoot : "/core",
 };
 
 define(['jquery', 'bootstrap', 'i18next', 'views/home'], function($, _bootstrap, i18n, HomeView){
+    'use strict';
+
+    /* 
+     * Override Backbone.sync in order to add a root URL to all Backbone API request.
+     * Inspired from https://coderwall.com/p/8ldaqw
+     */
+    // Store the original version of Backbone.sync
+    var backboneSync = Backbone.sync;
+    Backbone.sync = function (method, model, options) {
+    	var rootUrl = window.options.apiRoot;
+    	var url = _.isFunction(model.url) ? model.url() : model.url;
+
+    	// If no url, don't override, let Backbone.sync do its normal fail
+    	if (url) {
+    		options = _.extend(options, {
+    			url: rootUrl + (rootUrl.charAt(rootUrl.length - 1) === '/' ? '' : '/') 
+    						 + (url.charAt(0) === '/' ? url.substr(1) : url)
+    		});
+        }
+
+        // Call the stored original Backbone.sync method with the new url property
+        backboneSync(method, model, options);
+    };
+    
 	// Initialize internationalization
 	i18n.init(options.i18next_options);
 	
