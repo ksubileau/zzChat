@@ -34,7 +34,7 @@ require.config({
 });
 
 window.options = {
-	i18next_options : {
+	i18next : {
 		resGetPath: 'locales/__lng__.json',
 		useCookie: false,
 		fallbackLng: 'en',
@@ -92,7 +92,7 @@ define(['jquery', 'bootstrap', 'i18next', 'views/home'], function($, _bootstrap,
     };
     
 	// Initialize internationalization
-	i18n.init(options.i18next_options);
+	i18n.init(options.i18next);
 	
 	// Start application
 	var home_view = new HomeView;
