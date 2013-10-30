@@ -44,14 +44,17 @@ window.options = {
 		{
             "langcode": "en",
             "fullname":"English",
+            "flagcode":"gb",
         },
 		{
             "langcode": "fr",
             "fullname":"Français",
+            "flagcode":"fr",
         },
 		{
             "langcode": "es",
             "fullname":"Español",
+            "flagcode":"es",
         },
 	],
 	currentLang : "fr",
