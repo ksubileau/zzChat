@@ -10,11 +10,11 @@
 define(['jquery', 'backbone', 'underscore', 'i18next', 'text!templates/home.html'],
     function($, Backbone, _, i18n, homeView){
 		var HomeView = Backbone.View.extend({
-			
+
 		    el: $('#main'),
-	
+
 		    template: _.template(homeView),
-		    
+
 		    events : {
 		        "click #langAvailable li a": "changeLanguageEvent"
 		    },
@@ -23,20 +23,19 @@ define(['jquery', 'backbone', 'underscore', 'i18next', 'text!templates/home.html
 		    	// Render view
 		    	this.$el.html(this.template({
 		    		i18n: i18n,
-		    		currentLangCode: options.currentLang,
-		    		currentLangName: options.langAvailable[options.currentLang],
-		    		langList: _.omit(options.langAvailable, options.currentLang)
+		    		currentLang: _.findWhere(options.langAvailable, {"langcode" : options.currentLang}),
+		    		langList: _.reject(options.langAvailable, function(lang) { return lang.langcode == options.currentLang; }),
 	    		}));
-	    		
+
 		    	return this;
 		    },
-		    
+
 		    // Triggered when the user selects a new language.
 		    changeLanguageEvent : function(e){
 		    	this.changeLanguage($(e.currentTarget).prop("hash").substr(1));
 		    	e.preventDefault();
 		    },
-		    
+
 		    changeLanguage : function(langCode){
 		    	// Record the new language code
 		    	options.currentLang = langCode;

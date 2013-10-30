@@ -1,10 +1,12 @@
 <div id="apphome">
 	<div id="langbar">
 		<div class="btn-group col-md-2 col-md-offset-9 dropdown">
-		  <button id="langSelector" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" value="<%= currentLangCode %>"><%= currentLangName %> <i class="fa fa-caret-down"/></button>
-		  <ul class="dropdown-menu" role="menu" id="langAvailable">
-		  	<% _.each(langList, function(langName, langCode) { %> <li><a href="#<%= langCode %>"><%= langName %></a></li> <% }); %>
-		  </ul>
+		  <button id="langSelector" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" value="<%= currentLang.langcode %>"><%= currentLang.fullname %> <i class="fa fa-caret-down"/></button>
+            <ul class="dropdown-menu" role="menu" id="langAvailable">
+		  	<% _.each(langList, function(lang) { %>
+                <li><a href="#<%= lang.langcode %>"><%= lang.fullname %></a></li>
+            <% }); %>
+            </ul>
 		</div>
 	</div>
 	<div id="front-card">
@@ -59,7 +61,7 @@
 					</form>
 				</div>
 			</div>
-		
+
 		</div>
 	</div>
 </div>

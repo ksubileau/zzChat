@@ -40,20 +40,29 @@ window.options = {
 		fallbackLng: 'en',
 		getAsync: false // Synchronous loading in order to avoid uninitialized errors.
 	},
-	langAvailable : {
-		"en":"English",
-		"fr":"Français",
-		"es":"Español",
-	},
+	langAvailable : [
+		{
+            "langcode": "en",
+            "fullname":"English",
+        },
+		{
+            "langcode": "fr",
+            "fullname":"Français",
+        },
+		{
+            "langcode": "es",
+            "fullname":"Español",
+        },
+	],
 	currentLang : "fr",
     api: {
         url: '/core',
-        
+
         // Turn on `emulateHTTP` to support legacy HTTP servers. Setting this option
         // will fake `"PATCH"`, `"PUT"` and `"DELETE"` requests via the `_method` parameter and
         // set a `X-Http-Method-Override` header.
         emulateHTTP : false,
-        
+
         // Turn on `emulateJSON` to support legacy servers that can't deal with direct
         // `application/json` requests ... will encode the body as
         // `application/x-www-form-urlencoded` instead and will send the model in a
@@ -63,13 +72,13 @@ window.options = {
 };
 
 define(['jquery', 'bootstrap', 'i18next', 'views/home'], function($, _bootstrap, i18n, HomeView){
-    'use strict';  
-    
+    'use strict';
+
     // Set Backbone options
     Backbone.emulateHTTP = window.options.api.emulateHTTP;
     Backbone.emulateJSON = window.options.api.emulateJSON;
 
-    /* 
+    /*
      * Override Backbone.sync in order to add a root URL to all Backbone API request.
      * Inspired from https://coderwall.com/p/8ldaqw
      */
@@ -82,7 +91,7 @@ define(['jquery', 'bootstrap', 'i18next', 'views/home'], function($, _bootstrap,
     	// If no url, don't override, let Backbone.sync do its normal fail
     	if (url) {
     		options = _.extend(options, {
-    			url: rootUrl + (rootUrl.charAt(rootUrl.length - 1) === '/' ? '' : '/') 
+    			url: rootUrl + (rootUrl.charAt(rootUrl.length - 1) === '/' ? '' : '/')
     						 + (url.charAt(0) === '/' ? url.substr(1) : url)
     		});
         }
@@ -90,10 +99,10 @@ define(['jquery', 'bootstrap', 'i18next', 'views/home'], function($, _bootstrap,
         // Call the stored original Backbone.sync method with the new url property
         backboneSync(method, model, options);
     };
-    
+
 	// Initialize internationalization
 	i18n.init(options.i18next);
-	
+
 	// Start application
 	var home_view = new HomeView;
 	home_view.render();
