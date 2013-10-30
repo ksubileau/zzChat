@@ -1,2 +1,5 @@
 /.local/
 /.settings/
+/app/css/*
+!/app/css/style.css
+koala-config.json
