@@ -9,23 +9,35 @@
 */
 
 #apphome {
+	.make-md-column(8);
+	.make-md-column-offset(2);
 	#langbar {
-		.clearfix();
+		.make-row();
 		padding-top:10px;
+
+		>div {
+			.make-md-column(12);
+		}
+
+		#lang-selector {
+			float: right;
+		}
 	}
-	
+
 	#front-card {
-		.clearfix();
-		
+		.make-row();
+
 		margin-top:50px;
-		
+
 		.logo {
 			max-width:480px;
 			width:100%;
 		}
-		
+
 		#welcome-card {
+			.make-md-column(7);
 			color:#fff;
+
 			h1 {
 				.text-shadow(2px 2px 4px rgba(0, 0, 0, 0.50));
 				margin: -18px 30px 0 0;
@@ -33,15 +45,20 @@
 				font-size: 3.5em;
 			}
 		}
-		
-		.panel-login {
-			.panel-variant(@panel-default-border; @panel-primary-text; @panel-success-heading-bg; @panel-default-border);
-			
-			.panel-heading {
-				text-align:center;
-				font-size:1.2em;
-				background-color:@main-green;
+
+		#login-card {
+			.make-md-column(5);
+
+			.panel {
+				.panel-variant(@panel-default-border; @panel-primary-text; @panel-success-heading-bg; @panel-default-border);
+
+				.panel-heading {
+					text-align:center;
+					font-size:1.2em;
+					background-color:@main-green;
+				}
 			}
 		}
+
 	}
 }

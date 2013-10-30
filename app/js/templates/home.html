@@ -1,67 +1,70 @@
 <div id="apphome">
-	<div id="langbar">
-		<div class="btn-group col-md-2 col-md-offset-9 dropdown">
-		  <button id="langSelector" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" value="<%= currentLang.langcode %>"><i class="country-flag country-flag-<%= currentLang.flagcode %>"/> <%= currentLang.fullname %> <i class="fa fa-caret-down"/></button>
-            <ul class="dropdown-menu" role="menu" id="langAvailable">
-		  	<% _.each(langList, function(lang) { %>
-                <li><a href="#<%= lang.langcode %>"><i class="country-flag country-flag-<%= lang.flagcode %>"/> <%= lang.fullname %></a></li>
-            <% }); %>
-            </ul>
-		</div>
-	</div>
-	<div id="front-card">
-		<div class="col-md-5 col-md-offset-2" id="welcome-card">
-			<img src="/app/img/logo.png" class="logo"/>
-			<h1><%= i18n.t("welcome") %></h1>
-		</div>
-		<div class="col-md-3">
-			<div class="panel panel-login">
-				<div class="panel-heading">
-					<h3 class="panel-title"><%= i18n.t("log_in") %></h3>
-				</div>
-				<div class="panel-body">
-					<form class="form-horizontal" role="form" id="login-form">
-						<div class="form-group">
-							<label for="nickname" class="control-label sr-only" required><%= i18n.t("nickname") %></label>
-							<div class="col-lg-12 input-group">
-								<span class="input-group-addon"><i class="fa fa-user" /></span>
-								<input type="text" class="form-control" id="nickname" placeholder="<%= i18n.t("nickname") %>">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="age" class="control-label sr-only" required><%= i18n.t("age") %></label>
-							<div class="col-lg-12 input-group">
-								<span class="input-group-addon"><i class="fa fa-calendar" /></span>
-								<input type="number" class="form-control" id="age" placeholder="<%= i18n.t("age") %>">
-							</div>
-						</div>
-						<div class="form-group">
-      						<p class="radio-inline"><%= i18n.t("gender") %> : </p>
-							<label class="radio-inline">
-								<input type="radio" name="gender" value="male"><i class="fa fa-male" /> <%= i18n.t("male") %>
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="gender" value="female"><i class="fa fa-female" /> <%= i18n.t("female") %>
-							</label>
-						</div>
-  						<div class="form-group">
-							<div class="col-lg-offset-2 col-lg-10">
-      							<div class="checkbox">
-        							<label>
-          								<input type="checkbox" id="rememberme"><%= i18n.t("remember_me") %>
-        							</label>
-      							</div>
-    						</div>
-  						</div>
-  						<div class="form-group">
-   							<div class="col-lg-12" style="text-align:center;">
-      							<button type="submit" class="btn btn-success"><i class="fa fa-check" /> <%= i18n.t("log_in") %></button>
-    						</div>
-  						</div>
-					</form>
-				</div>
-			</div>
-
-		</div>
-	</div>
+	<div  id="langbar">
+        <div>
+            <div id="lang-selector" class="btn-group dropdown">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" value="<%= currentLang.langcode %>">
+                    <i class="country-flag country-flag-<%= currentLang.flagcode %>"/> <%= currentLang.fullname %> <i class="fa fa-caret-down"/>
+                </button>
+                <ul class="dropdown-menu" role="menu" id="langAvailable">
+                <% _.each(langList, function(lang) { %>
+                    <li><a href="#<%= lang.langcode %>"><i class="country-flag country-flag-<%= lang.flagcode %>"/> <%= lang.fullname %></a></li>
+                <% }); %>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="front-card">
+        <div id="welcome-card">
+            <img src="/app/img/logo.png" class="logo"/>
+            <h1><%= i18n.t("welcome") %></h1>
+        </div>
+        <div id="login-card">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><%= i18n.t("log_in") %></h3>
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal" role="form" id="login-form">
+                        <div class="form-group">
+                            <label for="nickname" class="control-label sr-only" required><%= i18n.t("nickname") %></label>
+                            <div class="col-lg-12 input-group">
+                                <span class="input-group-addon"><i class="fa fa-user" /></span>
+                                <input type="text" class="form-control" id="nickname" placeholder="<%= i18n.t("nickname") %>">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="age" class="control-label sr-only" required><%= i18n.t("age") %></label>
+                                <div class="col-lg-12 input-group">
+                                <span class="input-group-addon"><i class="fa fa-calendar" /></span>
+                                <input type="number" class="form-control" id="age" placeholder="<%= i18n.t("age") %>">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <p class="radio-inline"><%= i18n.t("gender") %> : </p>
+                            <label class="radio-inline">
+                                <input type="radio" name="gender" value="male"><i class="fa fa-male" /> <%= i18n.t("male") %>
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="gender" value="female"><i class="fa fa-female" /> <%= i18n.t("female") %>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-offset-2 col-lg-10">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="rememberme"><%= i18n.t("remember_me") %>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-12" style="text-align:center;">
+                                <button type="submit" class="btn btn-success"><i class="fa fa-check" /> <%= i18n.t("log_in") %></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
