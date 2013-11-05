@@ -59,7 +59,7 @@ window.options = {
 	],
 	currentLang : "fr",
     api: {
-        url: '/core',
+        url: '/api',
 
         // Turn on `emulateHTTP` to support legacy HTTP servers. Setting this option
         // will fake `"PATCH"`, `"PUT"` and `"DELETE"` requests via the `_method` parameter and
