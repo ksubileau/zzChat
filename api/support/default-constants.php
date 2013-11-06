@@ -18,4 +18,8 @@ function set_initial_constants( ) {
     // Path constants
     set_constant( 'ZC_STORAGE_DIR', ABSPATH . '/storage/');
 
+    // Security constants
+    set_constant( 'AUTH_HEADER_KEY', 'X-AUTH-TOKEN' );
+    set_constant( 'AUTH_PARAM_KEY', 'auth_token' );
+
 }
