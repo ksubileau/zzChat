@@ -1,6 +1,6 @@
 <?php
 
-require( './config.php' );
+require( dirname(__FILE__) .'/config.php' );
 
 /** Chemin absolu vers le dossier de ZZChat. */
 if ( !defined('ABSPATH') )
@@ -39,4 +39,5 @@ $app = new \Slim\Slim(array(
 $app->add(new \Slim\Middleware\MethodOverride());
 $app->add(new \Slim\Middleware\ContentTypes());
 
-$app->run();
+if(!defined('ZZCHAT_TEST_MODE') || !ZZCHAT_TEST_MODE)
+    $app->run();
