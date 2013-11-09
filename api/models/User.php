@@ -3,6 +3,13 @@
 class User extends Model {
 
 	/**
+	 * The database table used by the model.
+	 *
+	 * @var string
+	 */
+	const STORAGE_DIR = '/users';
+
+	/**
 	 * The unique user identifier.
 	 *
 	 * @var string
@@ -30,20 +37,48 @@ class User extends Model {
 	 */
 	public $sex;
 
+	/**
+	 * The user's authentication token.
+	 *
+	 * @var string
+	 */
+	protected $token;
+
+	/**
+	 * Login timestamp.
+	 *
+	 * @var string
+	 */
+	protected $loginDate;
+
 
     function __construct() {
-    	// TODO Define constant in config for the uid string lenght
-        $this->uid = generate_token(32);
+    	parent::__construct();
+
+        $this->uid = generate_token(ZC_UID_LENGTH);
+        $this->token = generate_token(ZC_TOKEN_LENGTH);
+
+        $this->loginDate = time();
     }
 
 	/**
 	 * Get the unique identifier for the user.
 	 *
-	 * @return mixed
+	 * @return string
 	 */
-	public function getAuthIdentifier()
+	public function getUID()
 	{
-		return $this->getKey();
+		return $this->uid;
+	}
+
+	/**
+	 * Get the unique authentication token for the user.
+	 *
+	 * @return string
+	 */
+	public function getAuthToken()
+	{
+		return $this->token;
 	}
 
 	public function getNick() {
@@ -71,7 +106,7 @@ class User extends Model {
 	}
 
 	/**
-	 * Get the unique identifier for the user.
+	 * Check if the user's data are valid.
 	 *
 	 * @return bool
 	 */
@@ -100,12 +135,11 @@ class User extends Model {
 			return false;
 		}
 
-		$storage_dir = ZC_STORAGE_DIR.'/users';
-		if (!file_exists($storage_dir)) {
-		    mkdir($storage_dir, 0777, true);
+		if (!file_exists(ZC_STORAGE_DIR.self::STORAGE_DIR)) {
+		    mkdir(ZC_STORAGE_DIR.self::STORAGE_DIR, 0777, true);
 		}
 
-		if(file_put_contents($storage_dir.'/'.$this->uid, serialize($this)) === false) {
+		if(file_put_contents(ZC_STORAGE_DIR.self::STORAGE_DIR.'/'.$this->uid, serialize($this)) === false) {
 			return false;
 		}
 
