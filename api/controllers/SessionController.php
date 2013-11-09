@@ -27,16 +27,16 @@ class SessionController extends Controller  {
 	 */
 	static public function getAuthToken()
 	{
-		if( isset($_SERVER[AUTH_HEADER_KEY]) ) {
-			return $_SERVER[AUTH_HEADER_KEY];
+		if( isset($_SERVER[ZC_AUTH_HEADER_KEY]) ) {
+			return $_SERVER[ZC_AUTH_HEADER_KEY];
 		}
 
-		if( isset($_GET[AUTH_PARAM_KEY]) ) {
-			return $_GET[AUTH_PARAM_KEY];
+		if( isset($_GET[ZC_AUTH_PARAM_KEY]) ) {
+			return $_GET[ZC_AUTH_PARAM_KEY];
 		}
 
-		if( isset($_POST[AUTH_PARAM_KEY]) ) {
-			return $_POST[AUTH_PARAM_KEY];
+		if( isset($_POST[ZC_AUTH_PARAM_KEY]) ) {
+			return $_POST[ZC_AUTH_PARAM_KEY];
 		}
 
 		return false;

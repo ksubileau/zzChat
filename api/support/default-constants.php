@@ -10,16 +10,24 @@
  */
 function set_initial_constants( ) {
 
-    // Debug constants
+    /************************************
+     * Debug constants
+     ************************************/
     set_constant( 'ZC_DEBUG', false );
     set_constant( 'ZC_DEBUG_DISPLAY', true);
     set_constant( 'ZC_DEBUG_LOG', false);
 
-    // Path constants
+    /************************************
+     * Path constants
+     ************************************/
     set_constant( 'ZC_STORAGE_DIR', ABSPATH . '/storage/');
 
-    // Security constants
-    set_constant( 'AUTH_HEADER_KEY', 'X-AUTH-TOKEN' );
-    set_constant( 'AUTH_PARAM_KEY', 'auth_token' );
+    /************************************
+     * Security constants
+     ************************************/
+    // Name of the HTTP Header containing the authentication token.
+    set_constant( 'ZC_AUTH_HEADER_KEY', 'X-AUTH-TOKEN' );
+    // Name of the URL parameter containing the authentication token.
+    set_constant( 'ZC_AUTH_PARAM_KEY', 'auth_token' );
 
 }
