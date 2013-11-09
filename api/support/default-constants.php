@@ -29,5 +29,9 @@ function set_initial_constants( ) {
     set_constant( 'ZC_AUTH_HEADER_KEY', 'X-AUTH-TOKEN' );
     // Name of the URL parameter containing the authentication token.
     set_constant( 'ZC_AUTH_PARAM_KEY', 'auth_token' );
+    // User ID string size
+    set_constant( 'ZC_UID_LENGTH', 32 );
+    // Authentication token lenght
+    set_constant( 'ZC_TOKEN_LENGTH', 32 );
 
 }
