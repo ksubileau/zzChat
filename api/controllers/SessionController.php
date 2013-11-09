@@ -10,6 +10,36 @@
 class SessionController extends Controller  {
 
 	/**
+	 * Login User.
+	 *
+	 * @return string
+	 */
+	static public function login($data = NULL)
+	{
+		$user = new User();
+		$user->setNick($data['nickname']);
+		$user->setAge(intval($data['age']));
+		if(isset($data['gender'])) {
+			if($data['gender'] == "male") {
+				$user->setSex(1);
+			}
+			elseif ($data['gender'] == "female") {
+				$user->setSex(2);
+			}
+		}
+
+		if( ! $user->validate()) {
+			throw new ApiException(400, "Invalid or incomplete input.");
+		}
+
+		if( ! $user->save()) {
+			throw new ApiException(500, "Unable to save user's data.");
+		}
+
+		return json_encode(array("user" => $user, "auth_token" => $user->getAuthToken()));
+	}
+
+	/**
 	 * Check if the user is logged in.
 	 *
 	 * @return boolean
