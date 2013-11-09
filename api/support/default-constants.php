@@ -31,7 +31,7 @@ function set_initial_constants( ) {
     set_constant( 'ZC_AUTH_PARAM_KEY', 'auth_token' );
     // User ID string size
     set_constant( 'ZC_UID_LENGTH', 32 );
-    // Authentication token lenght
-    set_constant( 'ZC_TOKEN_LENGTH', 32 );
+    // Authentication token key. Must be a 36-character random string.
+    set_constant( 'ZC_AUTH_TOKEN_KEY', '04b457d2b8c996fe57ae92bf779e2847' );
 
 }

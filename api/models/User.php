@@ -56,7 +56,7 @@ class User extends Model {
     	parent::__construct();
 
         $this->uid = generate_token(ZC_UID_LENGTH);
-        $this->token = generate_token(ZC_TOKEN_LENGTH);
+        $this->_generateAuthToken();
 
         $this->loginDate = time();
     }
@@ -78,7 +78,43 @@ class User extends Model {
 	 */
 	public function getAuthToken()
 	{
+		if(!$this->token) {
+			$this->_generateAuthToken();
+		}
 		return $this->token;
+	}
+
+	/**
+	 * Generate the unique authentication token for the user.
+	 *
+	 * @return string
+	 */
+	private function _generateAuthToken($authTokenKey = ZC_AUTH_TOKEN_KEY)
+	{
+		require_once(dirname(__FILE__) .'/../vendor/phpseclib/Crypt/AES.php');
+
+		$cipher = new Crypt_AES();
+		$cipher->setKeyLength(256);
+		$cipher->setKey($authTokenKey);
+		//$cipher->setIV('...'); // defaults to all-NULLs if not explicitely defined
+
+		$this->token = bin2hex($cipher->encrypt($this->getUID()));
+	}
+
+	/**
+	 * Get the user ID from its authentication token.
+	 *
+	 * @return string
+	 */
+	public static function getUIDFromToken($token, $authTokenKey = ZC_AUTH_TOKEN_KEY)
+	{
+		require_once(dirname(__FILE__) .'/../vendor/phpseclib/Crypt/AES.php');
+
+		$cipher = new Crypt_AES();
+		$cipher->setKeyLength(256);
+		$cipher->setKey($authTokenKey);
+		//$cipher->setIV('...'); // defaults to all-NULLs if not explicitely defined
+		return $cipher->decrypt(hex2bin($token));
 	}
 
 	public function getNick() {

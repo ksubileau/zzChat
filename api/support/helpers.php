@@ -89,6 +89,23 @@ if ( ! function_exists('generate_token'))
     }
 }
 
+if ( !function_exists( 'hex2bin' ) ) {
+    /**
+     * Hex2bin PHP < 5.4 fallback.
+     *
+     * @return string
+     */
+    function hex2bin( $str ) {
+        $sbin = "";
+        $len = strlen( $str );
+        for ( $i = 0; $i < $len; $i += 2 ) {
+            $sbin .= pack( "H*", substr( $str, $i, 2 ) );
+        }
+
+        return $sbin;
+    }
+}
+
 if ( ! function_exists('array_add'))
 {
     /**
