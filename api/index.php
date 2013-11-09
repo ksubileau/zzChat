@@ -39,5 +39,9 @@ $app = new \Slim\Slim(array(
 $app->add(new \Slim\Middleware\MethodOverride());
 $app->add(new \Slim\Middleware\ContentTypes());
 
+$app->error(function (\Exception $e) use ($app) {
+    $app->halt($e->getCode(), $e->getMessage());
+});
+
 if(!defined('ZZCHAT_TEST_MODE') || !ZZCHAT_TEST_MODE)
     $app->run();
