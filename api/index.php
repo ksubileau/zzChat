@@ -43,5 +43,9 @@ $app->error(function (\Exception $e) use ($app) {
     $app->halt($e->getCode(), $e->getMessage());
 });
 
+// Set up routes
+$router = new Router($app);
+$router->setup();
+
 if(!defined('ZZCHAT_TEST_MODE') || !ZZCHAT_TEST_MODE)
     $app->run();
