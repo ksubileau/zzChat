@@ -7,5 +7,10 @@
  *
  */
 abstract class Controller {
+    protected $app;
+
+     function __construct($app = null) {
+            $this->app = ($app instanceof Slim) ? $app : Slim::getInstance();
+     }
 
 }

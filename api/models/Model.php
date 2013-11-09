@@ -8,6 +8,10 @@
  */
 abstract class Model {
 
+     function __construct() {
+        // Does nothing for now.
+     }
+
     protected function validate() {
         return true;
     }
