@@ -3,3 +3,4 @@
 /app/css/*
 !/app/css/style.css
 koala-config.json
+storage/
