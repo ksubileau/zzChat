@@ -26,26 +26,26 @@
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" id="login-form">
                         <div class="form-group">
-                            <label for="nickname" class="control-label sr-only" required><%= i18n.t("nickname") %></label>
+                            <label for="nickname" class="control-label sr-only"><%= i18n.t("nickname") %></label>
                             <div class="col-lg-12 input-group">
                                 <span class="input-group-addon"><i class="fa fa-user" /></span>
-                                <input type="text" class="form-control" id="nickname" placeholder="<%= i18n.t("nickname") %>">
+                                <input type="text" class="form-control" id="nickname" placeholder="<%= i18n.t("nickname") %>" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="age" class="control-label sr-only" required><%= i18n.t("age") %></label>
+                            <label for="age" class="control-label sr-only"><%= i18n.t("age") %></label>
                                 <div class="col-lg-12 input-group">
                                 <span class="input-group-addon"><i class="fa fa-calendar" /></span>
-                                <input type="number" class="form-control" id="age" placeholder="<%= i18n.t("age") %>">
+                                <input type="number" class="form-control" id="age" placeholder="<%= i18n.t("age") %>" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <p class="radio-inline"><%= i18n.t("gender") %> : </p>
                             <label class="radio-inline">
-                                <input type="radio" name="gender" value="male"><i class="fa fa-male" /> <%= i18n.t("male") %>
+                                <input type="radio" name="gender" value="male" required><i class="fa fa-male" /> <%= i18n.t("male") %>
                             </label>
                             <label class="radio-inline">
-                                <input type="radio" name="gender" value="female"><i class="fa fa-female" /> <%= i18n.t("female") %>
+                                <input type="radio" name="gender" value="female" required><i class="fa fa-female" /> <%= i18n.t("female") %>
                             </label>
                         </div>
                         <div class="form-group">
