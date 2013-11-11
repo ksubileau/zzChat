@@ -11,33 +11,33 @@ require( ABSPATH . '/support/helpers.php' );
 require( ABSPATH . '/support/ClassLoader.php' );
 require( ABSPATH . '/vendor/Slim/Slim.php' );
 
+use \Slim\Slim;
+use \Slim\Middleware;
+use \ZZChat\Support;
+use \ZZChat\Support\ClassLoader;
+use \ZZChat\Routers\Router;
+
 // ZZChat calculates offsets from UTC.
 date_default_timezone_set( 'UTC' );
 
 // Set initial default constants.
-set_initial_constants( );
+Support\set_initial_constants( );
 
 // Set debug mode.
-set_debug_mode( );
+Support\set_debug_mode( );
 
-// Register Slim's auto loader.
-\Slim\Slim::registerAutoloader();
-
-// Register non-Slim autoloader
+// Register autoloader
 ClassLoader::addDirectories(array(
-    ABSPATH.'/controllers',
-    ABSPATH.'/models',
-    ABSPATH.'/routers',
-    ABSPATH.'/support',
+    ABSPATH.'/vendor/phpseclib',
 ));
 ClassLoader::register();
 
-$app = new \Slim\Slim(array(
+$app = new Slim(array(
     'debug' => ZC_DEBUG,
 ));
 
-$app->add(new \Slim\Middleware\MethodOverride());
-$app->add(new \Slim\Middleware\ContentTypes());
+$app->add(new Middleware\MethodOverride());
+$app->add(new Middleware\ContentTypes());
 
 $app->error(function (\Exception $e) use ($app) {
     $app->halt($e->getCode(), $e->getMessage());

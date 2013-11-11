@@ -1,4 +1,7 @@
 <?php
+namespace ZZChat\Models;
+
+use \ZZChat\Support;
 
 class User extends Model {
 
@@ -55,7 +58,7 @@ class User extends Model {
     function __construct() {
     	parent::__construct();
 
-        $this->uid = generate_token(ZC_UID_LENGTH);
+        $this->uid = Support\generate_token(ZC_UID_LENGTH);
         $this->_generateAuthToken();
 
         $this->loginDate = time();
@@ -91,9 +94,7 @@ class User extends Model {
 	 */
 	private function _generateAuthToken($authTokenKey = ZC_AUTH_TOKEN_KEY)
 	{
-		require_once(dirname(__FILE__) .'/../vendor/phpseclib/Crypt/AES.php');
-
-		$cipher = new Crypt_AES();
+		$cipher = new \Crypt_AES();
 		$cipher->setKeyLength(256);
 		$cipher->setKey($authTokenKey);
 		//$cipher->setIV('...'); // defaults to all-NULLs if not explicitely defined
@@ -108,13 +109,11 @@ class User extends Model {
 	 */
 	public static function getUIDFromToken($token, $authTokenKey = ZC_AUTH_TOKEN_KEY)
 	{
-		require_once(dirname(__FILE__) .'/../vendor/phpseclib/Crypt/AES.php');
-
-		$cipher = new Crypt_AES();
+		$cipher = new \Crypt_AES();
 		$cipher->setKeyLength(256);
 		$cipher->setKey($authTokenKey);
 		//$cipher->setIV('...'); // defaults to all-NULLs if not explicitely defined
-		return $cipher->decrypt(hex2bin($token));
+		return $cipher->decrypt(Support\hex2bin($token));
 	}
 
 	public function getNick() {

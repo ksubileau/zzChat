@@ -1,4 +1,5 @@
 <?php
+namespace ZZChat\Models;
 
 /**
  * Model abstract class.

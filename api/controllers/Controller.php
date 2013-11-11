@@ -1,4 +1,5 @@
 <?php
+namespace ZZChat\Controllers;
 
 /**
  * Controller abstract class.

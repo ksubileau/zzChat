@@ -1,4 +1,5 @@
 <?php
+namespace ZZChat\Support;
 
 class ClassLoader {
 
@@ -16,39 +17,83 @@ class ClassLoader {
 	 */
 	protected static $registered = false;
 
-	/**
+    /**
+	 * Get the normal file name for a class.
+	 *
+	 * @param string $class Class name
+	 * @return string Class file name
+	 * @throws Exception If class name is invalid
+	 */
+    protected static function getClassFileName($class)
+    {
+        if (!preg_match('/^[A-Za-z0-9_\\\\]+$/D', $class)) {
+            throw new Exception("Invalid class name \"$class\".");
+        }
+
+        // prefixed class
+        $class = str_replace('_', '/', $class);
+
+        // namespace
+        $class = str_replace('\\', '/', $class);
+
+        $class = self::removePrefix($class, 'ZZChat/');
+        return $class;
+    }
+
+    protected static function removePrefix($class, $prefixToRemove)
+    {
+        if (strpos($class, $prefixToRemove) === 0) {
+            return substr($class, strlen($prefixToRemove));
+        }
+
+        return $class;
+    }
+
+    private static function usesZZChatNamespace($class)
+    {
+        return strpos($class, 'ZZChat\\') === 0 || strpos($class, '\ZZChat\\') === 0;
+    }
+
+   /**
 	 * Load the given class file.
 	 *
 	 * @param  string  $class
 	 * @return void
 	 */
 	public static function autoload($class)
-	{
-		$class = static::normalizeClass($class);
+    {
+        $classPath = static::getClassFileName($class);
 
-		foreach (static::$directories as $directory)
-		{
-			if (file_exists($path = $directory.DIRECTORY_SEPARATOR.$class))
-			{
-				require_once $path;
+        if (static::usesZZChatNamespace($class)) {
+            static::tryToLoadClass($class, '', $classPath);
+        } else {
+            // non-ZZChat classes (e.g., Slim) are in vendor/
+            if (! static::tryToLoadClass($class, '/vendor/', $classPath)) {
+            	// Try also others directories.
+				foreach (static::$directories as $directory)
+				{
+					if (static::tryToLoadClass($class, $directory.DIRECTORY_SEPARATOR, $classPath, ''))
+						return true;
+				}
+            }
+        }
+    }
 
-				return true;
-			}
+    private static function tryToLoadClass($class, $dir, $classPath, $prefix = ABSPATH)
+    {
+    	if(strlen($prefix) > 0 && substr($prefix, -1) != '/') {
+		    $prefix .= '/';
 		}
-	}
+        $path = $prefix . $dir . $classPath . '.php';
 
-	/**
-	 * Get the normal file name for a class.
-	 *
-	 * @param  string  $class
-	 * @return string
-	 */
-	public static function normalizeClass($class)
-	{
-		if ($class[0] == '\\') $class = substr($class, 1);
+        if (file_exists($path)) {
+            require_once $path;
 
-		return str_replace(array('\\', '_'), DIRECTORY_SEPARATOR, $class).'.php';
-	}
+            return class_exists($class, false) || interface_exists($class, false);
+        }
+
+        return false;
+    }
 
 	/**
 	 * Register the given class loader on the auto-loader stack.
@@ -59,14 +104,19 @@ class ClassLoader {
 	{
 		if ( ! static::$registered)
 		{
-			spl_autoload_register(__NAMESPACE__ . "\\".__CLASS__."::autoload");
+			spl_autoload_register(__CLASS__."::autoload");
+
+			// preserve any existing __autoload
+			if (function_exists('__autoload')) {
+			    spl_autoload_register('__autoload');
+			}
 
 			static::$registered = true;
 		}
 	}
 
 	/**
-	 * Add directories to the class loader.
+	 * Add directories to the class loader search scope.
 	 *
 	 * @param  string|array  $directories
 	 * @return void

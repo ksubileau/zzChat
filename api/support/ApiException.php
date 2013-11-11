@@ -1,4 +1,5 @@
 <?php
+namespace ZZChat\Support;
 
 /**
  * Special exception for raising API errors that can be used in API methods.
@@ -8,7 +9,7 @@
  * @license    http://www.gnu.org/licenses/gpl-3.0.html GNU GPLv3 (also in /LICENSE)
  * @link       https://github.com/ksubileau/zzChat
  */
-class ApiException extends Exception
+class ApiException extends \Exception
 {
     /**
      * HTTP status codes

@@ -1,4 +1,8 @@
 <?php
+namespace ZZChat\Routers;
+
+use \Slim\Slim;
+use \ZZChat\Controllers\SessionController;
 
 /**
  * Router class.

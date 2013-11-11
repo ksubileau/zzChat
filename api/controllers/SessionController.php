@@ -1,4 +1,8 @@
 <?php
+namespace ZZChat\Controllers;
+
+use \ZZChat\Models\User;
+use \ZZChat\Support\ApiException;
 
 /**
  * Session controller.

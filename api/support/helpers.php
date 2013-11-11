@@ -1,4 +1,6 @@
 <?php
+namespace ZZChat\Support;
+
 /**
  * Utility functions.
  * Some of these functions are taken from or inspired
@@ -89,13 +91,18 @@ if ( ! function_exists('generate_token'))
     }
 }
 
-if ( !function_exists( 'hex2bin' ) ) {
+if ( !function_exists( __NAMESPACE__.'\hex2bin' ) ) {
     /**
      * Hex2bin PHP < 5.4 fallback.
      *
      * @return string
      */
     function hex2bin( $str ) {
+        if (function_exists('\hex2bin')) {
+            // Use PHP function if available (PHP > 5.4).
+            return \hex2bin($str);
+        }
+
         $sbin = "";
         $len = strlen( $str );
         for ( $i = 0; $i < $len; $i += 2 ) {

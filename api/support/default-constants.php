@@ -1,4 +1,6 @@
 <?php
+namespace ZZChat\Support;
+
 /**
  * Defines constants and global variables that can be overridden, generally in config.php.
  *
