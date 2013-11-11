@@ -168,6 +168,13 @@ class User extends Model
 	}
 
 	public function setAge($age) {
+		if( is_string($age)) {
+			$age = trim($age);
+			if ((string)intval($age) != $age)
+				return false;
+			else
+				$age = intval($age);
+		}
 		$this->age = $age;
 	}
 

@@ -24,12 +24,13 @@ class SessionController extends Controller
 	{
 		$user = new User();
 		$user->setNick($data['nickname']);
-		$user->setAge(intval($data['age']));
+		$user->setAge($data['age']);
+
 		if(isset($data['gender'])) {
-			if($data['gender'] == "male") {
+			if($data['gender'] == "male" || $data['gender'] == "1") {
 				$user->setSex(1);
 			}
-			elseif ($data['gender'] == "female") {
+			elseif ($data['gender'] == "female" || $data['gender'] == "2") {
 				$user->setSex(2);
 			}
 		}
