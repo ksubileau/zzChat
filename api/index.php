@@ -1,4 +1,12 @@
 <?php
+/**
+ * Startup file.
+ *
+ * @package    ZZChat
+ * @author     Kévin Subileau
+ * @license    http://www.gnu.org/licenses/gpl-3.0.html GNU GPLv3 (also in /LICENSE)
+ * @link       https://github.com/ksubileau/zzChat
+ */
 
 require( dirname(__FILE__) .'/config.php' );
 

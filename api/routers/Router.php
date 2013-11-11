@@ -7,10 +7,13 @@ use \ZZChat\Controllers\SessionController;
 /**
  * Router class.
  *
- * @package ZZChat
- *
+ * @package    ZZChat
+ * @author     Kévin Subileau
+ * @license    http://www.gnu.org/licenses/gpl-3.0.html GNU GPLv3 (also in /LICENSE)
+ * @link       https://github.com/ksubileau/zzChat
  */
-class Router {
+class Router
+{
     protected $app;
 
      function __construct($app = null) {
@@ -19,6 +22,7 @@ class Router {
 
     public function setup () {
         $this->app->map('/login',array($this, 'login'))->via('POST');
+        $this->app->map('/user',array($this, 'login'))->via('POST');
     }
 
     public function login () {

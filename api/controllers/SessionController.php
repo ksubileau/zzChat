@@ -7,18 +7,20 @@ use \ZZChat\Support\ApiException;
 /**
  * Session controller.
  *
+ * @package    ZZChat
  * @author     Kévin Subileau
  * @license    http://www.gnu.org/licenses/gpl-3.0.html GNU GPLv3 (also in /LICENSE)
  * @link       https://github.com/ksubileau/zzChat
  */
-class SessionController extends Controller  {
+class SessionController extends Controller
+{
 
 	/**
 	 * Login User.
 	 *
 	 * @return string
 	 */
-	static public function login($data = NULL)
+	public static function login($data = NULL)
 	{
 		$user = new User();
 		$user->setNick($data['nickname']);
@@ -48,7 +50,7 @@ class SessionController extends Controller  {
 	 *
 	 * @return boolean
 	 */
-	static public function isLogin()
+	public static function isLogin()
 	{
 		$token = static::getAuthToken();
 		return static::isValidToken($token);
@@ -59,7 +61,7 @@ class SessionController extends Controller  {
 	 *
 	 * @return boolean|string The auth token, or false if the token does not exist.
 	 */
-	static public function getAuthToken()
+	public static function getAuthToken()
 	{
 		if( isset($_SERVER[ZC_AUTH_HEADER_KEY]) ) {
 			return $_SERVER[ZC_AUTH_HEADER_KEY];
@@ -81,7 +83,7 @@ class SessionController extends Controller  {
 	 *
 	 * @return boolean
 	 */
-	static public function isValidToken($token)
+	public static function isValidToken($token)
 	{
 		return ! empty($token);
 	}

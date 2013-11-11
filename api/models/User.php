@@ -3,7 +3,16 @@ namespace ZZChat\Models;
 
 use \ZZChat\Support;
 
-class User extends Model {
+/**
+ * User model.
+ *
+ * @package    ZZChat
+ * @author     Kévin Subileau
+ * @license    http://www.gnu.org/licenses/gpl-3.0.html GNU GPLv3 (also in /LICENSE)
+ * @link       https://github.com/ksubileau/zzChat
+ */
+class User extends Model
+{
 
 	/**
 	 * The database table used by the model.
@@ -59,7 +68,7 @@ class User extends Model {
     	parent::__construct();
 
         $this->uid = Support\generate_token(ZC_UID_LENGTH);
-        $this->_generateAuthToken();
+        $this->generateAuthToken();
 
         $this->loginDate = time();
     }
@@ -82,7 +91,7 @@ class User extends Model {
 	public function getAuthToken()
 	{
 		if(!$this->token) {
-			$this->_generateAuthToken();
+			$this->generateAuthToken();
 		}
 		return $this->token;
 	}
@@ -92,7 +101,7 @@ class User extends Model {
 	 *
 	 * @return string
 	 */
-	private function _generateAuthToken($authTokenKey = ZC_AUTH_TOKEN_KEY)
+	private function generateAuthToken($authTokenKey = ZC_AUTH_TOKEN_KEY)
 	{
 		$cipher = new \Crypt_AES();
 		$cipher->setKeyLength(256);

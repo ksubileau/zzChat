@@ -1,7 +1,16 @@
 <?php
 namespace ZZChat\Support;
 
-class ClassLoader {
+/**
+ * ZZChat PSR-0 auto loader.
+ *
+ * @package    ZZChat
+ * @author     Kévin Subileau
+ * @license    http://www.gnu.org/licenses/gpl-3.0.html GNU GPLv3 (also in /LICENSE)
+ * @link       https://github.com/ksubileau/zzChat
+ */
+class ClassLoader
+{
 
 	/**
 	 * The registered directories.
