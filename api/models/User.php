@@ -118,11 +118,41 @@ class User extends Model
 	 */
 	public static function getUIDFromToken($token, $authTokenKey = ZC_AUTH_TOKEN_KEY)
 	{
+		$token = trim($token);
+		// A token must be a valid hex number.
+		if(!preg_match("/^[0-9A-Fa-f]+$/", $token)) {
+			return false;
+		}
+
 		$cipher = new \Crypt_AES();
 		$cipher->setKeyLength(256);
 		$cipher->setKey($authTokenKey);
 		//$cipher->setIV('...'); // defaults to all-NULLs if not explicitely defined
 		return $cipher->decrypt(Support\hex2bin($token));
+	}
+
+	/**
+	 * Return true if the token match a valid user.
+	 *
+	 * @return boolean
+	 */
+	public static function isValidToken($token)
+	{
+		$uid = static::getUIDFromToken($token);
+		return static::exists($uid);
+	}
+
+	/**
+	 * Check if the passed UID corresponds to an existing user.
+	 *
+	 * @return bool
+	 */
+	public static function exists($uid)
+	{
+		if (!$uid)
+			return false;
+
+		return file_exists(static::getStoragePathForUID($uid));
 	}
 
 	public function getNick() {
@@ -179,15 +209,38 @@ class User extends Model
 			return false;
 		}
 
-		if (!file_exists(ZC_STORAGE_DIR.self::STORAGE_DIR)) {
-		    mkdir(ZC_STORAGE_DIR.self::STORAGE_DIR, 0777, true);
+		$filepath = $this->getStoragePath();
+
+		if (!file_exists(dirname($filepath))) {
+		    mkdir(dirname($filepath), 0777, true);
 		}
 
-		if(file_put_contents(ZC_STORAGE_DIR.self::STORAGE_DIR.'/'.$this->uid, serialize($this)) === false) {
+		if(file_put_contents($filepath, serialize($this)) === false) {
 			return false;
 		}
 
 		return true;
+	}
+
+	/**
+	 * Return the user's data file path.
+	 *
+	 * @return string
+	 */
+	protected static function getStoragePathForUID($uid) {
+		if (!$uid)
+			return false;
+
+		return ZC_STORAGE_DIR . self::STORAGE_DIR . '/' . $uid;
+	}
+
+	/**
+	 * Return the user's data file path.
+	 *
+	 * @return string
+	 */
+	protected function getStoragePath() {
+		return static::getStoragePathForUID($this->uid);
 	}
 
 }

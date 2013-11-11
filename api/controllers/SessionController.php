@@ -53,7 +53,7 @@ class SessionController extends Controller
 	public static function isLogin()
 	{
 		$token = static::getAuthToken();
-		return static::isValidToken($token);
+		return User::isValidToken($token);
 	}
 
 	/**
@@ -76,15 +76,5 @@ class SessionController extends Controller
 		}
 
 		return false;
-	}
-
-	/**
-	 * Return true if the token match a valid user.
-	 *
-	 * @return boolean
-	 */
-	public static function isValidToken($token)
-	{
-		return ! empty($token);
 	}
 }

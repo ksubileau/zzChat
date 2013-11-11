@@ -4,10 +4,19 @@ use ZZChat\Controllers\SessionController;
 
 class SessionTest extends ZZChatTestCase {
 
-    public function testUnlogged()
+    public function testGetAuthTokenUnlogged()
     {
-        $this->assertFalse(SessionController::getAuthToken());
-        $this->assertFalse(SessionController::isValidToken(SessionController::getAuthToken()));
+        $authToken = SessionController::getAuthToken();
+        $this->assertFalse($authToken);
+
+        return $authToken;
+    }
+
+    /*
+     * @depends testGetAuthTokenUnlogged
+     */
+    public function testIsLoginUnlogged()
+    {
         $this->assertFalse(SessionController::isLogin());
     }
 }
