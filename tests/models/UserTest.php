@@ -1,6 +1,8 @@
 <?php
 
-class UserTest extends PHPUnit_Framework_TestCase {
+use ZZChat\Models\User;
+
+class UserTest extends ZZChatTestCase {
 
     public function testValidation()
     {

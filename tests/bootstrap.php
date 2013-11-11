@@ -7,4 +7,6 @@ set_include_path(dirname(__FILE__) . '/../api' . PATH_SEPARATOR . get_include_pa
 if ( !defined('ABSPATH') )
     define('ABSPATH', dirname(__FILE__) . '/../api');
 
+require( './ZZChatTestCase.php' );
+
 require( ABSPATH . '/index.php' );
