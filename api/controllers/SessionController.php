@@ -42,7 +42,7 @@ class SessionController extends Controller
 			throw new ApiException(500, "Unable to save user's data.");
 		}
 
-		return json_encode(array("user" => $user, "auth_token" => $user->getAuthToken()));
+		return json_encode(array("user" => $user, "token" => $user->getAuthToken()));
 	}
 
 	/**
