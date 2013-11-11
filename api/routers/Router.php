@@ -22,7 +22,6 @@ class Router
 
     public function setup () {
         $this->app->map('/login',array($this, 'login'))->via('POST');
-        $this->app->map('/user',array($this, 'login'))->via('POST');
     }
 
     public function login () {
