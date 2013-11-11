@@ -6,5 +6,6 @@
 	"remember_me": "Se souvenir de moi",
 	"gender": "Sexe",
 	"nickname": "Pseudo",
-	"age": "Age"
+	"age": "Age",
+    "login_error": "Impossible de se connecter. Veuillez vérifier votre saisie."
 }

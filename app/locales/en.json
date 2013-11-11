@@ -6,5 +6,6 @@
 	"remember_me": "Remember me",
 	"gender": "Gender",
 	"nickname": "Nickname",
-	"age": "Age"
+	"age": "Age",
+    "login_error": "Unable to log in."
 }
