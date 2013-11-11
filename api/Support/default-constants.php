@@ -27,7 +27,7 @@ if ( ! function_exists('set_initial_constants'))
         /************************************
          * Path constants
          ************************************/
-        set_constant( 'ZC_STORAGE_DIR', ABSPATH . '/storage/');
+        set_constant( 'ZC_STORAGE_DIR', ABSPATH . '/Storage/');
 
         /************************************
          * Security constants

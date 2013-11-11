@@ -14,10 +14,10 @@ require( dirname(__FILE__) .'/config.php' );
 if ( !defined('ABSPATH') )
     define('ABSPATH', dirname(__FILE__) . '/');
 
-require( ABSPATH . '/support/default-constants.php' );
-require( ABSPATH . '/support/helpers.php' );
-require( ABSPATH . '/support/ClassLoader.php' );
-require( ABSPATH . '/vendor/Slim/Slim.php' );
+require( ABSPATH . '/Support/default-constants.php' );
+require( ABSPATH . '/Support/helpers.php' );
+require( ABSPATH . '/Support/ClassLoader.php' );
+require( ABSPATH . '/Vendor/Slim/Slim.php' );
 
 use \Slim\Slim;
 use \Slim\Middleware;
@@ -36,7 +36,7 @@ Support\set_debug_mode( );
 
 // Register autoloader
 ClassLoader::addDirectories(array(
-    ABSPATH.'/vendor/phpseclib',
+    ABSPATH.'/Vendor/PhpSecLib',
 ));
 ClassLoader::register();
 

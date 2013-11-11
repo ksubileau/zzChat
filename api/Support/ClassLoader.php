@@ -77,7 +77,7 @@ class ClassLoader
             static::tryToLoadClass($class, '', $classPath);
         } else {
             // non-ZZChat classes (e.g., Slim) are in vendor/
-            if (! static::tryToLoadClass($class, '/vendor/', $classPath)) {
+            if (! static::tryToLoadClass($class, '/Vendor/', $classPath)) {
             	// Try also others directories.
 				foreach (static::$directories as $directory)
 				{

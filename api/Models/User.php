@@ -19,7 +19,7 @@ class User extends Model
 	 *
 	 * @var string
 	 */
-	const STORAGE_DIR = '/users';
+	const STORAGE_DIR = '/Users';
 
 	/**
 	 * The unique user identifier.
