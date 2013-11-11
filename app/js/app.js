@@ -33,53 +33,60 @@ require.config({
 	}
 });
 
-window.options = {
-	i18next : {
-		resGetPath: 'locales/__lng__.json',
-		useCookie: false,
-		fallbackLng: 'en',
-		getAsync: false // Synchronous loading in order to avoid uninitialized errors.
-	},
-	langAvailable : [
-		{
-            "langcode": "en",
-            "fullname":"English",
-            "flagcode":"gb",
-        },
-		{
-            "langcode": "fr",
-            "fullname":"Français",
-            "flagcode":"fr",
-        },
-		{
-            "langcode": "es",
-            "fullname":"Español",
-            "flagcode":"es",
-        },
-	],
-	currentLang : "fr",
-    api: {
-        url: '/api',
+window.zzchat = {
+    // TODO Use external config file ?
+    "options" : {
+    	i18next : {
+    		resGetPath: 'locales/__lng__.json',
+    		useCookie: false,
+    		fallbackLng: 'en',
+    		getAsync: false // Synchronous loading in order to avoid uninitialized errors.
+    	},
+        // TODO Load dynamically from server ?
+    	langAvailable : [
+    		{
+                "langcode": "en",
+                "fullname":"English",
+                "flagcode":"gb",
+            },
+    		{
+                "langcode": "fr",
+                "fullname":"Français",
+                "flagcode":"fr",
+            },
+    		{
+                "langcode": "es",
+                "fullname":"Español",
+                "flagcode":"es",
+            },
+    	],
+        // TODO Detect browser language
+    	currentLang : "fr",
+        api: {
+            url: '/api',
 
-        // Turn on `emulateHTTP` to support legacy HTTP servers. Setting this option
-        // will fake `"PATCH"`, `"PUT"` and `"DELETE"` requests via the `_method` parameter and
-        // set a `X-Http-Method-Override` header.
-        emulateHTTP : false,
+            // Turn on `emulateHTTP` to support legacy HTTP servers. Setting this option
+            // will fake `"PATCH"`, `"PUT"` and `"DELETE"` requests via the `_method` parameter and
+            // set a `X-Http-Method-Override` header.
+            emulateHTTP : false,
 
-        // Turn on `emulateJSON` to support legacy servers that can't deal with direct
-        // `application/json` requests ... will encode the body as
-        // `application/x-www-form-urlencoded` instead and will send the model in a
-        // form param named `model`.
-        emulateJSON : false,
+            // Turn on `emulateJSON` to support legacy servers that can't deal with direct
+            // `application/json` requests ... will encode the body as
+            // `application/x-www-form-urlencoded` instead and will send the model in a
+            // form param named `model`.
+            emulateJSON : false,
+        },
     },
+    "me":null,
+    "token":null,
 };
 
 define(['jquery', 'bootstrap', 'i18next', 'views/home'], function($, _bootstrap, i18n, HomeView){
     'use strict';
 
     // Set Backbone options
-    Backbone.emulateHTTP = window.options.api.emulateHTTP;
-    Backbone.emulateJSON = window.options.api.emulateJSON;
+    Backbone.emulateHTTP = window.zzchat.options.api.emulateHTTP;
+    Backbone.emulateJSON = window.zzchat.options.api.emulateJSON;
 
     /*
      * Override Backbone.sync in order to add a root URL to all Backbone API request.
@@ -88,7 +95,7 @@ define(['jquery', 'bootstrap', 'i18next', 'views/home'], function($, _bootstrap,
     // Store the original version of Backbone.sync
     var backboneSync = Backbone.sync;
     Backbone.sync = function (method, model, options) {
-    	var rootUrl = window.options.api.url;
+    	var rootUrl = window.zzchat.options.api.url;
     	var url = _.isFunction(model.url) ? model.url() : model.url;
 
     	// If no url, don't override, let Backbone.sync do its normal fail
@@ -104,7 +111,7 @@ define(['jquery', 'bootstrap', 'i18next', 'views/home'], function($, _bootstrap,
     };
 
 	// Initialize internationalization
-	i18n.init(options.i18next);
+	i18n.init(window.zzchat.options.i18next);
 
 	// Start application
 	var home_view = new HomeView;

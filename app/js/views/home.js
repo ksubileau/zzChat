@@ -28,8 +28,8 @@ define(['jquery', 'backbone', 'underscore', 'i18next', 'models/user', 'text!temp
 		    	// Render view
 		    	this.$el.html(this.template({
 		    		i18n: i18n,
-		    		currentLang: _.findWhere(options.langAvailable, {"langcode" : options.currentLang}),
-		    		langList: _.reject(options.langAvailable, function(lang) { return lang.langcode == options.currentLang; }),
+		    		currentLang: _.findWhere(window.zzchat.options.langAvailable, {"langcode" : window.zzchat.options.currentLang}),
+		    		langList: _.reject(window.zzchat.options.langAvailable, function(lang) { return lang.langcode == window.zzchat.options.currentLang; }),
 	    		}));
 
 		    	return this;
@@ -58,14 +58,16 @@ define(['jquery', 'backbone', 'underscore', 'i18next', 'models/user', 'text!temp
 		        		gender: $('input[name=gender]:checked', '#login-form').val()
 		        	};
 
+		        // TODO Use Backbone methods instead of jQuery ajax call, as it doesn't use Backbone config.
+		        // (API URL, data post format...)
 		        $.ajax({
 				    contentType: 'application/json',
 				    data: JSON.stringify(formValues),
 				    dataType: 'json',
 				    success: function(response) {
-                        window.current_user = new UserModel;
-				        window.current_user.set(response.user);
-                        window.token = response.token;
+                        window.zzchat.me = new UserModel;
+				        window.zzchat.me.set(response.user);
+                        window.zzchat.token = response.token;
                         // TODO Change view
 				    },
 				    error: function() {
@@ -77,7 +79,7 @@ define(['jquery', 'backbone', 'underscore', 'i18next', 'models/user', 'text!temp
 				    },
 				    processData: false,
 				    type: 'POST',
-				    url: window.options.api.url + '/login'
+				    url: window.zzchat.options.api.url + '/login'
 				});
 
 		        return true;
@@ -85,7 +87,7 @@ define(['jquery', 'backbone', 'underscore', 'i18next', 'models/user', 'text!temp
 
 		    changeLanguage : function(langCode){
 		    	// Record the new language code
-		    	options.currentLang = langCode;
+		    	window.zzchat.options.currentLang = langCode;
 		    	// Load the translation file and re-render the view.
 				i18n.setLng(langCode, $.proxy(this.render, this));
 		    },
