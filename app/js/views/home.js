@@ -7,7 +7,7 @@
 * @link https://github.com/ksubileau/zzChat
 * @license GNU GPLv3 (http://www.gnu.org/licenses/gpl-3.0.html also in /LICENSE)
 */
-define(['jquery', 'backbone', 'underscore', 'i18next', 'models/user', 'text!templates/home.html'],
+define(['jquery', 'backbone', 'underscore', 'i18next', 'models/user', 'text!templates/home.html', 'jquery.placeholder'],
     function($, Backbone, _, i18n, UserModel, homeView){
 		var HomeView = Backbone.View.extend({
 
@@ -31,6 +31,9 @@ define(['jquery', 'backbone', 'underscore', 'i18next', 'models/user', 'text!temp
 		    		currentLang: _.findWhere(window.zzchat.options.langAvailable, {"langcode" : window.zzchat.options.currentLang}),
 		    		langList: _.reject(window.zzchat.options.langAvailable, function(lang) { return lang.langcode == window.zzchat.options.currentLang; }),
 	    		}));
+
+		    	// Placeholder support for IE9 and others fu**ing browers.
+	    		$('input, textarea', this.$el).placeholder();
 
 		    	return this;
 		    },

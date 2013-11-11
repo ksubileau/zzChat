@@ -18,6 +18,7 @@ require.config({
 		text: 'libs/require/text',
 		bootstrap: 'libs/bootstrap/bootstrap.min',
 		i18next: 'libs/i18next/i18next.min',
+        'jquery.placeholder': 'libs/jquery.placeholder/jquery.placeholder',
 	},
 	shim: {
 		'underscore': {
@@ -29,7 +30,10 @@ require.config({
 		},
 		'bootstrap': {
 			deps: ['jquery'],
-		}
+		},
+        'jquery.placeholder': {
+            deps: ['jquery'],
+        },
 	}
 });
 
