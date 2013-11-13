@@ -9,6 +9,8 @@
 */
 define(['underscore', 'backbone'],
 	function(_, Backbone){
+    	'use strict';
+
 		var UserModel = Backbone.Model.extend({
 			idAttribute: 'uid',
 

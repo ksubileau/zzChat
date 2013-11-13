@@ -9,6 +9,8 @@
 */
 define(['jquery', 'backbone', 'underscore', 'i18next', 'models/user', 'text!templates/home.html', 'jquery.placeholder'],
     function($, Backbone, _, i18n, UserModel, homeView){
+		'use strict';
+
 		var HomeView = Backbone.View.extend({
 
 		    el: $('#main'),
@@ -70,6 +72,8 @@ define(['jquery', 'backbone', 'underscore', 'i18next', 'models/user', 'text!temp
 				    success: function(response) {
                         window.zzchat.me = new UserModel;
 				        window.zzchat.me.set(response.user);
+				        // Save the authentication token.
+				        // It will be automatically sent back to the server in future requests.
                         window.zzchat.token = response.token;
                         // TODO Change view
 				    },
