@@ -69,6 +69,9 @@ window.zzchat = {
         api: {
             url: '/api',
 
+            // Authentication header name
+            authHeaderName: 'X-Auth-Token',
+
             // Turn on `emulateHTTP` to support legacy HTTP servers. Setting this option
             // will fake `"PATCH"`, `"PUT"` and `"DELETE"` requests via the `_method` parameter and
             // set a `X-Http-Method-Override` header.
@@ -93,11 +96,12 @@ define(['jquery', 'bootstrap', 'i18next', 'views/home'], function($, _bootstrap,
     Backbone.emulateJSON = window.zzchat.options.api.emulateJSON;
 
     /*
-     * Override Backbone.sync in order to add a root URL to all Backbone API request.
+     * Override Backbone.sync in order to set the root URL of all Backbone API request
+     * and send the authentication token once the user is connected.
      * Inspired from https://coderwall.com/p/8ldaqw
      */
     // Store the original version of Backbone.sync
-    var backboneSync = Backbone.sync;
+    Backbone.basicSync = Backbone.sync;
     Backbone.sync = function (method, model, options) {
     	var rootUrl = window.zzchat.options.api.url;
     	var url = _.isFunction(model.url) ? model.url() : model.url;
@@ -106,12 +110,19 @@ define(['jquery', 'bootstrap', 'i18next', 'views/home'], function($, _bootstrap,
     	if (url) {
     		options = _.extend(options, {
     			url: rootUrl + (rootUrl.charAt(rootUrl.length - 1) === '/' ? '' : '/')
-    						 + (url.charAt(0) === '/' ? url.substr(1) : url)
+    						 + (url.charAt(0) === '/' ? url.substr(1) : url),
+
+                // Automatically send the authentication token in HTTP headers if available.
+                beforeSend: function(xhr) {
+                    if(typeof window.zzchat.token != 'undefined') {
+                        xhr.setRequestHeader(window.zzchat.options.api.authHeaderName, window.zzchat.token);
+                    }
+                },
     		});
         }
 
         // Call the stored original Backbone.sync method with the new url property
-        backboneSync(method, model, options);
+        return Backbone.basicSync(method, model, options);
     };
 
 	// Initialize internationalization
