@@ -14,9 +14,8 @@ define([
         'i18next',
         'config',
         'router',
-        'views/home',
     ],
-    function($, Backbone, i18n, config, Router, HomeView){
+    function($, Backbone, i18n, config, Router){
         'use strict';
 
         var zzChat = {
