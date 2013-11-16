@@ -28,6 +28,10 @@ define({
         },
     ],
 
+    // Choose the starting language or enable autodetection if null.
+    defaultLanguage : null,
+    //defaultLanguage : "en",
+
     api: {
         url: '/api',
 

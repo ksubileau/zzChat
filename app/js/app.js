@@ -67,11 +67,16 @@ define([
                     return Backbone.basicSync(method, model, options);
                 };
 
-                // TODO Detect browser language
-                this.currentLang = "en";
-
+                var i18nOpts = zzChat.options.i18next;
+                // Configure default language if specified
+                if (this.options.defaultLanguage != null) {
+                    if (this.isValidLangCode(this.options.defaultLanguage)) {
+                        i18nOpts = _.extend(i18nOpts, {lng:this.options.defaultLanguage});
+                    }
+                    // TODO Throw error or warning if value is invalid ?
+                }
                 // Initialize internationalization
-                i18n.init(zzChat.options.i18next);
+                i18n.init(i18nOpts);
 
                 // Start application
                 this.router = new Router();
@@ -93,6 +98,29 @@ define([
 
             getCurrentUser: function() {
                 return user;
+            },
+
+            setLanguage: function(langCode, callback) {
+                return i18n.setLng(langCode, callback);
+            },
+
+            getLanguage: function() {
+                // Get the current language of i18next.
+                var selectedLng = i18n.lng();
+                // Check that it corresponds to a valid language code.
+                if(this.isValidLangCode(selectedLng))
+                    return selectedLng;
+                // Else try to remove the second part of the language code.
+                if(_.contains(selectedLng, '-')) {
+                    selectedLng = selectedLng.split('-')[0];
+                    if(this.isValidLangCode(selectedLng))
+                        return selectedLng;
+                }
+                return null;
+            },
+
+            isValidLangCode: function(langCode) {
+                return _.contains(_.pluck(this.options.langAvailable, "langcode"), langCode);
             },
         }
         return zzChat;

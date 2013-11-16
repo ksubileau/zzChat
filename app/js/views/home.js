@@ -30,8 +30,8 @@ define(['jquery', 'backbone', 'underscore', 'i18next', 'models/user', 'text!temp
 		    	// Render view
 		    	this.$el.html(this.template({
 		    		i18n: i18n,
-		    		currentLang: _.findWhere(zzChat.options.langAvailable, {"langcode" : zzChat.currentLang}),
-		    		langList: _.reject(zzChat.options.langAvailable, function(lang) { return lang.langcode == zzChat.currentLang; }),
+		    		currentLang: _.findWhere(zzChat.options.langAvailable, {"langcode" : zzChat.getLanguage()}),
+		    		langList: _.reject(zzChat.options.langAvailable, function(lang) { return lang.langcode == zzChat.getLanguage(); }),
 	    		}));
 
 		    	// Placeholder support for IE9 and others fu**ing browers.
@@ -42,7 +42,8 @@ define(['jquery', 'backbone', 'underscore', 'i18next', 'models/user', 'text!temp
 
 		    // Triggered when the user selects a new language.
 		    changeLanguageEvent : function(e){
-		    	this.changeLanguage($(e.currentTarget).prop("hash").substr(1));
+		    	// Load the translation file and re-render the view.
+		    	zzChat.setLanguage($(e.currentTarget).prop("hash").substr(1), $.proxy(this.render, this));
 		    	e.preventDefault();
 		    },
 
@@ -91,13 +92,6 @@ define(['jquery', 'backbone', 'underscore', 'i18next', 'models/user', 'text!temp
 				});
 
 		        return true;
-		    },
-
-		    changeLanguage : function(langCode){
-		    	// Record the new language code
-		    	zzChat.currentLang = langCode;
-		    	// Load the translation file and re-render the view.
-				i18n.setLng(langCode, $.proxy(this.render, this));
 		    },
 
 		});
