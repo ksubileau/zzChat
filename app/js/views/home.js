@@ -30,8 +30,8 @@ define(['jquery', 'backbone', 'underscore', 'i18next', 'models/user', 'text!temp
 		    	// Render view
 		    	this.$el.html(this.template({
 		    		i18n: i18n,
-		    		currentLang: _.findWhere(window.zzchat.options.langAvailable, {"langcode" : window.zzchat.options.currentLang}),
-		    		langList: _.reject(window.zzchat.options.langAvailable, function(lang) { return lang.langcode == window.zzchat.options.currentLang; }),
+		    		currentLang: _.findWhere(zzChat.options.langAvailable, {"langcode" : zzChat.currentLang}),
+		    		langList: _.reject(zzChat.options.langAvailable, function(lang) { return lang.langcode == zzChat.currentLang; }),
 	    		}));
 
 		    	// Placeholder support for IE9 and others fu**ing browers.
@@ -70,12 +70,13 @@ define(['jquery', 'backbone', 'underscore', 'i18next', 'models/user', 'text!temp
 				    data: JSON.stringify(formValues),
 				    dataType: 'json',
 				    success: function(response) {
-                        window.zzchat.me = new UserModel;
-				        window.zzchat.me.set(response.user);
+                        zzChat.me = new UserModel;
+				        zzChat.me.set(response.user);
 				        // Save the authentication token.
 				        // It will be automatically sent back to the server in future requests.
-                        window.zzchat.token = response.token;
-                        // TODO Change view
+                        zzChat.token = response.token;
+                        // Open Home tab
+                        zzChat.router.homeTab();
 				    },
 				    error: function() {
 				    	// Enable submit button
@@ -86,7 +87,7 @@ define(['jquery', 'backbone', 'underscore', 'i18next', 'models/user', 'text!temp
 				    },
 				    processData: false,
 				    type: 'POST',
-				    url: window.zzchat.options.api.url + '/login'
+				    url: zzChat.options.api.url + '/login'
 				});
 
 		        return true;
@@ -94,7 +95,7 @@ define(['jquery', 'backbone', 'underscore', 'i18next', 'models/user', 'text!temp
 
 		    changeLanguage : function(langCode){
 		    	// Record the new language code
-		    	window.zzchat.options.currentLang = langCode;
+		    	zzChat.currentLang = langCode;
 		    	// Load the translation file and re-render the view.
 				i18n.setLng(langCode, $.proxy(this.render, this));
 		    },

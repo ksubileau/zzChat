@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*!
  * zzChat - HTML5 Chat Application
 *
@@ -21,6 +21,6 @@
 	</head>
 	<body>
 		<div id="main"></div>
-		<script data-main="/app/js/app" src="/app/js/libs/require/require.min.js"></script>
+		<script data-main="js/main" src="/app/js/libs/require/require.min.js"></script>
 	</body>
 </html>
