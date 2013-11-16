@@ -7,5 +7,5 @@
 	"gender": "Gender",
 	"nickname": "Nickname",
 	"age": "Age",
-    "login_error": "Unable to log in."
+    "login_error": "Unable to log in. Please check your input."
 }
