@@ -91,6 +91,10 @@ define([
                 return this.getAuthToken() != null;
             },
 
+            setAuthToken: function(value) {
+                this.token = value;
+            },
+
             getAuthToken: function() {
                 return this.token;
             },
