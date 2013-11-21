@@ -11,19 +11,20 @@ define([
         'jquery',
         'backbone',
         'views/home',
+        'views/main',
     ],
-    function($, Backbone, HomeView) {
+    function($, Backbone, HomeView, MainView) {
         var Router = Backbone.Router.extend({
             currentView: null,
 
             routes: {
               "": "loginView",
-              "#/home": "homeTab"
+              "home": "homeTab",
+              "room-:id": "openRoom" // Room tab
               /*
               // TODO Routes :
-              "#/room/:id": // Room tab
-              "#/private/:uid": // Private conversation with specified UID
-              "#/settings": // User settings
+              "private-:uid": // Private conversation with specified UID
+              "settings": // User settings
               */
             },
 
@@ -36,10 +37,9 @@ define([
 
             changeView: function(view) {
                 if(null != this.currentView)
-                    this.currentView.undelegateEvents();
+                    this.currentView.dispose();
                 this.currentView = view;
                 this.currentView.render();
-                //$("#main").html(this.currentView.render().$el).show();
             },
 
             loginView: function(){
@@ -51,8 +51,30 @@ define([
                 this.changeView(new HomeView);
             },
 
-            homeTab: function(){
-                console.log("Go to home tab!");
+            homeTab: function() {/* // Disable for devellopment.
+                // Redirect to login page if user is not logged in.
+                if(!zzChat.isLogin()) {
+                    this.navigate("", true);
+                    return;
+                }*/
+                if(this.currentView === null || !this.currentView.showTab) {
+                  var mainView = new MainView
+                  this.changeView(mainView);
+                }
+                this.currentView.showTab('home');
+            },
+
+            openRoom: function(roomId) {/* // Disable for devellopment.
+                // Redirect to login page if user is not logged in.
+                if(!zzChat.isLogin()) {
+                    this.navigate("", true);
+                    return;
+                }*/
+                if(this.currentView === null || !this.currentView.showTab) {
+                  var mainView = new MainView
+                  this.changeView(mainView);
+                }
+                this.currentView.showTab(roomId);
             }
         });
         return Router;

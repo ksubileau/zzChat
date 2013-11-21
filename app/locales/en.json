@@ -7,5 +7,9 @@
 	"gender": "Gender",
 	"nickname": "Nickname",
 	"age": "Age",
-    "login_error": "Unable to log in. Please check your input."
+    "login_error": "Unable to log in. Please check your input.",
+    "home": "Home",
+
+    "room": "Room",
+    "room_plural": "Rooms"
 }

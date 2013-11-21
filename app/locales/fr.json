@@ -7,5 +7,9 @@
 	"gender": "Sexe",
 	"nickname": "Pseudo",
 	"age": "Age",
-    "login_error": "Impossible de se connecter. Veuillez vérifier votre saisie."
+    "login_error": "Impossible de se connecter. Veuillez vérifier votre saisie.",
+    "home": "Accueil",
+
+    "room": "Salon",
+    "room_plural": "Salons"
 }

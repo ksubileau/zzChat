@@ -7,11 +7,11 @@
 * @link https://github.com/ksubileau/zzChat
 * @license GNU GPLv3 (http://www.gnu.org/licenses/gpl-3.0.html also in /LICENSE)
 */
-define(['jquery', 'backbone', 'underscore', 'i18next', 'models/user', 'text!templates/home.html', 'jquery.placeholder'],
-    function($, Backbone, _, i18n, UserModel, homeView){
+define(['jquery', 'backbone', 'underscore', 'i18next', 'views/disposable', 'models/user', 'text!templates/home.html', 'jquery.placeholder'],
+    function($, Backbone, _, i18n, DisposableView, UserModel, homeView){
 		'use strict';
 
-		var HomeView = Backbone.View.extend({
+		var HomeView = DisposableView.extend({
 
 		    el: $('#main'),
 
@@ -77,7 +77,7 @@ define(['jquery', 'backbone', 'underscore', 'i18next', 'models/user', 'text!temp
 				        // It will be automatically sent back to the server in future requests.
                         zzChat.setAuthToken(response.token);
                         // Open Home tab
-                        zzChat.router.homeTab();
+                        zzChat.router.navigate("/home", {trigger : true});
 				    },
 				    error: function() {
 				    	// Enable submit button

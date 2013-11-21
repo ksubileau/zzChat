@@ -79,7 +79,6 @@ define([
 
                 // Start application
                 this.router = new Router();
-                this.router.loginView();
 
             },
 

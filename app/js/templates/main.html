@@ -1,0 +1,25 @@
+<div id="appmain">
+    <div class="row" id="header">
+        <div>
+             <img src="/app/img/logo.png" class="logo"/>
+        </div>
+    </div>
+    <div class="row" id="content">
+        <div>
+            <ul id="tabs" class="nav nav-tabs">
+                <% _.each(tabs, function(tab) { %>
+                    <li id="<%= tab.getId() %>"><a href="#<%= tab.getHref() %>"><% if (tab.isCloseable()) { %><button class="close closeTab" type="button" >×</button><% } %><% if (tab.getIcon()) { %><span class="fa fa-<%= tab.getIcon() %>"></span><% } %> <%= tab.getTitle() %> </a></li>
+                <% }); %>
+                <!-- <li class="dropdown">
+                        <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1">
+                        <li class="active"><a href="#dropdown1" tabindex="-1" data-toggle="tab">@fat</a></li>
+                        <li class=""><a href="#dropdown2" tabindex="-1" data-toggle="tab">@mdo</a></li>
+                        </ul>
+                </li>  -->
+            </ul>
+             <div class="tab-content">
+             </div>
+        </div>
+    </div>
+</div>

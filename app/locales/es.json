@@ -7,5 +7,6 @@
 	"gender": "Sexo",
 	"nickname": "Apodo",
 	"age": "Edad",
-    "login_error": "No se puede iniciar sesión. Por favor, revise su entrada."
+    "login_error": "No se puede iniciar sesión. Por favor, revise su entrada.",
+    "home": "Inicio"
 }

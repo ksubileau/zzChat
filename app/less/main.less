@@ -1,0 +1,119 @@
+/*!
+* zzChat - HTML5 Chat Application
+*
+* Main page styles
+*
+* @author Kévin Subileau
+* @link https://github.com/ksubileau/zzChat
+* @license GNU GPLv3 (http://www.gnu.org/licenses/gpl-3.0.html also in /LICENSE)
+*/
+
+#appmain {
+	.make-md-column(8);
+	.make-md-column-offset(2);
+
+	height: 100%;
+
+	#header {
+		.make-row();
+		padding-top:10px;
+
+		>div {
+			.make-md-column(12);/*
+			position: absolute;
+			top:0;
+			left:0;*/
+			height: @header-height;
+		}
+
+		.logo {
+			height: @header-height;
+		}
+
+		#lang-selector {
+			float: right;
+		}
+	}
+
+	#content {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+	    padding-top: (@header-height + @header-content-margin);
+	    padding-bottom: @bottom-margin;
+
+	    > div {
+			.make-md-column(12);
+			height: 100%;
+	    }
+	}
+
+	.tab-content {
+		background-color:#fff;
+		border-radius:4px;
+		/*padding:20px;*/
+		position:absolute;
+		left: 0;
+		top: @tabs-height;
+		bottom: 0;
+		right: 0;
+
+		>div {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			right: 0;
+			left: 0;
+		}
+	}
+
+	.nav-tabs {
+		height: @tabs-height;
+		padding: 0px 15px;
+		border-bottom: medium none;
+
+		> li {
+			height: 100%;
+			> a {
+				height: 100%;
+			    background: none repeat scroll 0 0 rgba(255, 255, 255, 0.5);
+			}
+			&.active > a {
+			    background: none repeat scroll 0 0 rgb(255, 255, 255);
+			}
+			.close {
+				margin: -1px 0 0 8px;
+			}
+		}
+	}
+
+	.tab-room {
+		#sendbox {
+			position: absolute;
+			bottom: 0px;
+			height: @sendbox-height;
+			overflow: hidden;
+		}
+
+		#chatbox {
+		    height: 100%;
+		    /*overflow: hidden;*/
+		    padding-bottom: @sendbox-height;
+		}
+
+		#table-wrapper {
+		  position:relative;
+		}
+		#table-scroll {
+		  /*height:150px;
+		  overflow:auto;
+		  margin-top:20px;*/
+		}
+		#table-wrapper table {
+		  width:100%;
+		}
+	}
+
+}
