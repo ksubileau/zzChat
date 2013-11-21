@@ -44,7 +44,7 @@ define([
                 // Store the original version of Backbone.sync
                 Backbone.basicSync = Backbone.sync;
                 Backbone.sync = function (method, model, options) {
-                    var rootUrl = this.options.api.url;
+                    var rootUrl = zzChat.options.api.url;
                     var url = _.isFunction(model.url) ? model.url() : model.url;
 
                     // If no url, don't override, let Backbone.sync do its normal fail
