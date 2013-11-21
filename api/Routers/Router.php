@@ -3,6 +3,7 @@ namespace ZZChat\Routers;
 
 use \Slim\Slim;
 use \ZZChat\Controllers\SessionController;
+use \ZZChat\Controllers\UserController;
 
 /**
  * Router class.
@@ -22,10 +23,15 @@ class Router
 
     public function setup () {
         $this->app->map('/login',array($this, 'login'))->via('POST');
+        $this->app->map('/users',array($this, 'getUserList'))->via('GET');
     }
 
     public function login () {
         echo SessionController::login($this->app->request()->getBody());
+    }
+
+    public function getUserList () {
+        echo UserController::getUserList();
     }
 
 }

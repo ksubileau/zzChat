@@ -206,6 +206,47 @@ class User extends Model
 	}
 
 	/**
+	 * Load the user's data.
+	 *
+	 * @return User
+	 */
+	public static function load($uid)
+	{
+		$filepath = self::getStoragePathForUID($uid);
+
+		if (!file_exists($filepath)) {
+		    return false;
+		}
+
+		if(($data = file_get_contents($filepath)) === false) {
+			return false;
+		}
+
+		return unserialize($data);
+	}
+
+	/**
+	 * Load all users.
+	 *
+	 * @return User
+	 */
+	public static function loadAll()
+	{
+		$users = array();
+
+		foreach (glob(ZC_STORAGE_DIR . self::STORAGE_DIR . '/*') as $filename) {
+			if (is_readable($filename)) {
+				$user = self::load(basename($filename));
+				if ($user) {
+					array_push($users, $user);
+				}
+			}
+		}
+
+		return $users;
+	}
+
+	/**
 	 * Save the user's data.
 	 *
 	 * @return bool
