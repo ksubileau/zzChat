@@ -156,7 +156,7 @@ class User extends Model
 	}
 
 	public function getNick() {
-		return $this->nickname;
+		return $this->nick;
 	}
 
 	public function setNick($nickname) {

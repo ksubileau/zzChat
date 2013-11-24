@@ -4,6 +4,14 @@ use ZZChat\Models\User;
 
 class UserTest extends ZZChatTestCase {
 
+    public function testSetGetUsername()
+    {
+        $user = new User();
+        $user->setNick("Testing");
+
+        $this->assertEquals($user->getNick(), "Testing");
+    }
+
     public function testValidation()
     {
         $user = new User();
