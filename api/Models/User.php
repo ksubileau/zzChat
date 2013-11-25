@@ -212,13 +212,13 @@ class User extends Model
 	 */
 	public static function load($uid)
 	{
-		$filepath = self::getStoragePathForUID($uid);
+		$filepath = static::getStoragePathForUID($uid);
 
-		if (!file_exists($filepath)) {
+		if (!file_exists($filepath . '/properties')) {
 		    return false;
 		}
 
-		if(($data = file_get_contents($filepath)) === false) {
+		if(($data = file_get_contents($filepath . '/properties')) === false) {
 			return false;
 		}
 
@@ -236,7 +236,7 @@ class User extends Model
 
 		foreach (glob(ZC_STORAGE_DIR . self::STORAGE_DIR . '/*') as $filename) {
 			if (is_readable($filename)) {
-				$user = self::load(basename($filename));
+				$user = static::load(basename($filename));
 				if ($user) {
 					array_push($users, $user);
 				}
@@ -259,15 +259,81 @@ class User extends Model
 
 		$filepath = $this->getStoragePath();
 
-		if (!file_exists(dirname($filepath))) {
-		    mkdir(dirname($filepath), 0777, true);
+		if (!file_exists($filepath)) {
+		    mkdir($filepath, 0777, true);
 		}
 
-		if(file_put_contents($filepath, serialize($this)) === false) {
+		if(file_put_contents($filepath . '/properties', serialize($this)) === false) {
+			return false;
+		}
+
+		// Set create time if it's a new user.
+		if (!file_exists($filepath . '/ctime')) {
+			if(file_put_contents($filepath . '/ctime', time()) === false) {
+				return false;
+			}
+		}
+
+		// Update modification time
+		if(file_put_contents($filepath . '/mtime', time()) === false) {
 			return false;
 		}
 
 		return true;
+	}
+
+	/**
+	 * Return the last modification or creation time.
+	 *
+	 * @return int
+	 */
+	protected static function getTimeForUID($uid, $timefile) {
+		$timefile = static::getStoragePathForUID($uid) . '/' .$reference;
+
+		if (!file_exists($timefile))
+			return false;
+
+		if(($timestring = file_get_contents($timefile)) === false) {
+			return false;
+		}
+
+		return intval($timestring);
+	}
+
+	/**
+	 * Return the last modification time.
+	 *
+	 * @return int
+	 */
+	protected static function getModificationTimeForUID($uid) {
+		return static::getTimeForUID($uid, 'mtime');
+	}
+
+	/**
+	 * Return the creation time.
+	 *
+	 * @return int
+	 */
+	protected static function getCreationTimeForUID($uid) {
+		return static::getTimeForUID($uid, 'ctime');
+	}
+
+	/**
+	 * Return the creation time.
+	 *
+	 * @return int
+	 */
+	protected function getCreationTime() {
+		return static::getCreationTimeForUID($this->uid);
+	}
+
+	/**
+	 * Return the last modification time.
+	 *
+	 * @return int
+	 */
+	protected function getModificationTime() {
+		return static::getModificationTimeForUID($this->uid);
 	}
 
 	/**
