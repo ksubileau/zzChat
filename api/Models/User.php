@@ -22,13 +22,6 @@ class User extends Model
 	const STORAGE_DIR = '/Users';
 
 	/**
-	 * The unique user identifier.
-	 *
-	 * @var string
-	 */
-	public $uid;
-
-	/**
 	 * The user's nickname (required).
 	 *
 	 * @var string
@@ -67,21 +60,10 @@ class User extends Model
     function __construct() {
     	parent::__construct();
 
-        $this->uid = Support\generate_token(ZC_UID_LENGTH);
         $this->generateAuthToken();
 
         $this->loginDate = time();
     }
-
-	/**
-	 * Get the unique identifier for the user.
-	 *
-	 * @return string
-	 */
-	public function getUID()
-	{
-		return $this->uid;
-	}
 
 	/**
 	 * Get the unique authentication token for the user.
@@ -108,7 +90,7 @@ class User extends Model
 		$cipher->setKey($authTokenKey);
 		//$cipher->setIV('...'); // defaults to all-NULLs if not explicitely defined
 
-		$this->token = bin2hex($cipher->encrypt($this->getUID()));
+		$this->token = bin2hex($cipher->encrypt($this->getID()));
 	}
 
 	/**
@@ -116,7 +98,7 @@ class User extends Model
 	 *
 	 * @return string
 	 */
-	public static function getUIDFromToken($token, $authTokenKey = ZC_AUTH_TOKEN_KEY)
+	public static function getIDFromToken($token, $authTokenKey = ZC_AUTH_TOKEN_KEY)
 	{
 		$token = trim($token);
 		// A token must be a valid hex number.
@@ -138,21 +120,8 @@ class User extends Model
 	 */
 	public static function isValidToken($token)
 	{
-		$uid = static::getUIDFromToken($token);
-		return static::exists($uid);
-	}
-
-	/**
-	 * Check if the passed UID corresponds to an existing user.
-	 *
-	 * @return bool
-	 */
-	public static function exists($uid)
-	{
-		if (!$uid)
-			return false;
-
-		return file_exists(static::getStoragePathForUID($uid));
+		$id = static::getIDFromToken($token);
+		return static::exists($id);
 	}
 
 	public function getNick() {
@@ -210,9 +179,9 @@ class User extends Model
 	 *
 	 * @return User
 	 */
-	public static function load($uid)
+	public static function load($id)
 	{
-		$filepath = static::getStoragePathForUID($uid);
+		$filepath = static::getStoragePathForID($id);
 
 		if (!file_exists($filepath . '/properties')) {
 		    return false;
@@ -280,81 +249,6 @@ class User extends Model
 		}
 
 		return true;
-	}
-
-	/**
-	 * Return the last modification or creation time.
-	 *
-	 * @return int
-	 */
-	protected static function getTimeForUID($uid, $timefile) {
-		$timefile = static::getStoragePathForUID($uid) . '/' .$reference;
-
-		if (!file_exists($timefile))
-			return false;
-
-		if(($timestring = file_get_contents($timefile)) === false) {
-			return false;
-		}
-
-		return intval($timestring);
-	}
-
-	/**
-	 * Return the last modification time.
-	 *
-	 * @return int
-	 */
-	protected static function getModificationTimeForUID($uid) {
-		return static::getTimeForUID($uid, 'mtime');
-	}
-
-	/**
-	 * Return the creation time.
-	 *
-	 * @return int
-	 */
-	protected static function getCreationTimeForUID($uid) {
-		return static::getTimeForUID($uid, 'ctime');
-	}
-
-	/**
-	 * Return the creation time.
-	 *
-	 * @return int
-	 */
-	protected function getCreationTime() {
-		return static::getCreationTimeForUID($this->uid);
-	}
-
-	/**
-	 * Return the last modification time.
-	 *
-	 * @return int
-	 */
-	protected function getModificationTime() {
-		return static::getModificationTimeForUID($this->uid);
-	}
-
-	/**
-	 * Return the user's data file path.
-	 *
-	 * @return string
-	 */
-	protected static function getStoragePathForUID($uid) {
-		if (!$uid)
-			return false;
-
-		return ZC_STORAGE_DIR . self::STORAGE_DIR . '/' . $uid;
-	}
-
-	/**
-	 * Return the user's data file path.
-	 *
-	 * @return string
-	 */
-	protected function getStoragePath() {
-		return static::getStoragePathForUID($this->uid);
 	}
 
 }

@@ -26,23 +26,23 @@ class UserTest extends ZZChatTestCase {
     /**
      * @dataProvider invalidTokenSet
      */
-    public function testGetUIDFromInvalidToken($token)
+    public function testGetIDFromInvalidToken($token)
     {
-        $this->assertFalse(User::getUIDFromToken($token));
+        $this->assertFalse(User::getIDFromToken($token));
     }
 
     /**
      * @dataProvider tokenSet
      */
-    public function testGetUIDFromToken($authTokenKey, $uid, $token)
+    public function testGetIDFromToken($authTokenKey, $uid, $token)
     {
-        $this->assertEquals($uid, User::getUIDFromToken($token, $authTokenKey));
+        $this->assertEquals($uid, User::getIDFromToken($token, $authTokenKey));
     }
 
-    public function testNewUserUIDisNotEmpty()
+    public function testNewUserIDisNotEmpty()
     {
         $user = new User();
-        $this->assertNotEmpty($user->getUID());
+        $this->assertNotEmpty($user->getID());
     }
 
     public function testGenerateTokenisNotEmpty()
@@ -59,11 +59,11 @@ class UserTest extends ZZChatTestCase {
         $user = new User();
         $token = $user->getAuthToken();
 
-        $this->assertEquals($user->getUID(), User::getUIDFromToken($token));
+        $this->assertEquals($user->getID(), User::getIDFromToken($token));
     }
 
     /**
-     * @depends testGetUIDFromInvalidToken
+     * @depends testGetIDFromInvalidToken
      * @dataProvider invalidTokenSet
      */
     public function testIsValidTokenWithInvalidToken($token)
@@ -105,6 +105,6 @@ class UserTest extends ZZChatTestCase {
 
     public function invalidTokenSet()
     {
-        return array(array(''), array(false), array('    '), array('foo'), array('$$$$'), array('SELECT'), array('/'), array('../'));
+        return array(array(''), array(false), array('    '), array('foo'), array('$$$$'), array('SELECT'), array('/'), array('../'), array('57441f4dc__$$$__acaaf'));
     }
 }

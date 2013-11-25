@@ -12,7 +12,7 @@ define(['underscore', 'backbone'],
     	'use strict';
 
 		var UserModel = Backbone.Model.extend({
-			idAttribute: 'uid',
+			idAttribute: 'id',
 
 			urlRoot: '/user',
 
