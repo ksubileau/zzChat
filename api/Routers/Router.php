@@ -4,6 +4,7 @@ namespace ZZChat\Routers;
 use \Slim\Slim;
 use \ZZChat\Controllers\SessionController;
 use \ZZChat\Controllers\UserController;
+use \ZZChat\Controllers\RoomController;
 
 /**
  * Router class.
@@ -24,6 +25,9 @@ class Router
     public function setup () {
         $this->app->map('/login',array($this, 'login'))->via('POST');
         $this->app->map('/users',array($this, 'getUserList'))->via('GET');
+
+        // Rooms
+        $this->app->map('/rooms',array($this, 'getRoomList'))->via('GET');
     }
 
     public function login () {
@@ -32,6 +36,10 @@ class Router
 
     public function getUserList () {
         echo UserController::getUserList();
+    }
+
+    public function getRoomList () {
+        echo RoomController::getRoomList();
     }
 
 }
