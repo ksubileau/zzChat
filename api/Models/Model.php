@@ -2,6 +2,7 @@
 namespace ZZChat\Models;
 
 use \ZZChat\Support;
+use \ZZChat\Support\ApiException;
 
 /**
  * Model abstract class.
@@ -156,20 +157,20 @@ abstract class Model
     {
         $filepath = static::getStoragePathForID($id);
 
-        if (!file_exists($filepath . '/properties')) {
+        if (!$filepath || !file_exists($filepath . '/properties')) {
             return false;
         }
 
         if(($data = file_get_contents($filepath . '/properties')) === false) {
-            return false;
+            throw new ApiException(500, "Unable to read from file. Please check permissions.");
         }
 
         $props = json_decode($data, true);
         if ($props === NULL) {
-            return false;
+            throw new ApiException(500, "Failed to decode the data file.", Support\json_last_error_msg().'.');
         }
         if(array_keys($props) != static::getProperties()) {
-            return false;
+            throw new ApiException(500, "Failed to decode the data file.", "Invalid model data.");
         }
 
         $class = get_called_class();
@@ -224,20 +225,24 @@ abstract class Model
 
         $data = json_encode($props, ZC_STORAGE_JSON_PRETTY_PRINT?JSON_PRETTY_PRINT:0);
 
+        if($data === NULL) {
+            throw new ApiException(500, "Failed to encode data.", Support\json_last_error_msg().'.');
+        }
+
         if(file_put_contents($filepath . '/properties', $data) === false) {
-            return false;
+            throw new ApiException(500, "Unable to write file. Please check permissions.");
         }
 
         // Set create time if it's a new instance.
         if (!file_exists($filepath . '/ctime')) {
             if(file_put_contents($filepath . '/ctime', time()) === false) {
-                return false;
+                throw new ApiException(500, "Unable to write create time. Please check file permissions.");
             }
         }
 
         // Update modification time
         if(file_put_contents($filepath . '/mtime', time()) === false) {
-            return false;
+            throw new ApiException(500, "Unable to write modification time. Please check file permissions.");
         }
 
         return true;
