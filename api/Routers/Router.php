@@ -24,7 +24,12 @@ class Router
 
     public function setup () {
         $this->app->map('/login',array($this, 'login'))->via('POST');
+
+        // Users
         $this->app->map('/users',array($this, 'getUserList'))->via('GET');
+        $this->app->get('/user/:id', function ($id) {
+            echo UserController::getUser($id);
+        });
 
         // Rooms
         $this->app->map('/rooms',array($this, 'getRoomList'))->via('GET');
@@ -41,5 +46,4 @@ class Router
     public function getRoomList () {
         echo RoomController::getRoomList();
     }
-
 }

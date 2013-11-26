@@ -18,4 +18,12 @@ class UserController extends Controller
         $users = User::loadAll();
         return json_encode($users);
     }
+
+    public static function getUser($id) {
+        $user = User::load($id);
+        if(!$user) {
+            throw new ApiException(404, "User not found.");
+        }
+        return json_encode($user);
+    }
 }
