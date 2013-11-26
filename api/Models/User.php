@@ -57,12 +57,13 @@ class User extends Model
 	protected $loginDate;
 
 
-    function __construct() {
-    	parent::__construct();
+    function __construct($props = NULL) {
+    	parent::__construct($props);
+    	if ($props == NULL) { // Only if the object is not load from file
+	        $this->generateAuthToken();
 
-        $this->generateAuthToken();
-
-        $this->loginDate = time();
+	        $this->loginDate = time();
+    	}
     }
 
 	/**
@@ -174,81 +175,16 @@ class User extends Model
 		return true;
 	}
 
-	/**
-	 * Load the user's data.
+    /**
+	 * Return the list of persistants properties names.
 	 *
-	 * @return User
+	 * @return array
 	 */
-	public static function load($id)
-	{
-		$filepath = static::getStoragePathForID($id);
-
-		if (!file_exists($filepath . '/properties')) {
-		    return false;
-		}
-
-		if(($data = file_get_contents($filepath . '/properties')) === false) {
-			return false;
-		}
-
-		return unserialize($data);
-	}
-
-	/**
-	 * Load all users.
-	 *
-	 * @return User
-	 */
-	public static function loadAll()
-	{
-		$users = array();
-
-		foreach (glob(ZC_STORAGE_DIR . self::STORAGE_DIR . '/*') as $filename) {
-			if (is_readable($filename)) {
-				$user = static::load(basename($filename));
-				if ($user) {
-					array_push($users, $user);
-				}
-			}
-		}
-
-		return $users;
-	}
-
-	/**
-	 * Save the user's data.
-	 *
-	 * @return bool
-	 */
-	public function save()
-	{
-		if ( ! $this->validate()) {
-			return false;
-		}
-
-		$filepath = $this->getStoragePath();
-
-		if (!file_exists($filepath)) {
-		    mkdir($filepath, 0777, true);
-		}
-
-		if(file_put_contents($filepath . '/properties', serialize($this)) === false) {
-			return false;
-		}
-
-		// Set create time if it's a new user.
-		if (!file_exists($filepath . '/ctime')) {
-			if(file_put_contents($filepath . '/ctime', time()) === false) {
-				return false;
-			}
-		}
-
-		// Update modification time
-		if(file_put_contents($filepath . '/mtime', time()) === false) {
-			return false;
-		}
-
-		return true;
-	}
+	protected static function getProperties() {
+        return array_merge (
+        		parent::getProperties(),
+        		array ('nick', 'age', 'sex', 'token', 'loginDate')
+	        );
+    }
 
 }

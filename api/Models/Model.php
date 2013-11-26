@@ -28,8 +28,17 @@ abstract class Model
      */
     public $id;
 
-    function __construct() {
-        $this->id = Support\generate_token(ZC_ID_LENGTH);
+    function __construct($props = NULL) {
+        if($props == NULL) {
+            $this->id = Support\generate_token(ZC_ID_LENGTH);
+        }
+        else {
+            // Object load from file
+            // All fields of the child class will be filled.
+            foreach ($props as $key => $value) {
+                $this->$key = $value;
+            }
+        }
     }
 
     /**
@@ -134,6 +143,104 @@ abstract class Model
         return true;
     }
 
-    abstract public function save();
+    protected static function getProperties() {
+        return array ('id');
+    }
+
+    /**
+     * Load the model's data.
+     *
+     * @return Object
+     */
+    public static function load($id)
+    {
+        $filepath = static::getStoragePathForID($id);
+
+        if (!file_exists($filepath . '/properties')) {
+            return false;
+        }
+
+        if(($data = file_get_contents($filepath . '/properties')) === false) {
+            return false;
+        }
+
+        $props = json_decode($data, true);
+        if ($props === NULL) {
+            return false;
+        }
+        if(array_keys($props) != static::getProperties()) {
+            return false;
+        }
+
+        $class = get_called_class();
+        $obj = new $class($props);
+
+        return $obj;
+    }
+
+    /**
+     * Load all instances.
+     *
+     * @return array
+     */
+    public static function loadAll()
+    {
+        $objs = array();
+
+        foreach (glob(ZC_STORAGE_DIR . static::STORAGE_DIR . '/*') as $filename) {
+            if (is_readable($filename)) {
+                $obj = static::load(basename($filename));
+                if ($obj) {
+                    array_push($objs, $obj);
+                }
+            }
+        }
+
+        return $objs;
+    }
+
+    /**
+     * Save the model's data.
+     *
+     * @return bool
+     */
+    public function save()
+    {
+        if ( ! $this->validate()) {
+            return false;
+        }
+
+        $filepath = $this->getStoragePath();
+
+        if (!file_exists($filepath)) {
+            mkdir($filepath, 0777, true);
+        }
+
+        $propKeys = static::getProperties();
+        $props = array();
+        foreach ($propKeys as $key) {
+            $props[$key] = $this->$key;
+        }
+
+        $data = json_encode($props, ZC_STORAGE_JSON_PRETTY_PRINT?JSON_PRETTY_PRINT:0);
+
+        if(file_put_contents($filepath . '/properties', $data) === false) {
+            return false;
+        }
+
+        // Set create time if it's a new instance.
+        if (!file_exists($filepath . '/ctime')) {
+            if(file_put_contents($filepath . '/ctime', time()) === false) {
+                return false;
+            }
+        }
+
+        // Update modification time
+        if(file_put_contents($filepath . '/mtime', time()) === false) {
+            return false;
+        }
+
+        return true;
+    }
 
 }
