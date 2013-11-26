@@ -213,7 +213,7 @@ abstract class Model
         $filepath = $this->getStoragePath();
 
         if (!file_exists($filepath)) {
-            mkdir($filepath, 0777, true);
+            mkdir($filepath, ZC_STORAGE_DIR_PERM, true);
         }
 
         $propKeys = static::getProperties();
