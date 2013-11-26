@@ -101,6 +101,7 @@ if ( !function_exists( __NAMESPACE__.'\hex2bin' ) ) {
      * Hex2bin PHP < 5.4 fallback.
      *
      * @return string
+     * @see http://www.php.net/manual/function.hex2bin.php
      */
     function hex2bin( $str ) {
         if (function_exists('\hex2bin')) {
@@ -115,6 +116,42 @@ if ( !function_exists( __NAMESPACE__.'\hex2bin' ) ) {
         }
 
         return $sbin;
+    }
+}
+
+if (!function_exists(__NAMESPACE__.'\json_last_error_msg')) {
+    /**
+     * json_last_error_msg PHP < 5.5 fallback.
+     *
+     * @return string
+     * @see http://www.php.net/manual/function.json-last-error-msg.php
+     */
+    function json_last_error_msg()
+    {
+        if (function_exists('\json_last_error_msg')) {
+            // Use PHP function if available (PHP > 5.5).
+            return \json_last_error_msg();
+        }
+        switch (json_last_error()) {
+            case JSON_ERROR_DEPTH:
+                $error = 'The maximum stack depth has been exceeded';
+            break;
+            case JSON_ERROR_STATE_MISMATCH:
+                $error = 'Invalid or malformed JSON';
+            break;
+            case JSON_ERROR_CTRL_CHAR:
+                $error = 'Control character error, possibly incorrectly encoded';
+            break;
+            case JSON_ERROR_SYNTAX:
+                $error = 'Syntax error, malformed JSON';
+            break;
+            case JSON_ERROR_UTF8:
+                $error = 'Malformed UTF-8 characters, possibly incorrectly encoded';
+            break;
+            default:
+                return;
+        }
+        return $error;
     }
 }
 
