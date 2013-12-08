@@ -64,8 +64,17 @@ class SessionController extends Controller
 	 */
 	public static function getAuthToken()
 	{
-		if( isset($_SERVER[ZC_AUTH_HEADER_KEY]) ) {
-			return $_SERVER[ZC_AUTH_HEADER_KEY];
+		// TODO Test on Nginx
+		$headers = array();
+		$header_key = strtoupper(ZC_AUTH_HEADER_KEY);
+		if( function_exists('apache_request_headers') ) {
+			$headers = array_change_key_case(apache_request_headers(), CASE_UPPER);
+		}
+		else {
+			$headers = array_change_key_case($_SERVER, CASE_UPPER);
+		}
+		if( isset($headers[$header_key] ) ) {
+			return $headers[$header_key];
 		}
 
 		if( isset($_GET[ZC_AUTH_PARAM_KEY]) ) {
