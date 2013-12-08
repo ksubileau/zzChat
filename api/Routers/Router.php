@@ -2,6 +2,7 @@
 namespace ZZChat\Routers;
 
 use \Slim\Slim;
+use \ZZChat\Support\ApiException;
 use \ZZChat\Controllers\SessionController;
 use \ZZChat\Controllers\UserController;
 use \ZZChat\Controllers\RoomController;
@@ -16,13 +17,15 @@ use \ZZChat\Controllers\RoomController;
  */
 class Router
 {
-    protected $app;
+    public $app;
 
      function __construct($app = null) {
             $this->app = ($app instanceof \Slim\Slim) ? $app : \Slim\Slim::getInstance();
      }
 
     public function setup () {
+        $that = $this;
+
         $this->app->map('/login',array($this, 'login'))->via('POST');
 
         // Users
@@ -33,6 +36,24 @@ class Router
 
         // Rooms
         $this->app->map('/rooms',array($this, 'getRoomList'))->via('GET');
+        $this->app->get('/room/:id', function ($id) {
+            echo RoomController::getRoom($id);
+        });
+        $this->app->get('/room/:id/users', function ($id) {
+            echo RoomController::getUsers($id);
+        });
+        $this->app->get('/room/:id/messages', function ($id) {
+            echo RoomController::getMessages($id);
+        });
+        $this->app->get('/room/:id/enter', array($this, 'checkLogin'), function ($id) {
+            echo RoomController::enter($id);
+        });
+        $this->app->get('/room/:id/leave', array($this, 'checkLogin'), function ($id) {
+            echo RoomController::leave($id);
+        });
+        $this->app->post('/room/:id/message', array($this, 'checkLogin'), function ($id) use ($that) {
+            echo RoomController::postMessage($id, $that->app->request()->getBody());
+        });
     }
 
     public function login () {
@@ -45,5 +66,11 @@ class Router
 
     public function getRoomList () {
         echo RoomController::getRoomList();
+    }
+
+    public function checkLogin() {
+        if(!SessionController::isLogin()){
+            throw new ApiException(403);
+        }
     }
 }
