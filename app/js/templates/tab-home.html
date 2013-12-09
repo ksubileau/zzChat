@@ -8,12 +8,9 @@
                 <div style="top: 40px; bottom: 0px; overflow: auto; position: absolute; width: 100%;" id="table-wrapper">
                     <table style="cursor: pointer; width: 100%; max-height: 100%;" class="table-hover table-condensed" id="roomlist" >
                         <tbody>
-                            <tr data-room-id="1"><td>Public</td><td>25</td></tr>
-                            <tr data-room-id="5890f6de9f72a9ae3313ffa34f17da2a"><td>Isima</td><td>20</td></tr>
-                            <tr data-room-id="3"><td>Polytech</td><td>42</td></tr>
-                            <tr data-room-id="4"><td>Ifma</td><td>25</td></tr>
-                            <tr data-room-id="5"><td>IUT</td><td>25</td></tr>
-                            <tr data-room-id="6"><td>Vetagro</td><td>25</td></tr>
+                            <% rooms.each(function(room) { %>
+                                <tr data-room-id="<%= room.get("id") %>"><td><%= room.get("name") %></td></tr>
+                            <% }); %>
                         </tbody>
                     </table>
                 </div>

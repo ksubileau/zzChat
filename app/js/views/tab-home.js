@@ -7,8 +7,8 @@
 * @link https://github.com/ksubileau/zzChat
 * @license GNU GPLv3 (http://www.gnu.org/licenses/gpl-3.0.html also in /LICENSE)
 */
-define(['jquery', 'underscore', 'backbone', 'i18next', 'collections/user', 'views/tab', 'text!templates/tab-home.html'],
-    function($, _, Backbone, i18n, UserCollection, TabItemView, homeTabItem){
+define(['jquery', 'underscore', 'backbone', 'i18next', 'collections/user', 'collections/room', 'views/tab', 'text!templates/tab-home.html'],
+    function($, _, Backbone, i18n, UserCollection, RoomCollection, TabItemView, homeTabItem){
         'use strict';
 
         var HomeTabItem = TabItemView.extend({
@@ -17,6 +17,8 @@ define(['jquery', 'underscore', 'backbone', 'i18next', 'collections/user', 'view
             template: _.template(homeTabItem),
 
             userCollection: new UserCollection(),
+
+            roomCollection: new RoomCollection(),
 
             events : {
                 "click #roomlist tr": "showRoom",
@@ -35,12 +37,15 @@ define(['jquery', 'underscore', 'backbone', 'i18next', 'collections/user', 'view
             initialize: function() {
                 this.listenTo(this.userCollection, 'all', this.render);
                 this.userCollection.fetch();
+                this.listenTo(this.roomCollection, 'all', this.render);
+                this.roomCollection.fetch();
             },
 
             render: function() {
                 this.$el.html(this.template({
                     i18n: i18n,
                     users: this.userCollection,
+                    rooms: this.roomCollection,
                 }));
 
                 this.$el.attr('id', this.getId());
