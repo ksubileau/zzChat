@@ -71,13 +71,10 @@ define(['jquery', 'backbone', 'underscore', 'i18next', 'views/disposable', 'mode
 				    data: JSON.stringify(formValues),
 				    dataType: 'json',
 				    success: function(response) {
-                        zzChat.me = new UserModel;
-				        zzChat.me.set(response.user);
-				        // Save the authentication token.
-				        // It will be automatically sent back to the server in future requests.
-                        zzChat.setAuthToken(response.token);
-                        // Open Home tab
-                        zzChat.router.navigate("/home", {trigger : true});
+                        var user = new UserModel;
+				        user.set(response.user);
+				        // Trigger successful login event
+                        zzChat.trigger('zzChat:loginSuccess', {'user':user, 'token':response.token});
 				    },
 				    error: function() {
 				    	// Enable submit button

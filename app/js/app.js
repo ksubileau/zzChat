@@ -77,9 +77,11 @@ define([
                 // Initialize internationalization
                 i18n.init(i18nOpts);
 
+                // Listen to succesfull login event
+                this.on("zzChat:loginSuccess", this.onLoginSuccess);
+
                 // Start application
                 this.router = new Router();
-
             },
 
             registerGlobal: function() {
@@ -124,7 +126,17 @@ define([
             isValidLangCode: function(langCode) {
                 return _.contains(_.pluck(this.options.langAvailable, "langcode"), langCode);
             },
+
+            onLoginSuccess: function(loginInfo) {
+                this.me = loginInfo.user;
+                // Save the authentication token.
+                // It will be automatically sent back to the server in future requests.
+                this.setAuthToken(loginInfo.token);
+                // Open Home tab
+                this.router.navigate("/home", {trigger : true});
+        	}
         }
+        _.extend(zzChat, Backbone.Events);
         return zzChat;
     }
 );
