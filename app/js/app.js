@@ -99,7 +99,7 @@ define([
             },
 
             getCurrentUser: function() {
-                return me;
+                return this.me;
             },
 
             setLanguage: function(langCode, callback) {
