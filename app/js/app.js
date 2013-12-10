@@ -21,7 +21,7 @@ define([
         var zzChat = {
             router: null,
             token: null,
-            user: null,
+            me: null,
             currentLang: null,
             options : null,
 
@@ -99,7 +99,7 @@ define([
             },
 
             getCurrentUser: function() {
-                return user;
+                return me;
             },
 
             setLanguage: function(langCode, callback) {
