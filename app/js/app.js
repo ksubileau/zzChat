@@ -87,7 +87,7 @@ define([
             },
 
             isLogin: function() {
-                return this.getAuthToken() != null;
+                return this.getCurrentUser() != null && this.getAuthToken() != null;
             },
 
             setAuthToken: function(value) {
