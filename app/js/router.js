@@ -14,6 +14,8 @@ define([
         'views/main',
     ],
     function($, Backbone, HomeView, MainView) {
+        'use strict';
+
         var Router = Backbone.Router.extend({
             currentView: null,
 
@@ -74,7 +76,7 @@ define([
                   var mainView = new MainView
                   this.changeView(mainView);
                 }
-                this.currentView.showTab(roomId);
+                this.currentView.openRoom(roomId);
             }
         });
         return Router;

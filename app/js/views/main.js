@@ -9,6 +9,8 @@
 */
 define(['backbone', 'underscore', 'jquery', 'views/disposable', 'views/tab-home', 'views/tab-room', 'text!templates/main.html'],
     function(Backbone, _, $, DisposableView, HomeTabItem, RoomTabItem, mainView){
+        'use strict';
+
 		var MainView = DisposableView.extend({
 		    el: $('#main'),
 
@@ -22,7 +24,6 @@ define(['backbone', 'underscore', 'jquery', 'views/disposable', 'views/tab-home'
 			    this.currentTab = null;
 			    this.tabItems = [];
 			    this.addTab(new HomeTabItem());
-			    this.addTab(new RoomTabItem());
 			},
 
 		    render: function() {
@@ -47,6 +48,18 @@ define(['backbone', 'underscore', 'jquery', 'views/disposable', 'views/tab-home'
 
 		    getTabFromId: function (tabId) {
 		    	return _(this.tabItems).findWhere({"id":tabId});
+		    },
+
+		    openRoom: function(roomId) {
+		    	var tab = this.getTabFromId(roomId);
+		    	if (tab) {
+		    		this.showTab(tab);
+		    		return;
+		    	}
+		    	// TODO Check room exists
+		    	tab = new RoomTabItem(zzChat.rooms.get(roomId));
+			    this.addTab(tab);
+			    this.showTab(tab);
 		    },
 
 		    showTab: function(tab) {

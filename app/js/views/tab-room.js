@@ -16,15 +16,23 @@ define(['jquery', 'underscore', 'backbone', 'i18next', 'views/tab', 'text!templa
 
             template: _.template(roomTabItem),
 
+            room: null,
+
+            initialize : function (room) {
+                this.room = room;
+            },
+
             events : {
                 "click #sendResponse": "sendResponse",
             },
 
             // Tab properties
-            id:"5890f6de9f72a9ae3313ffa34f17da2a",
             closeable: true,
             icon: "comment",
-            title: "Isima",
+
+            title: function () {
+                return this.room.get("name");
+            },
 
             href: function() {
                 return "room-" + this.getId();
