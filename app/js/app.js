@@ -14,8 +14,10 @@ define([
         'i18next',
         'config',
         'router',
+        'collections/user',
+        'collections/room',
     ],
-    function($, Backbone, i18n, config, Router){
+    function($, Backbone, i18n, config, Router, UserCollection, RoomCollection){
         'use strict';
 
         var zzChat = {
@@ -24,6 +26,9 @@ define([
             me: null,
             currentLang: null,
             options : null,
+
+            users: new UserCollection(),
+            rooms: new RoomCollection(),
 
             init: function() {
                 // Register this instance to global scope
@@ -132,6 +137,11 @@ define([
                 // Save the authentication token.
                 // It will be automatically sent back to the server in future requests.
                 this.setAuthToken(loginInfo.token);
+
+                // Initialize root collections
+                this.users.fetch();
+                this.rooms.fetch();
+
                 // Open Home tab
                 this.router.navigate("/home", {trigger : true});
         	}

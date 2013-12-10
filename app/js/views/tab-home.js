@@ -7,18 +7,14 @@
 * @link https://github.com/ksubileau/zzChat
 * @license GNU GPLv3 (http://www.gnu.org/licenses/gpl-3.0.html also in /LICENSE)
 */
-define(['jquery', 'underscore', 'backbone', 'i18next', 'collections/user', 'collections/room', 'views/tab', 'text!templates/tab-home.html'],
-    function($, _, Backbone, i18n, UserCollection, RoomCollection, TabItemView, homeTabItem){
+define(['jquery', 'underscore', 'backbone', 'i18next', 'views/tab', 'text!templates/tab-home.html'],
+    function($, _, Backbone, i18n, TabItemView, homeTabItem){
         'use strict';
 
         var HomeTabItem = TabItemView.extend({
             tabClassName: 'tab-home',
 
             template: _.template(homeTabItem),
-
-            userCollection: new UserCollection(),
-
-            roomCollection: new RoomCollection(),
 
             events : {
                 "click #roomlist tr": "showRoom",
@@ -35,17 +31,15 @@ define(['jquery', 'underscore', 'backbone', 'i18next', 'collections/user', 'coll
             },
 
             initialize: function() {
-                this.listenTo(this.userCollection, 'all', this.render);
-                this.userCollection.fetch();
-                this.listenTo(this.roomCollection, 'all', this.render);
-                this.roomCollection.fetch();
+                this.listenTo(zzChat.users, 'all', this.render);
+                this.listenTo(zzChat.rooms, 'all', this.render);
             },
 
             render: function() {
                 this.$el.html(this.template({
                     i18n: i18n,
-                    users: this.userCollection,
-                    rooms: this.roomCollection,
+                    users: zzChat.users,
+                    rooms: zzChat.rooms,
                 }));
 
                 this.$el.attr('id', this.getId());
