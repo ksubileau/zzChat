@@ -49,14 +49,12 @@ define([
                 // Store the original version of Backbone.sync
                 Backbone.basicSync = Backbone.sync;
                 Backbone.sync = function (method, model, options) {
-                    var rootUrl = zzChat.options.api.url;
-                    var url = _.isFunction(model.url) ? model.url() : model.url;
+                    var fullUrl = zzChat.getUrlForModel(model);
 
                     // If no url, don't override, let Backbone.sync do its normal fail
-                    if (url) {
+                    if (fullUrl) {
                         options = _.extend(options, {
-                            url: rootUrl + (rootUrl.charAt(rootUrl.length - 1) === '/' ? '' : '/')
-                                         + (url.charAt(0) === '/' ? url.substr(1) : url),
+                            url: fullUrl,
 
                             // Automatically send the authentication token in HTTP headers if available.
                             beforeSend: function(xhr) {
@@ -87,6 +85,21 @@ define([
 
                 // Start application
                 this.router = new Router();
+            },
+
+            getUrlForModel: function(model, extension) {
+                var rootUrl = zzChat.options.api.url;
+                var url = _.isFunction(model.url) ? model.url() : model.url;
+
+                if (url) {
+                    url = rootUrl + (rootUrl.charAt(rootUrl.length - 1) === '/' ? '' : '/')
+                                         + (url.charAt(0) === '/' ? url.substr(1) : url);
+                    if(extension) {
+                        url = url + (url.charAt(url.length - 1) === '/' ? '' : '/')
+                                         + (extension.charAt(0) === '/' ? extension.substr(1) : extension);
+                    }
+                }
+                return url;
             },
 
             registerGlobal: function() {
