@@ -7,8 +7,12 @@
 * @link https://github.com/ksubileau/zzChat
 * @license GNU GPLv3 (http://www.gnu.org/licenses/gpl-3.0.html also in /LICENSE)
 */
-define(['underscore', 'backbone'],
-	function(_, Backbone){
+define([
+		'underscore',
+		'backbone',
+        'collections/user',
+    ],
+	function(_, Backbone, UserCollection){
     	'use strict';
 
 		var RoomModel = Backbone.Model.extend({
@@ -18,6 +22,11 @@ define(['underscore', 'backbone'],
 
 		    defaults: {
 		        name: '',
+		        users: null,
+		    },
+
+		    initialize: function() {
+		    	this.users = new UserCollection();
 		    },
 
 		    enter: function() {
@@ -26,6 +35,7 @@ define(['underscore', 'backbone'],
                         xhr.setRequestHeader(zzChat.options.api.authHeaderName, zzChat.getAuthToken());
                     },
 				    success: function(response) {
+						//TODO this.users.fetch...
 				    },
 				    error: function() {
 				    	// TODO Handle errors
