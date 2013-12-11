@@ -61,7 +61,7 @@ define([
 		    	return _(this.tabItems).findWhere({"id":tabId});
 		    },
 
-		    openRoom: function(roomId) {
+		    openRoom: function(roomId, options) {
 		    	var tab = this.getTabFromId(roomId);
 		    	if (tab) {
 		    		this.showTab(tab);
@@ -69,11 +69,14 @@ define([
 		    	}
 		    	// TODO Check room exists
 		    	tab = new RoomTabItem(zzChat.rooms.get(roomId));
+		    	// Trigger event
+		    	options && options.silent || tab.trigger('tab:open');
+		    	// Add tab
 			    this.addTab(tab);
 			    this.showTab(tab);
 		    },
 
-		    showTab: function(tab) {
+		    showTab: function(tab, options) {
 		    	if (typeof tab === 'string') {
 		    		tab = this.getTabFromId(tab);
 		    	}
@@ -81,6 +84,8 @@ define([
 		    	if (tab) {
 			    	// Remove previous tab content
 			    	if(this.currentTab) {
+		    			// Trigger event
+		    			options && options.silent || this.currentTab.trigger('tab:hide');
 			    		this.currentTab.dispose();
 			    		this.disposed(this.currentTab);
 			    	}
@@ -94,6 +99,8 @@ define([
 			    	$('ul li:not(#' + tab.getId() + ')', this.$el).removeClass('active');
 			    	// Delegate Events
 			    	this.currentTab.delegateEvents();
+			    	// Trigger shown event
+		    		options && options.silent || this.currentTab.trigger('tab:show');
 		    	}
 
 		    	// Update route
@@ -104,11 +111,15 @@ define([
 			    return this;
 		    },
 
-		    closeTab: function(e) {
+		    closeTab: function(e, options) {
 		    	e.preventDefault();
 		    	// Get target tab.
 		    	var tabLi = $(e.currentTarget).closest("li");
 		    	var tab = this.getTabFromId(tabLi.attr("id"));
+
+		    	// Trigger close event
+	    		options && options.silent || tab.trigger('tab:close');
+
 		    	// If it's the current tab, navigate to another.
 		    	if (this.currentTab == tab) {
 		    		// Select the closest tab.
