@@ -7,14 +7,24 @@
 * @link https://github.com/ksubileau/zzChat
 * @license GNU GPLv3 (http://www.gnu.org/licenses/gpl-3.0.html also in /LICENSE)
 */
-define(['backbone', 'underscore', 'jquery', 'views/disposable', 'views/tab-home', 'views/tab-room', 'text!templates/main.html'],
-    function(Backbone, _, $, DisposableView, HomeTabItem, RoomTabItem, mainView){
+define([
+        'backbone',
+        'underscore',
+        'jquery',
+        'views/disposable',
+        'views/tab-home',
+        'views/tab-room',
+        'text!templates/main.html',
+        'text!templates/tab-panel.html'
+    ],
+    function(Backbone, _, $, DisposableView, HomeTabItem, RoomTabItem, mainView, tabPanelView){
         'use strict';
 
 		var MainView = DisposableView.extend({
 		    el: $('#main'),
 
 		    template: _.template(mainView),
+		    tabPanelTemplate: _.template(tabPanelView),
 
             events : {
                 "click #tabs li .closeTab": "closeTab",
@@ -27,16 +37,17 @@ define(['backbone', 'underscore', 'jquery', 'views/disposable', 'views/tab-home'
 			},
 
 		    render: function() {
-				this.$el.html(this.template({
-                    tabs: this.tabItems,
-                }));
+				this.$el.html(this.template({}));
+				this.renderTabList();
 				this.showTab(this.currentTab);
 				return this;
 		    },
 
 		    renderTabList: function() {
-		    	// TODO Avoid re-render entire view
-		    	this.render();
+		    	$('#tabs', this.$el).html(this.tabPanelTemplate({
+                    tabs: this.tabItems,
+                    currentTabId: this.currentTab?this.currentTab.getId():null,
+                }));
 		    },
 
 		    addTab: function(tab) {
