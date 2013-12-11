@@ -14,12 +14,42 @@ define(['underscore', 'backbone'],
 		var RoomModel = Backbone.Model.extend({
 			idAttribute: 'id',
 
-			urlRoot: function() {
-				return '/room/' + this.get("id");
-			},
+			urlRoot: '/room',
 
 		    defaults: {
 		        name: '',
+		    },
+
+		    enter: function() {
+		        $.ajax({
+		        	beforeSend: function(xhr) {
+                        xhr.setRequestHeader(zzChat.options.api.authHeaderName, zzChat.getAuthToken());
+                    },
+				    success: function(response) {
+				    },
+				    error: function() {
+				    	// TODO Handle errors
+				    },
+				    processData: false,
+				    type: 'GET',
+				    url: zzChat.getUrlForModel(this, '/enter'),
+				});
+		    },
+
+		    leave: function() {
+		        $.ajax({
+		        	beforeSend: function(xhr) {
+                        xhr.setRequestHeader(zzChat.options.api.authHeaderName, zzChat.getAuthToken());
+                    },
+				    success: function(response) {
+				    },
+				    error: function() {
+				    	// TODO Handle errors
+				    },
+				    processData: false,
+				    type: 'GET',
+				    url: zzChat.getUrlForModel(this, '/leave'),
+				});
 		    },
 
 		    validate: function(attrs) {

@@ -20,6 +20,12 @@ define(['jquery', 'underscore', 'backbone', 'i18next', 'views/tab', 'text!templa
 
             initialize : function (room) {
                 this.room = room;
+                this.on('tab:open', function() {
+                    this.room.enter();
+                }, this);
+                this.on('tab:close', function() {
+                    this.room.leave();
+                }, this);
             },
 
             events : {
