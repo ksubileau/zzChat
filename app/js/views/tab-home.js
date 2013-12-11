@@ -7,8 +7,8 @@
 * @link https://github.com/ksubileau/zzChat
 * @license GNU GPLv3 (http://www.gnu.org/licenses/gpl-3.0.html also in /LICENSE)
 */
-define(['jquery', 'underscore', 'backbone', 'i18next', 'views/tab', 'text!templates/tab-home.html'],
-    function($, _, Backbone, i18n, TabItemView, homeTabItem){
+define(['jquery', 'underscore', 'backbone', 'i18next', 'views/tab', 'views/userlist', 'text!templates/tab-home.html'],
+    function($, _, Backbone, i18n, TabItemView, UserListView, homeTabItem){
         'use strict';
 
         var HomeTabItem = TabItemView.extend({
@@ -18,7 +18,6 @@ define(['jquery', 'underscore', 'backbone', 'i18next', 'views/tab', 'text!templa
 
             events : {
                 "click #roomlist tr": "showRoom",
-                "click #userlist tr": "showPrivate"
             },
 
             // Tab properties
@@ -31,14 +30,13 @@ define(['jquery', 'underscore', 'backbone', 'i18next', 'views/tab', 'text!templa
             },
 
             initialize: function() {
-                this.listenTo(zzChat.users, 'all', this.render);
+                this.userlistview = new UserListView(zzChat.users, i18n.t("online_users"));
                 this.listenTo(zzChat.rooms, 'all', this.render);
             },
 
             render: function() {
                 this.$el.html(this.template({
                     i18n: i18n,
-                    users: zzChat.users,
                     rooms: zzChat.rooms,
                 }));
 
@@ -46,6 +44,13 @@ define(['jquery', 'underscore', 'backbone', 'i18next', 'views/tab', 'text!templa
 
                 // Placeholder support for IE9 and others fu**ing browers.
                 $('input, textarea', this.$el).placeholder();
+
+                // Render users list
+                this.userlistview.setElement(this.$('#home-user-list')).render();
+                this.rendered(this.userlistview);
+                // Delegate Events
+                this.userlistview.delegateEvents();
+
                 return this;
             },
 
@@ -54,13 +59,6 @@ define(['jquery', 'underscore', 'backbone', 'i18next', 'views/tab', 'text!templa
                 e.preventDefault();
                 var roomId = $(e.currentTarget).data('room-id');
                 zzChat.router.navigate("room-" + roomId, true);
-            },
-
-            // Triggered when the user wants to chat in private with another user.
-            showPrivate : function(e){
-                e.preventDefault();
-                var userId = $(e.currentTarget).data('user-id');
-                zzChat.router.navigate("private-" + userId, true);
             },
         });
         return HomeTabItem;

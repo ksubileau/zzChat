@@ -1,0 +1,16 @@
+<div class="userlist">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title"><%= title %></h3>
+        </div>
+        <div class="table-wrapper">
+            <table class="table-hover table-condensed" >
+                <tbody>
+                    <% users.each(function(user) { %>
+                        <tr data-user-id="<%= user.get("id") %>" class="user-<%= (user.get("sex") == 1)?'male':'female' %>"><td class="fa fa-<%= (user.get("sex") == 1)?'male':'female' %> sex-indicator"></td><td><%= user.get("nick") %></td><td><%= user.get("age") %></td></tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

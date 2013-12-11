@@ -17,22 +17,6 @@
             </div>
         </div>
     </div>
-    <div style="height: 100%;" class="col-md-6">
-        <div class="col-md-12" style="height: 100%; position: relative;">
-            <div style="height: 100%; width: 100%; position: relative;" class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Personnes présentes</h3>
-                </div>
-                <div style="top: 40px; bottom: 0px; overflow: auto; position: absolute; width: 100%;" id="table-wrapper">
-                    <table style="cursor: pointer; width: 100%; max-height: 100%;" class="table-hover table-condensed" id="userlist" >
-                        <tbody>
-                            <% users.each(function(user) { %>
-                                <tr data-user-id="<%= user.get("id") %>" class="user-<%= (user.get("sex") == 1)?'male':'female' %>"><td class="fa fa-<%= (user.get("sex") == 1)?'male':'female' %> sex-indicator"></td><td><%= user.get("nick") %></td><td><%= user.get("age") %></td></tr>
-                            <% }); %>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+    <div style="height: 100%;" class="col-md-6" id="home-user-list">
     </div>
 </div>

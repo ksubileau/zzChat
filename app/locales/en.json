@@ -10,6 +10,8 @@
     "login_error": "Unable to log in. Please check your input.",
     "home": "Home",
 
+    "online_users": "Online users",
+
     "room": "Room",
     "room_plural": "Rooms"
 }

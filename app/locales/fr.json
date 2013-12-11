@@ -10,6 +10,8 @@
     "login_error": "Impossible de se connecter. Veuillez vérifier votre saisie.",
     "home": "Accueil",
 
+    "online_users": "Utilisateurs en ligne",
+
     "room": "Salon",
     "room_plural": "Salons"
 }

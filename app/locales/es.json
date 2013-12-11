@@ -8,5 +8,10 @@
 	"nickname": "Apodo",
 	"age": "Edad",
     "login_error": "No se puede iniciar sesión. Por favor, revise su entrada.",
-    "home": "Inicio"
+    "home": "Inicio",
+
+    "online_users": "Usuarios en línea",
+
+    "room": "Sala",
+    "room_plural": "Salas"
 }

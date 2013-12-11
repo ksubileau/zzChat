@@ -89,7 +89,27 @@
 		}
 	}
 
-	.tab-home {
+	.userlist {
+		.make-md-column(12);
+		height: 100%;
+		position: relative;
+		.panel {
+			height: 100%;
+			width: 100%;
+			position: relative;
+		}
+		.table-wrapper {
+			top: 40px;
+			bottom: 0px;
+			overflow: auto;
+			position: absolute;
+			width: 100%;
+			table {
+				cursor: pointer;
+				width: 100%;
+				max-height: 100%;
+			}
+		}
 		td.sex-indicator {
 			width:15px;
 			line-height: inherit;
