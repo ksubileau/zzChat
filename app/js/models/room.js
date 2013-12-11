@@ -52,6 +52,26 @@ define(['underscore', 'backbone'],
 				});
 		    },
 
+		    sendMessage: function(message) {
+		        $.ajax({
+				    contentType: 'application/json',
+				    data: JSON.stringify({"text":message}),
+				    dataType: 'json',
+		        	beforeSend: function(xhr) {
+                        xhr.setRequestHeader(zzChat.options.api.authHeaderName, zzChat.getAuthToken());
+                    },
+				    success: function(response) {
+                        this.trigger('room:messageSent');
+				    },
+				    error: function() {
+				    	// TODO Handle errors
+				    },
+				    processData: false,
+				    type: 'POST',
+				    url: zzChat.getUrlForModel(this, '/message'),
+				});
+		    },
+
 		    validate: function(attrs) {
 		        errors = [];
 

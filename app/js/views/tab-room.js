@@ -29,7 +29,7 @@ define(['jquery', 'underscore', 'backbone', 'i18next', 'views/tab', 'text!templa
             },
 
             events : {
-                "click #sendResponse": "sendResponse",
+                "click #sendResponse": "sendMessage",
             },
 
             // Tab properties
@@ -44,9 +44,10 @@ define(['jquery', 'underscore', 'backbone', 'i18next', 'views/tab', 'text!templa
                 return "room-" + this.getId();
             },
 
-            sendResponse: function(e) {
+            sendMessage: function(e) {
                 e.preventDefault();
-                console.log('Réponse : '+ $('#responseText').val());
+                this.room.sendMessage($('#responseText').val());
+                $('#responseText').val('');
             }
         });
         return RoomTabItem;
