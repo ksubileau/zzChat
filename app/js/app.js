@@ -14,10 +14,11 @@ define([
         'i18next',
         'config',
         'router',
+        'poller',
         'collections/user',
         'collections/room',
     ],
-    function($, Backbone, i18n, config, Router, UserCollection, RoomCollection){
+    function($, Backbone, i18n, config, Router, poller, UserCollection, RoomCollection){
         'use strict';
 
         var zzChat = {
@@ -36,6 +37,12 @@ define([
 
                 // Load configuration from file
                 this.options = config;
+
+                // Set poller instance
+                this.poller = poller;
+                // Listen to poller events
+                this.listenTo(this.poller, 'api:user_new', this.onNewUser);
+                this.listenTo(this.poller, 'api:room_new', this.onNewRoom);
 
                 // Set Backbone options
                 Backbone.emulateHTTP = this.options.api.emulateHTTP;
@@ -155,9 +162,20 @@ define([
                 this.users.fetch();
                 this.rooms.fetch();
 
+                // Start Poller
+                this.poller.start();
+
                 // Open Home tab
                 this.router.navigate("/home", {trigger : true});
-        	}
+            },
+
+            onNewUser: function(data) {
+                this.users.fetch();
+            },
+
+            onNewRoom: function(data) {
+                this.rooms.fetch();
+            }
         }
         _.extend(zzChat, Backbone.Events);
         return zzChat;

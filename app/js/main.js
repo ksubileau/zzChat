@@ -19,6 +19,7 @@ require.config({
         bootstrap: 'libs/bootstrap/bootstrap.min',
         i18next: 'libs/i18next/i18next.min',
         'jquery.placeholder': 'libs/jquery.placeholder/jquery.placeholder',
+        'jquery.eventsource': 'libs/jquery.eventsource/jquery.eventsource',
     },
     shim: {
         'underscore': {
@@ -32,6 +33,9 @@ require.config({
             deps: ['jquery'],
         },
         'jquery.placeholder': {
+            deps: ['jquery'],
+        },
+        'jquery.eventsource': {
             deps: ['jquery'],
         },
     },
