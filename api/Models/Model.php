@@ -71,7 +71,7 @@ abstract class Model
      * @return int
      */
     protected static function getTimeForID($id, $timefile) {
-        $timefile = static::getStoragePathForID($id) . '/' .$reference;
+        $timefile = static::getStoragePathForID($id) . '/' .$timefile;
 
         if (!file_exists($timefile))
             return false;
@@ -117,6 +117,23 @@ abstract class Model
      */
     protected function getModificationTime() {
         return static::getModificationTimeForID($this->id);
+    }
+
+    /**
+     * Return true if a new model was created since the passed time reference.
+     *
+     * @return boolean
+     */
+    public static function hasNewEntry($timeref)
+    {
+        foreach (glob(ZC_STORAGE_DIR . static::STORAGE_DIR . '/*') as $id) {
+            $ctime = static::getCreationTimeForID(basename($id));
+
+            if ($ctime !== false && $ctime >= $timeref) {
+                return basename($id);
+            }
+        }
+        return false;
     }
 
     /**
