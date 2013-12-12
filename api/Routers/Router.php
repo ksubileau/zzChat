@@ -6,6 +6,7 @@ use \ZZChat\Support\ApiException;
 use \ZZChat\Controllers\SessionController;
 use \ZZChat\Controllers\UserController;
 use \ZZChat\Controllers\RoomController;
+use \ZZChat\Controllers\SSEController;
 
 /**
  * Router class.
@@ -53,6 +54,12 @@ class Router
         });
         $this->app->post('/room/:id/message', array($this, 'checkLogin'), function ($id) use ($that) {
             echo RoomController::postMessage($id, $that->app->request()->getBody());
+        });
+
+        // Events
+        $this->app->get('/events', array($this, 'checkLogin'), function () use ($that) {
+            $sse = new SSEController();
+            $sse->start();
         });
     }
 

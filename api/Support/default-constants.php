@@ -45,5 +45,17 @@ if ( ! function_exists('set_initial_constants'))
         // Authentication token key. Must be a 36-character random string.
         set_constant( 'ZC_AUTH_TOKEN_KEY', '04b457d2b8c996fe57ae92bf779e2847' );
 
+        /************************************
+         * Server Sent Events constants
+         ************************************/
+        // Seconds to sleep between two events checking.
+        set_constant( 'ZC_SSE_SLEEP_TIME', 1.5 );
+        // The time limit of the script in seconds. The client will have to reconnect after this time.
+        set_constant( 'ZC_SSE_EXEC_LIMIT', 120 );
+        // The interval in seconds of sending a keep alive signal.
+        set_constant( 'ZC_SSE_KEEP_ALIVE_DELAY', 20 );
+        // The time for the client to reconnect after connection has lost in seconds.
+        set_constant( 'ZC_SSE_RECONNECT_TIME', 1 );
+
     }
 }
