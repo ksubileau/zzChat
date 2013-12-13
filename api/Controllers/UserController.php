@@ -26,4 +26,11 @@ class UserController extends Controller
         }
         return json_encode($user);
     }
+
+    public static function updateAccessTime($id = NULL) {
+        if($id === NULL) {
+            $id = User::getIDFromToken(SessionController::getAuthToken());
+        }
+        return User::updateAccessTime($id);
+    }
 }

@@ -175,6 +175,38 @@ class User extends Model
 		return true;
 	}
 
+	/**
+	 * Update the last access time to the current timestamp.
+	 *
+	 * @return boolean
+	 */
+	public static function updateAccessTime($id)
+	{
+		if(!static::exists($id))
+			return false;
+		return static::setTimeForID($id, 'atime');
+	}
+
+	/**
+	 * Get the last access time.
+	 *
+	 * @return boolean
+	 */
+	public static function getAccessTime($id)
+	{
+		return static::getTimeForID($id, 'atime');
+	}
+
+	/**
+	 * Check if the user is currently active.
+	 *
+	 * @return boolean
+	 */
+	public static function isActive($id)
+	{
+		return static::getTimeForID($id, 'atime');
+	}
+
     /**
 	 * Return the list of persistants properties names.
 	 *

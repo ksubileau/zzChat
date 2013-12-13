@@ -58,6 +58,10 @@ class Router
 
         // Events
         $this->app->get('/events', array($this, 'checkLogin'), function () use ($that) {
+            // Update access time
+            // TODO Generalize this action to all API calls
+            UserController::updateAccessTime();
+            // Start SSE controller.
             $sse = new SSEController();
             $sse->start();
         });
