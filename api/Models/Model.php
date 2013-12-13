@@ -242,16 +242,23 @@ abstract class Model
      *
      * @return array
      */
-    public static function loadAll()
+    public static function loadAll($ids = NULL)
     {
         $objs = array();
 
-        foreach (glob(static::getStorageBasePath() . '/*') as $filename) {
-            if (is_readable($filename)) {
-                $obj = static::load(basename($filename));
-                if ($obj) {
-                    array_push($objs, $obj);
-                }
+        if($ids == NULL) {
+            // Load all entries by default
+            $ids = array_map("basename", glob(static::getStorageBasePath() . '/*'));
+            // Remove time files from glob result
+            $ids = array_diff($ids, array('mtime', 'ctime', 'dtime'));
+        } else if (!is_array($ids)) {
+            $ids = array($ids);
+        }
+
+        foreach ($ids as $id) {
+            $obj = static::load($id);
+            if ($obj) {
+                array_push($objs, $obj);
             }
         }
 
