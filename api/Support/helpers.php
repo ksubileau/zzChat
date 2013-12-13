@@ -183,59 +183,6 @@ if ( ! function_exists('rrmdir'))
     }
 }
 
-if ( ! function_exists('array_add'))
-{
-    /**
-     * Add an element to an array if it doesn't exist.
-     *
-     * @param  array   $array
-     * @param  string  $key
-     * @param  mixed   $value
-     * @return array
-     */
-    function array_add($array, $key, $value)
-    {
-        if ( ! isset($array[$key])) $array[$key] = $value;
-
-        return $array;
-    }
-}
-
-if ( ! function_exists('array_divide'))
-{
-    /**
-     * Divide an array into two arrays. One with keys and the other with values.
-     *
-     * @param  array  $array
-     * @return array
-     */
-    function array_divide($array)
-    {
-        return array(array_keys($array), array_values($array));
-    }
-}
-
-if ( ! function_exists('array_first'))
-{
-    /**
-     * Return the first element in an array passing a given truth test.
-     *
-     * @param  array    $array
-     * @param  Closure  $callback
-     * @param  mixed    $default
-     * @return mixed
-     */
-    function array_first($array, $callback, $default = null)
-    {
-        foreach ($array as $key => $value)
-        {
-            if (call_user_func($callback, $key, $value)) return $value;
-        }
-
-        return value($default);
-    }
-}
-
 if ( ! function_exists('dd'))
 {
     /**
