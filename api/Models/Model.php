@@ -291,7 +291,7 @@ abstract class Model
      */
     public function delete()
     {
-        return static::delete($this->id);
+        return static::deleteByID($this->id);
     }
 
     /**
@@ -299,7 +299,7 @@ abstract class Model
      *
      * @return bool
      */
-    public static function delete($id)
+    public static function deleteByID($id)
     {
         $targetpath = static::getStoragePathForID($id);
 
