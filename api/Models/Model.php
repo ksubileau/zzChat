@@ -145,7 +145,7 @@ abstract class Model
      */
     public static function hasNewEntry($timeref)
     {
-        foreach (glob(ZC_STORAGE_DIR . static::STORAGE_DIR . '/*') as $id) {
+        foreach (glob(static::getStorageBasePath() . '/*') as $id) {
             $ctime = static::getCreationTimeForID(basename($id));
 
             if ($ctime !== false && $ctime >= $timeref) {
@@ -153,6 +153,15 @@ abstract class Model
             }
         }
         return false;
+    }
+
+    /**
+     * Return the model's entries path.
+     *
+     * @return string
+     */
+    protected static function getStorageBasePath() {
+        return ZC_STORAGE_DIR . static::STORAGE_DIR;
     }
 
     /**
@@ -164,7 +173,7 @@ abstract class Model
         if (!$id)
             return false;
 
-        return ZC_STORAGE_DIR . static::STORAGE_DIR . '/' . $id;
+        return static::getStorageBasePath() . '/' . $id;
     }
 
     /**
@@ -224,7 +233,7 @@ abstract class Model
     {
         $objs = array();
 
-        foreach (glob(ZC_STORAGE_DIR . static::STORAGE_DIR . '/*') as $filename) {
+        foreach (glob(static::getStorageBasePath() . '/*') as $filename) {
             if (is_readable($filename)) {
                 $obj = static::load(basename($filename));
                 if ($obj) {
