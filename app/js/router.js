@@ -53,12 +53,12 @@ define([
                 this.changeView(new HomeView);
             },
 
-            homeTab: function() {/* // Disable for devellopment.
+            homeTab: function() {
                 // Redirect to login page if user is not logged in.
                 if(!zzChat.isLogin()) {
                     this.navigate("", true);
                     return;
-                }*/
+                }
                 if(this.currentView === null || !this.currentView.showTab) {
                   var mainView = new MainView
                   this.changeView(mainView);
@@ -66,12 +66,12 @@ define([
                 this.currentView.showTab('home');
             },
 
-            openRoom: function(roomId) {/* // Disable for devellopment.
+            openRoom: function(roomId) {
                 // Redirect to login page if user is not logged in.
                 if(!zzChat.isLogin()) {
                     this.navigate("", true);
                     return;
-                }*/
+                }
                 if(this.currentView === null || !this.currentView.showTab) {
                   var mainView = new MainView
                   this.changeView(mainView);
