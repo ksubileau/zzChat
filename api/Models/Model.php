@@ -70,8 +70,11 @@ abstract class Model
      *
      * @return boolean|int
      */
-    protected static function getTimeForID($id, $timefile) {
-        $timefile = static::getStoragePathForID($id) . '/' .$timefile;
+    protected static function getTime($timefile, $id = NULL) {
+        if($id)
+            $timefile = static::getStoragePathForID($id) . '/' .$timefile;
+        else
+            $timefile = static::getStorageBasePath() . '/' .$timefile;
 
         if (!file_exists($timefile))
             return false;
@@ -88,12 +91,15 @@ abstract class Model
      *
      * @return bool
      */
-    protected static function setTimeForID($id, $timefile, $timestamp = NULL) {
+    protected static function setTime($timefile, $id = NULL, $timestamp = NULL) {
         if($timestamp === NULL) {
             $timestamp = time();
         }
 
-        $timefile = static::getStoragePathForID($id) . '/' .$timefile;
+        if($id)
+            $timefile = static::getStoragePathForID($id) . '/' .$timefile;
+        else
+            $timefile = static::getStorageBasePath() . '/' .$timefile;
 
         if(file_put_contents($timefile, $timestamp) === false) {
             return false;
@@ -108,7 +114,7 @@ abstract class Model
      * @return int
      */
     protected static function getModificationTimeForID($id) {
-        return static::getTimeForID($id, 'mtime');
+        return static::getTime('mtime', $id);
     }
 
     /**
@@ -117,7 +123,7 @@ abstract class Model
      * @return int
      */
     protected static function getCreationTimeForID($id) {
-        return static::getTimeForID($id, 'ctime');
+        return static::getTime('ctime', $id);
     }
 
     /**
@@ -145,13 +151,20 @@ abstract class Model
      */
     public static function hasNewEntry($timeref)
     {
+        $ctime = static::getTime('ctime');
+        if ($ctime !== false && $ctime >= $timeref) {
+            return true;
+        }
+
+        // TODO More precise events
+        /*
         foreach (glob(static::getStorageBasePath() . '/*') as $id) {
             $ctime = static::getCreationTimeForID(basename($id));
 
             if ($ctime !== false && $ctime >= $timeref) {
                 return basename($id);
             }
-        }
+        }*/
         return false;
     }
 
@@ -280,14 +293,24 @@ abstract class Model
 
         // Set create time if it's a new instance.
         if (!file_exists($filepath . '/ctime')) {
-            if(static::setTimeForID($this->id, 'ctime') === false) {
+            if(static::setTime('ctime', $this->id) === false) {
                 throw new ApiException(500, "Unable to write create time. Please check file permissions.");
+            }
+
+            // Set global last create time.
+            if(static::setTime('ctime') === false) {
+                throw new ApiException(500, "Unable to write global create time. Please check file permissions.");
             }
         }
 
         // Update modification time
-        if(static::setTimeForID($this->id, 'mtime') === false) {
+        if(static::setTime('mtime', $this->id) === false) {
             throw new ApiException(500, "Unable to write modification time. Please check file permissions.");
+        }
+
+        // Set global last modification time.
+        if(static::setTime('mtime') === false) {
+            throw new ApiException(500, "Unable to write global modification time. Please check file permissions.");
         }
 
         return true;
@@ -319,6 +342,11 @@ abstract class Model
         // Delete model's data
         if(Support\rrmdir($targetpath) === false) {
             throw new ApiException(500, "Unable to delete data directory. Please check file permissions.");
+        }
+
+        // Set global last delete time.
+        if(static::setTime('dtime') === false) {
+            throw new ApiException(500, "Unable to write global delete time. Please check file permissions.");
         }
 
         return true;

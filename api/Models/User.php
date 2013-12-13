@@ -184,7 +184,7 @@ class User extends Model
 	{
 		if(!static::exists($id))
 			return false;
-		return static::setTimeForID($id, 'atime');
+		return static::setTime('atime', $id);
 	}
 
 	/**
@@ -194,7 +194,7 @@ class User extends Model
 	 */
 	public static function getAccessTime($id)
 	{
-		return static::getTimeForID($id, 'atime');
+		return static::getTime('atime', $id);
 	}
 
 	/**
@@ -204,7 +204,7 @@ class User extends Model
 	 */
 	public static function isActive($id)
 	{
-		return static::getTimeForID($id, 'atime');
+		return static::getTime('atime', $id);
 	}
 
     /**

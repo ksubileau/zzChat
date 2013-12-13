@@ -120,7 +120,7 @@ class SSEController extends Controller
     private function checkEvents($timeref) {
         $events = array();
 
-        if(($uid = User::hasNewEntry($timeref)) !== false) {
+        if(User::hasNewEntry($timeref)) {
             $events['user_new'] = '';
         }
 
