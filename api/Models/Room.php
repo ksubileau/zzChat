@@ -49,7 +49,7 @@ class Room extends Model
 	 */
 	public function enter($user) {
 		$uid = is_object($user)?$user->getID():$user;
-		$users = $this->getUsers();
+		$users = $this->getUsers(true);
 		if(!in_array($uid, $users)){
 	        array_push($users, $uid);
 			$this->storeUsers($users);
@@ -63,7 +63,7 @@ class Room extends Model
 	 */
 	public function leave($user) {
 		$uid = is_object($user)?$user->getID():$user;
-		$users = $this->getUsers();
+		$users = $this->getUsers(true);
 		if(($key = array_search($uid, $users)) === false) {
 			return false;
 		}
@@ -77,7 +77,7 @@ class Room extends Model
 	 *
 	 * @return array
 	 */
-	public function getUsers() {
+	public function getUsers($idOnly = false) {
         $path = $this->getStoragePath();
 
         if (!file_exists($path . '/users')) {
@@ -92,6 +92,9 @@ class Room extends Model
         if ($users === NULL) {
             throw new ApiException(500, "Failed to decode the users file.", Support\json_last_error_msg().'.');
         }
+
+        if(!$idOnly)
+            $users = User::loadAll($users);
 
         return $users;
 	}
