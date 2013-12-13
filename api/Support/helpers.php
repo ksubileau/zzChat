@@ -155,6 +155,34 @@ if (!function_exists(__NAMESPACE__.'\json_last_error_msg')) {
     }
 }
 
+if ( ! function_exists('rrmdir'))
+{
+    /**
+     * Recursively delete a directory that is not empty.
+     *
+     * @param  string   $dir
+     * @return boolean
+     */
+    function rrmdir($dir) {
+        // Prevent deleting all files in host directory :D
+        if (empty($dir) || !is_dir($dir)) {
+            return false;
+        }
+
+        $files = array_diff(scandir($dir), array('.','..'));
+        foreach ($files as $file) {
+            $res = false;
+            if (is_dir("$dir/$file"))
+                $res = rrmdir("$dir/$file");
+            else
+                $res = unlink("$dir/$file");
+            if(!$res)
+                return false;
+        }
+        return rmdir($dir);
+    }
+}
+
 if ( ! function_exists('array_add'))
 {
     /**

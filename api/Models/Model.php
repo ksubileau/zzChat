@@ -284,4 +284,35 @@ abstract class Model
         return true;
     }
 
+    /**
+     * Permanently deletes the model's data.
+     *
+     * @return bool
+     */
+    public function delete()
+    {
+        return static::delete($this->id);
+    }
+
+    /**
+     * Permanently deletes the model's data.
+     *
+     * @return bool
+     */
+    public static function delete($id)
+    {
+        $targetpath = static::getStoragePathForID($id);
+
+        if (empty($id) || !file_exists($targetpath)) {
+            return false;
+        }
+
+        // Delete model's data
+        if(Support\rrmdir($targetpath) === false) {
+            throw new ApiException(500, "Unable to delete data directory. Please check file permissions.");
+        }
+
+        return true;
+    }
+
 }
