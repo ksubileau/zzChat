@@ -68,7 +68,7 @@ abstract class Model
     /**
      * Return the last modification or creation time.
      *
-     * @return int
+     * @return boolean|int
      */
     protected static function getTimeForID($id, $timefile) {
         $timefile = static::getStoragePathForID($id) . '/' .$timefile;
@@ -81,6 +81,25 @@ abstract class Model
         }
 
         return intval($timestring);
+    }
+
+    /**
+     * Set the last modification or creation time.
+     *
+     * @return bool
+     */
+    protected static function setTimeForID($id, $timefile, $timestamp = NULL) {
+        if($timestamp === NULL) {
+            $timestamp = time();
+        }
+
+        $timefile = static::getStoragePathForID($id) . '/' .$timefile;
+
+        if(file_put_contents($timefile, $timestamp) === false) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -252,13 +271,13 @@ abstract class Model
 
         // Set create time if it's a new instance.
         if (!file_exists($filepath . '/ctime')) {
-            if(file_put_contents($filepath . '/ctime', time()) === false) {
+            if(static::setTimeForID($this->id, 'ctime') === false) {
                 throw new ApiException(500, "Unable to write create time. Please check file permissions.");
             }
         }
 
         // Update modification time
-        if(file_put_contents($filepath . '/mtime', time()) === false) {
+        if(static::setTimeForID($this->id, 'mtime') === false) {
             throw new ApiException(500, "Unable to write modification time. Please check file permissions.");
         }
 
