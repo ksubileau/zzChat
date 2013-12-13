@@ -26,27 +26,34 @@ define([
 		    },
 
 		    initialize: function() {
-		    	this.users = new UserCollection();
+		    	var that = this;
+		    	this.users = new UserCollection([], {
+		    		url: function() {
+		    			return that.url() +  '/users';
+		    		}
+		    	});
 		    },
 
 		    enter: function() {
+		    	var that = this;
 		        $.ajax({
 		        	beforeSend: function(xhr) {
                         xhr.setRequestHeader(zzChat.options.api.authHeaderName, zzChat.getAuthToken());
                     },
 				    success: function(response) {
-						//TODO this.users.fetch...
+						that.users.fetch();
 				    },
 				    error: function() {
 				    	// TODO Handle errors
 				    },
 				    processData: false,
 				    type: 'GET',
-				    url: zzChat.getUrlForModel(this, '/enter'),
+				    url: zzChat.getUrlForModel(that, '/enter'),
 				});
 		    },
 
 		    leave: function() {
+		    	var that = this;
 		        $.ajax({
 		        	beforeSend: function(xhr) {
                         xhr.setRequestHeader(zzChat.options.api.authHeaderName, zzChat.getAuthToken());
@@ -58,11 +65,12 @@ define([
 				    },
 				    processData: false,
 				    type: 'GET',
-				    url: zzChat.getUrlForModel(this, '/leave'),
+				    url: zzChat.getUrlForModel(that, '/leave'),
 				});
 		    },
 
 		    sendMessage: function(message) {
+		    	var that = this;
 		        $.ajax({
 				    contentType: 'application/json',
 				    data: JSON.stringify({"text":message}),
@@ -71,14 +79,14 @@ define([
                         xhr.setRequestHeader(zzChat.options.api.authHeaderName, zzChat.getAuthToken());
                     },
 				    success: function(response) {
-                        this.trigger('room:messageSent');
+                        that.trigger('room:messageSent');
 				    },
 				    error: function() {
 				    	// TODO Handle errors
 				    },
 				    processData: false,
 				    type: 'POST',
-				    url: zzChat.getUrlForModel(this, '/message'),
+				    url: zzChat.getUrlForModel(that, '/message'),
 				});
 		    },
 

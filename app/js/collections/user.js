@@ -14,6 +14,12 @@ define(['underscore', 'backbone', 'models/user'],
         var UserCollection = Backbone.Collection.extend({
             model: UserModel,
             url: '/users',
+
+            initialize: function(models, options) {
+                options = options || {};
+                this.url = options.url || '/users';
+            }
+
         });
 
         return UserCollection;
