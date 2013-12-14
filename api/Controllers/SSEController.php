@@ -2,6 +2,7 @@
 namespace ZZChat\Controllers;
 
 use \ZZChat\Models\User;
+use \ZZChat\Models\Room;
 
 /**
  * Server Side Events controller.
@@ -115,13 +116,18 @@ class SSEController extends Controller
 
     /**
      * Compute a list of available events
-     * @param $timeref the
+     *
+     * @param $timeref
      */
     private function checkEvents($timeref) {
         $events = array();
 
         if(User::hasNewEntry($timeref)) {
             $events['user_new'] = '';
+        }
+
+        if(($res = Room::checkEvents($timeref))) {
+            $events = array_merge($events, array('rooms' => $res));
         }
 
         return $events;

@@ -53,6 +53,7 @@ class Room extends Model
 		if(!in_array($uid, $users)){
 	        array_push($users, $uid);
 			$this->storeUsers($users);
+            static::setTime('entertime', $this->id);
 	    }
 	}
 
@@ -69,6 +70,7 @@ class Room extends Model
 		}
 		unset($users[$key]);
 		$this->storeUsers($users);
+        static::setTime('leavetime', $this->id);
 		return true;
 	}
 
@@ -168,7 +170,41 @@ class Room extends Model
         if(file_put_contents($path . '/messages', $data) === false) {
             throw new ApiException(500, "Unable to write messages file. Please check permissions.");
         }
+
+        static::setTime('messagetime', $this->id);
 	}
+
+    /**
+     * Compute a list of available events for all rooms
+     *
+     * @param $timeref
+     */
+    public static function checkEvents($timeref) {
+        $ids = static::getAllID();
+
+        $events = array();
+
+        foreach ($ids as $roomid) {
+            $thisevents = array();
+            if(static::isMoreRecent($timeref, 'entertime', $roomid))
+            {
+                $thisevents['users_enter'] = '';
+            }
+            if(static::isMoreRecent($timeref, 'leavetime', $roomid))
+            {
+                $thisevents['users_leave'] = '';
+            }
+            if(static::isMoreRecent($timeref, 'messagetime', $roomid))
+            {
+                $thisevents['messages_new'] = '';
+            }
+            if(!empty($thisevents)) {
+                $events[$roomid] = $thisevents;
+            }
+        }
+
+        return $events;
+    }
 
 	/**
 	 * Check if the room's data are valid.
