@@ -145,14 +145,27 @@ abstract class Model
     }
 
     /**
+     * Return true if the time stored in a timefile is more recent than the passed time.
+     *
+     * @return boolean
+     */
+    public static function isMoreRecent($timeref, $timefile, $id = NULL)
+    {
+        $time = static::getTime($timefile, $id);
+        if ($time !== false && $time >= $timeref) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Return true if a new model was created since the passed time reference.
      *
      * @return boolean
      */
-    public static function hasNewEntry($timeref)
+    public static function hasNewEntry($timeref, $timefile = 'ctime')
     {
-        $ctime = static::getTime('ctime');
-        if ($ctime !== false && $ctime >= $timeref) {
+        if (static::isMoreRecent($timeref, $timefile)) {
             return true;
         }
 
@@ -238,6 +251,21 @@ abstract class Model
     }
 
     /**
+     * Load all entries IDs.
+     *
+     * @return array
+     */
+    public static function getAllID()
+    {
+        // Get all entry directories
+        $ids = array_map("basename", glob(static::getStorageBasePath() . '/*'));
+        // Remove time files from glob result
+        $ids = array_diff($ids, array('mtime', 'ctime', 'dtime'));
+
+        return $ids;
+    }
+
+    /**
      * Load all instances.
      *
      * @return array
@@ -248,9 +276,7 @@ abstract class Model
 
         if($ids == NULL) {
             // Load all entries by default
-            $ids = array_map("basename", glob(static::getStorageBasePath() . '/*'));
-            // Remove time files from glob result
-            $ids = array_diff($ids, array('mtime', 'ctime', 'dtime'));
+            $ids = static::getAllID();
         } else if (!is_array($ids)) {
             $ids = array($ids);
         }
