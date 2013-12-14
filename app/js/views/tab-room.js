@@ -7,8 +7,8 @@
 * @link https://github.com/ksubileau/zzChat
 * @license GNU GPLv3 (http://www.gnu.org/licenses/gpl-3.0.html also in /LICENSE)
 */
-define(['jquery', 'underscore', 'backbone', 'i18next', 'views/tab', 'views/userlist', 'text!templates/tab-room.html'],
-    function($, _, Backbone, i18n, TabItemView, UserListView, roomTabItem){
+define(['jquery', 'underscore', 'backbone', 'i18next', 'views/tab', 'views/userlist', 'views/messagebox', 'text!templates/tab-room.html'],
+    function($, _, Backbone, i18n, TabItemView, UserListView, MessageBoxView, roomTabItem){
         'use strict';
 
         var RoomTabItem = TabItemView.extend({
@@ -42,6 +42,7 @@ define(['jquery', 'underscore', 'backbone', 'i18next', 'views/tab', 'views/userl
                     this.room.leave();
                 }, this);
                 this.userlistview = new UserListView(this.room.users, i18n.t("online_users"));
+                this.messageboxview = new MessageBoxView(this.room.messages);
             },
 
             render: function() {
@@ -59,6 +60,12 @@ define(['jquery', 'underscore', 'backbone', 'i18next', 'views/tab', 'views/userl
                 this.rendered(this.userlistview);
                 // Delegate Events
                 this.userlistview.delegateEvents();
+
+                // Render messages list
+                this.messageboxview.setElement(this.$('.room-messages')).render();
+                this.rendered(this.messageboxview);
+                // Delegate Events
+                this.messageboxview.delegateEvents();
 
                 return this;
             },

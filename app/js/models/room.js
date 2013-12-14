@@ -11,8 +11,9 @@ define([
 		'underscore',
 		'backbone',
         'collections/user',
+        'collections/message',
     ],
-	function(_, Backbone, UserCollection){
+	function(_, Backbone, UserCollection, MessageCollection){
     	'use strict';
 
 		var RoomModel = Backbone.Model.extend({
@@ -23,6 +24,7 @@ define([
 		    defaults: {
 		        name: '',
 		        users: null,
+		        messages: null,
 		    },
 
 		    initialize: function() {
@@ -30,6 +32,11 @@ define([
 		    	this.users = new UserCollection([], {
 		    		url: function() {
 		    			return that.url() +  '/users';
+		    		}
+		    	});
+		    	this.messages = new MessageCollection([], {
+		    		url: function() {
+		    			return that.url() +  '/messages';
 		    		}
 		    	});
 		    },
@@ -42,6 +49,7 @@ define([
                     },
 				    success: function(response) {
 						that.users.fetch();
+						that.messages.fetch();
 				    },
 				    error: function() {
 				    	// TODO Handle errors
@@ -71,15 +79,17 @@ define([
 
 		    sendMessage: function(message) {
 		    	var that = this;
+		    	// TODO Use Message model
 		        $.ajax({
 				    contentType: 'application/json',
 				    data: JSON.stringify({"text":message}),
-				    dataType: 'json',
+				    //dataType: 'json',
 		        	beforeSend: function(xhr) {
                         xhr.setRequestHeader(zzChat.options.api.authHeaderName, zzChat.getAuthToken());
                     },
 				    success: function(response) {
                         that.trigger('room:messageSent');
+						that.messages.fetch();
 				    },
 				    error: function() {
 				    	// TODO Handle errors

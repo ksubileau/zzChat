@@ -1,0 +1,15 @@
+<div class="messagebox">
+    <div class="panel panel-default">
+        <div class="messagebox-panel-inner">
+        <% messages.each(function(message) { %>
+            <div class="message <%= (me && message.getAuthorID()==me.id)?'message-by-me':'' %>">
+                <div class="message-sender"><%= message.getAuthorNick() %></div>
+                <div class="message-text" style="">
+                    <%= message.get("text") %>
+                </div>
+                <div class="message-time"><%= (new Date(message.get("sent_time") * 1000)).toLocaleTimeString() %></div>
+            </div>
+        <% }); %>
+        </div>
+    </div>
+</div>
