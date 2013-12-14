@@ -50,6 +50,7 @@ define([
 				    success: function(response) {
 						that.users.fetch();
 						that.messages.fetch();
+						that.listenTo(zzChat.poller, 'api:rooms', that.parseEvent);
 				    },
 				    error: function() {
 				    	// TODO Handle errors
@@ -60,6 +61,18 @@ define([
 				});
 		    },
 
+		    parseEvent: function(event) {
+		    	if(_.has(event, this.id)) {
+		    		event = event[this.id];
+
+		    		if(_.has(event, 'users_enter') || _.has(event, 'users_leave')) {
+						this.users.fetch();
+			    	} else if(_.has(event, 'messages_new')) {
+						this.messages.fetch();
+			    	}
+		    	}
+		    },
+
 		    leave: function() {
 		    	var that = this;
 		        $.ajax({
@@ -67,6 +80,7 @@ define([
                         xhr.setRequestHeader(zzChat.options.api.authHeaderName, zzChat.getAuthToken());
                     },
 				    success: function(response) {
+						that.stopListening(zzChat.poller);
 				    },
 				    error: function() {
 				    	// TODO Handle errors
