@@ -17,10 +17,10 @@
 		<title>zzChat</title>
 		<link rel="shortcut icon" href="favicon.ico" />
 		<link rel="apple-touch-icon" href="favicon.png" />
-		<link rel="stylesheet" href="/app/css/style.css" />
+		<link rel="stylesheet" href="css/style.css" />
 	</head>
 	<body>
 		<div id="main"></div>
-		<script data-main="js/main" src="/app/js/libs/require/require.min.js"></script>
+		<script data-main="js/main" src="js/libs/require/require.min.js"></script>
 	</body>
 </html>

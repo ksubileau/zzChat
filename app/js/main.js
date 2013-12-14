@@ -8,7 +8,7 @@
 * @license GNU GPLv3 (http://www.gnu.org/licenses/gpl-3.0.html also in /LICENSE)
 */
 require.config({
-    baseUrl: '/app/js',
+    baseUrl: 'js',
     // Disable cache
     //urlArgs: "t=" +  (new Date()).getTime(),
     paths: {
