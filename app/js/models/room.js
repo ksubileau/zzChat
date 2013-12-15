@@ -8,12 +8,13 @@
 * @license GNU GPLv3 (http://www.gnu.org/licenses/gpl-3.0.html also in /LICENSE)
 */
 define([
+		'jquery',
 		'underscore',
 		'backbone',
         'collections/user',
         'collections/message',
     ],
-	function(_, Backbone, UserCollection, MessageCollection){
+	function($, _, Backbone, UserCollection, MessageCollection){
     	'use strict';
 
 		var RoomModel = Backbone.Model.extend({
@@ -51,6 +52,7 @@ define([
 						that.users.fetch();
 						that.messages.fetch();
 						that.listenTo(zzChat.poller, 'api:rooms', that.parseEvent);
+                		that.listenTo(zzChat.poller, 'api:user_inactive', _.debounce(that.onUsersChanged, 500, true));
 				    },
 				    error: function() {
 				    	// TODO Handle errors
@@ -59,18 +61,6 @@ define([
 				    type: 'GET',
 				    url: zzChat.getUrlForModel(that, '/enter'),
 				});
-		    },
-
-		    parseEvent: function(event) {
-		    	if(_.has(event, this.id)) {
-		    		event = event[this.id];
-
-		    		if(_.has(event, 'users_enter') || _.has(event, 'users_leave')) {
-						this.users.fetch();
-			    	} else if(_.has(event, 'messages_new')) {
-						this.messages.fetch();
-			    	}
-		    	}
 		    },
 
 		    leave: function() {
@@ -90,6 +80,22 @@ define([
 				    url: zzChat.getUrlForModel(that, '/leave'),
 				});
 		    },
+
+		    parseEvent: function(event) {
+		    	if(_.has(event, this.id)) {
+		    		event = event[this.id];
+
+		    		if(_.has(event, 'users_enter') || _.has(event, 'users_leave')) {
+						this.users.fetch();
+			    	} else if(_.has(event, 'messages_new')) {
+						this.messages.fetch();
+			    	}
+		    	}
+		    },
+
+            onUsersChanged: function(data) {
+                this.users.fetch();
+            },
 
 		    sendMessage: function(message) {
 		    	var that = this;

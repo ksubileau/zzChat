@@ -10,6 +10,7 @@
 
 define([
         'jquery',
+        'underscore',
         'backbone',
         'i18next',
         'config',
@@ -18,7 +19,7 @@ define([
         'collections/user',
         'collections/room',
     ],
-    function($, Backbone, i18n, config, Router, poller, UserCollection, RoomCollection){
+    function($, _, Backbone, i18n, config, Router, poller, UserCollection, RoomCollection){
         'use strict';
 
         var zzChat = {
@@ -41,8 +42,8 @@ define([
                 // Set poller instance
                 this.poller = poller;
                 // Listen to poller events
-                this.listenTo(this.poller, 'api:user_new', this.onNewUser);
-                this.listenTo(this.poller, 'api:room_new', this.onNewRoom);
+                this.listenTo(this.poller, 'api:user_new api:user_inactive api:user_deleted', _.debounce(this.onUsersChanged, 500, true));
+                this.listenTo(this.poller, 'api:room_new', _.debounce(this.onNewRoom, 500, true));
 
                 // Set Backbone options
                 Backbone.emulateHTTP = this.options.api.emulateHTTP;
@@ -169,7 +170,7 @@ define([
                 this.router.navigate("/home", {trigger : true});
             },
 
-            onNewUser: function(data) {
+            onUsersChanged: function(data) {
                 this.users.fetch();
             },
 
