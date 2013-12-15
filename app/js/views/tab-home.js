@@ -31,7 +31,7 @@ define(['jquery', 'underscore', 'backbone', 'i18next', 'views/tab', 'views/userl
 
             initialize: function() {
                 this.userlistview = new UserListView(zzChat.users, i18n.t("online_users"));
-                this.listenTo(zzChat.rooms, 'all', this.render);
+                this.listenTo(zzChat.rooms, 'all', _.debounce(this.render, 500, true));
             },
 
             render: function() {

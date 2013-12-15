@@ -24,7 +24,7 @@ define([
             initialize: function(messagelist) {
                 this.messagelist = messagelist;
 
-                this.listenTo(this.messagelist, 'all', this.render);
+                this.listenTo(this.messagelist, 'all', _.debounce(this.render, 500, true));
             },
 
             render: function() {

@@ -25,7 +25,7 @@ define(['jquery', 'underscore', 'backbone', 'i18next', 'views/disposable', 'text
                 if(title) {
                     this.title = title;
                 }
-                this.listenTo(this.users, 'all', this.render);
+                this.listenTo(this.users, 'all', _.debounce(this.render, 500, true));
             },
 
             render: function() {
