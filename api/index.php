@@ -24,6 +24,7 @@ use \Slim\Middleware;
 use \ZZChat\Support;
 use \ZZChat\Support\ClassLoader;
 use \ZZChat\Routers\Router;
+use \ZZChat\Models\User;
 
 // ZZChat calculates offsets from UTC.
 date_default_timezone_set( 'UTC' );
@@ -39,6 +40,10 @@ ClassLoader::addDirectories(array(
     ABSPATH.'/Vendor/PhpSecLib',
 ));
 ClassLoader::register();
+
+// Run users garbage collection
+// TODO Run it periodically, not on each request.
+User::clean();
 
 $app = new Slim(array(
     'debug' => ZC_DEBUG,
