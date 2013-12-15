@@ -210,6 +210,24 @@ class User extends Model
 	}
 
 	/**
+     * Check if there is some new inactive users since the given timestamp.
+     *
+     * @return boolean
+     */
+    public static function hasInactiveUsers($timeref = 0) {
+        $ids = static::getAllID();
+		$now = time();
+        foreach ($ids as $uid) {
+        	$inactiveTime = static::getAccessTime($uid) + ZC_USER_AUTO_LOGOUT_TIME;
+        	if($timeref < $inactiveTime && $inactiveTime <= $now) {
+        		return true;
+        	}
+        }
+
+        return false;
+    }
+
+	/**
 	 * Check if the user's session has expired.
 	 *
 	 * @return boolean

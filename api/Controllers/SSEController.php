@@ -126,6 +126,14 @@ class SSEController extends Controller
             $events['user_new'] = '';
         }
 
+        if(User::hasInactiveUsers($timeref)) {
+            $events['user_inactive'] = '';
+        }
+
+        if(User::hasDeletedEntry($timeref)) {
+            $events['user_deleted'] = '';
+        }
+
         if(($res = Room::checkEvents($timeref))) {
             $events = array_merge($events, array('rooms' => $res));
         }

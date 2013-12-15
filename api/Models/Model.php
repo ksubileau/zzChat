@@ -182,6 +182,21 @@ abstract class Model
     }
 
     /**
+     * Return true if a new model was created since the passed time reference.
+     *
+     * @return boolean
+     */
+    public static function hasDeletedEntry($timeref, $timefile = 'dtime')
+    {
+        if (static::isMoreRecent($timeref, $timefile)) {
+            return true;
+        }
+
+        // TODO More precise events
+        return false;
+    }
+
+    /**
      * Return the model's entries path.
      *
      * @return string
