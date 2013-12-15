@@ -74,6 +74,22 @@ class Room extends Model
 		return true;
 	}
 
+    /**
+     * Unregister an user on all rooms.
+     *
+     * @return bool
+     */
+    public static function leaveAll($user) {
+        $ids = static::getAllID();
+
+        $ids = array_walk($ids, function($roomid, $index) use ($user) {
+            $room = Room::load($roomid);
+            if($room) {
+                $room->leave($user);
+            }
+        });
+    }
+
 	/**
 	 * Return the list of present users on the room.
 	 *

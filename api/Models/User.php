@@ -202,6 +202,16 @@ class User extends Model
 	}
 
 	/**
+	 * Check if the user's session has expired.
+	 *
+	 * @return boolean
+	 */
+	public static function isExpired($id)
+	{
+		return (time() - static::getAccessTime($id)) > ZC_USER_EXPIRE_TIME;
+	}
+
+	/**
      * Check if the given nick is taken by one of the users.
      *
      * @param $nick
@@ -230,5 +240,38 @@ class User extends Model
         		array ('nick', 'age', 'sex', 'token')
 	        );
     }
+
+    /**
+     * Permanently deletes the user's data.
+     *
+     * @return bool
+     */
+    public static function deleteByID($id, $cascade = true)
+    {
+        if(parent::deleteByID($id)) {
+        	if ($cascade) {
+	        	// Delete also foreign references
+	        	Room::leaveAll($id);
+  			}
+        }
+    }
+
+	/**
+	 * Remove users whose session has expired.
+	 *
+	 * @return array
+	 */
+	public static function clean()
+	{
+        $ids = static::getAllID();
+
+        $ids = array_filter($ids, array('\ZZChat\Models\User', 'isExpired'));
+
+        $ids = array_walk($ids, function($id, $index) {
+        	User::deleteByID($id);
+        });
+
+        return $ids;
+	}
 
 }
