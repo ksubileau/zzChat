@@ -23,7 +23,7 @@ class SessionController extends Controller
 	public static function login($data = NULL)
 	{
 		$user = new User();
-		$user->setNick($data['nickname']);
+		$user->setNick(trim($data['nickname']));
 		$user->setAge($data['age']);
 
 		if(isset($data['gender'])) {

@@ -50,6 +50,12 @@ if ( ! function_exists('set_initial_constants'))
          ************************************/
         // Forbid duplicate nicknames if set to true.
         set_constant( 'ZC_NICK_CHECK_UNICITY', true );
+        // Minimum nicknames length
+        set_constant( 'ZC_NICK_LENGTH_MIN', 3);
+        // Minimum nicknames length
+        set_constant( 'ZC_NICK_LENGTH_MAX', 20);
+        // Allowed characters in nicknames (regex character classe without square brackets)
+        set_constant( 'ZC_NICK_ALLOWED_CHARS', '-a-zA-Z-0-9_');
         // Minimum age limit
         set_constant( 'ZC_AGE_MIN', 0 );
         // Maximum age limit
