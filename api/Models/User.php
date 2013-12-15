@@ -49,20 +49,11 @@ class User extends Model
 	 */
 	protected $token;
 
-	/**
-	 * Login timestamp.
-	 *
-	 * @var string
-	 */
-	protected $loginDate;
-
 
     function __construct($props = NULL) {
     	parent::__construct($props);
     	if ($props == NULL) { // Only if the object is not load from file
 	        $this->generateAuthToken();
-
-	        $this->loginDate = time();
     	}
     }
 
@@ -236,7 +227,7 @@ class User extends Model
 	protected static function getProperties() {
         return array_merge (
         		parent::getProperties(),
-        		array ('nick', 'age', 'sex', 'token', 'loginDate')
+        		array ('nick', 'age', 'sex', 'token')
 	        );
     }
 
