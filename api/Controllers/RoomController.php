@@ -82,7 +82,8 @@ class RoomController extends Controller
         if(empty($postData['text']))
             throw new ApiException(400, "Invalid or incomplete input.");
 
-        //TODO Input text sanitizing
+        // Sanitize input
+        $postData['text'] = htmlspecialchars($postData['text'], ENT_COMPAT, 'UTF-8');
 
         $room = Room::load($id);
         if(!$room) {

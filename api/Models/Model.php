@@ -296,9 +296,9 @@ abstract class Model
      *
      * @return bool
      */
-    public function save()
+    public function save($sanitize = true, $validate = true)
     {
-        if ( ! $this->validate()) {
+        if ( $validate && ! $this->validate()) {
             return false;
         }
 
@@ -312,6 +312,10 @@ abstract class Model
         $props = array();
         foreach ($propKeys as $key) {
             $props[$key] = $this->$key;
+
+            // Sanitize, prevent HTML injections
+            if($sanitize && is_string($props[$key]))
+                $props[$key] = htmlspecialchars($props[$key], ENT_COMPAT, 'UTF-8');
         }
 
         $data = json_encode($props, ZC_STORAGE_JSON_PRETTY_PRINT?JSON_PRETTY_PRINT:0);
