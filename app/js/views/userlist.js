@@ -19,11 +19,15 @@ define(['jquery', 'underscore', 'backbone', 'i18next', 'views/disposable', 'text
             },
 
             title: "",
+            activeOnly: true,
 
-            initialize: function(users, title) {
+            initialize: function(users, title, activeOnly) {
                 this.users = users;
                 if(title) {
                     this.title = title;
+                }
+                if(activeOnly) {
+                    this.activeOnly = activeOnly;
                 }
                 this.listenTo(this.users, 'all', _.debounce(this.render, 500, true));
             },
@@ -32,7 +36,7 @@ define(['jquery', 'underscore', 'backbone', 'i18next', 'views/disposable', 'text
                 this.$el.html(this.template({
                     i18n: i18n,
                     title: this.title,
-                    users: this.users,
+                    users: this.activeOnly?this.users.where({isActive: true}):this.users.models,
                 }));
 
                 return this;

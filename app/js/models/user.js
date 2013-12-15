@@ -20,6 +20,7 @@ define(['underscore', 'backbone'],
 		        nick: '',
 				age: '',
 				sex: '',
+				isActive: true,
 		    },
 
 		    validate: function(attrs) {

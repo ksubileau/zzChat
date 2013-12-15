@@ -6,7 +6,7 @@
         <div class="table-wrapper">
             <table class="table-hover table-condensed" >
                 <tbody>
-                    <% users.each(function(user) { %>
+                    <% _.each(users, function(user) { %>
                         <tr data-user-id="<%= user.get("id") %>" class="user-<%= (user.get("sex") == 1)?'male':'female' %>"><td class="fa fa-<%= (user.get("sex") == 1)?'male':'female' %> sex-indicator"></td><td><%= user.get("nick") %></td><td><%= user.get("age") %></td></tr>
                     <% }); %>
                 </tbody>
