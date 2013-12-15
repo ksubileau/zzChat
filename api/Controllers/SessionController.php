@@ -35,6 +35,10 @@ class SessionController extends Controller
 			}
 		}
 
+		if( ZC_NICK_CHECK_UNICITY && User::nickExists($user->getNick()) ) {
+			throw new ApiException(409, "Nickname already taken.");
+		}
+
 		if( ! $user->validate()) {
 			throw new ApiException(400, "Invalid or incomplete input.");
 		}

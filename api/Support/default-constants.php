@@ -46,6 +46,12 @@ if ( ! function_exists('set_initial_constants'))
         set_constant( 'ZC_AUTH_TOKEN_KEY', '04b457d2b8c996fe57ae92bf779e2847' );
 
         /************************************
+         * Validation constants
+         ************************************/
+        // Forbid duplicate nicknames if set to true.
+        set_constant( 'ZC_NICK_CHECK_UNICITY', true );
+
+        /************************************
          * Server Sent Events constants
          ************************************/
         // Seconds to sleep between two events checking.

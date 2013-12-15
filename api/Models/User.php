@@ -207,6 +207,24 @@ class User extends Model
 		return static::getTime('atime', $id);
 	}
 
+	/**
+     * Check if the given nick is taken by one of the users.
+     *
+     * @param $nick
+     */
+    public static function nickExists($nick) {
+        $ids = static::getAllID();
+
+        foreach ($ids as $uid) {
+        	$user = static::load($uid);
+        	if($user && $user->nick == $nick) {
+        		return true;
+        	}
+        }
+
+        return false;
+    }
+
     /**
 	 * Return the list of persistants properties names.
 	 *
