@@ -61,6 +61,9 @@ if ( ! function_exists('set_initial_constants'))
         // Maximum age limit
         set_constant( 'ZC_AGE_MAX', 130 );
 
+        // Time in seconds after which the user is considered logged-out if no activity has been recorded
+        // Must be greater than ZC_SSE_EXEC_LIMIT
+        set_constant( 'ZC_USER_AUTO_LOGOUT_TIME', 210);
         // Time in seconds after which the user will be completly deleted if no activity has been recorded
         // Must be greater than ZC_USER_AUTO_LOGOUT_TIME
         set_constant( 'ZC_USER_EXPIRE_TIME', 2 * 60 * 60);

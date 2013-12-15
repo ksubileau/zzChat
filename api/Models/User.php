@@ -43,6 +43,13 @@ class User extends Model
 	public $sex;
 
 	/**
+	 * Login timestamp.
+	 *
+	 * @var string
+	 */
+	public $isActive;
+
+	/**
 	 * The user's authentication token.
 	 *
 	 * @var string
@@ -55,6 +62,7 @@ class User extends Model
     	if ($props == NULL) { // Only if the object is not load from file
 	        $this->generateAuthToken();
     	}
+    	$this->isActive = static::isActive($this->id);
     }
 
 	/**
@@ -198,7 +206,7 @@ class User extends Model
 	 */
 	public static function isActive($id)
 	{
-		return static::getTime('atime', $id);
+		return (time() - static::getAccessTime($id)) < ZC_USER_AUTO_LOGOUT_TIME;
 	}
 
 	/**
