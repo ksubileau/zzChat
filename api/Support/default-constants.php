@@ -50,6 +50,10 @@ if ( ! function_exists('set_initial_constants'))
          ************************************/
         // Forbid duplicate nicknames if set to true.
         set_constant( 'ZC_NICK_CHECK_UNICITY', true );
+        // Minimum age limit
+        set_constant( 'ZC_AGE_MIN', 0 );
+        // Maximum age limit
+        set_constant( 'ZC_AGE_MAX', 130 );
 
         /************************************
          * Server Sent Events constants

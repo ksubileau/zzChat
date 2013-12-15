@@ -166,7 +166,7 @@ class User extends Model
 		if ( ! isset($this->nick) || ! isset($this->age) || ! isset($this->sex)) {
 			return false;
 		}
-		if( ! is_int($this->age) || $this->age <= 0 || $this->age >= 130) {
+		if( ! is_int($this->age) || $this->age <= 0 || $this->age <= ZC_AGE_MIN || $this->age >= ZC_AGE_MAX) {
 			return false;
 		}
 		if($this->sex !== 1 && $this->sex !== 2) {
