@@ -47,6 +47,9 @@ class SessionController extends Controller
 			throw new ApiException(500, "Unable to save user's data.");
 		}
 
+		// Update access time
+		User::updateAccessTime($user->id);
+
 		return json_encode(array("user" => $user, "token" => $user->getAuthToken()));
 	}
 
