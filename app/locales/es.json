@@ -8,6 +8,7 @@
 	"nickname": "Apodo",
 	"age": "Edad",
     "login_error": "No se puede iniciar sesión. Por favor, revise su entrada.",
+    "nick_taken": "Su apodo ya está en uso, por favor elige otro.",
     "home": "Inicio",
 
     "online_users": "Usuarios en línea",

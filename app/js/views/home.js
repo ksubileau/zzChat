@@ -76,9 +76,21 @@ define(['jquery', 'backbone', 'underscore', 'i18next', 'views/disposable', 'mode
 				        // Trigger successful login event
                         zzChat.trigger('zzChat:loginSuccess', {'user':user, 'token':response.token});
 				    },
-				    error: function() {
+				    error: function(xhr, textStatus, errorThrown) {
+				    	var message;
 				    	// Enable submit button
 				    	$("#loginBtn", '#login-form').prop('disabled', false);
+				    	// Set error message
+				    	switch(xhr.status) {
+				    		case 409:
+				    			message = i18n.t("nick_taken");
+				    		break;
+				    		default:
+				    			message = i18n.t("login_error");
+				    		break;
+				    	}
+
+				    	$("#login-error-message p", '#login-form').html(message);
 				    	// Show error message
 				    	$("#login-error-message", '#login-form').slideDown();
 				    	// TODO Improve error message accuracy.

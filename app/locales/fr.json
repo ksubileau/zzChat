@@ -8,6 +8,7 @@
 	"nickname": "Pseudo",
 	"age": "Age",
     "login_error": "Impossible de se connecter. Veuillez vérifier votre saisie.",
+    "nick_taken": "Votre pseudo est déjà pris, veuillez en choisir un autre.",
     "home": "Accueil",
 
     "online_users": "Utilisateurs en ligne",

@@ -8,6 +8,7 @@
 	"nickname": "Nickname",
 	"age": "Age",
     "login_error": "Unable to log in. Please check your input.",
+    "nick_taken": "Your nick is already taken, please select another one.",
     "home": "Home",
 
     "online_users": "Online users",
