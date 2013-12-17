@@ -30,20 +30,20 @@ class Router
         $this->app->map('/login',array($this, 'login'))->via('POST');
 
         // Users
-        $this->app->map('/users',array($this, 'getUserList'))->via('GET');
-        $this->app->get('/user/:id', function ($id) {
+        $this->app->map('/users', array($this, 'checkLoginOpt'), array($this, 'getUserList'))->via('GET');
+        $this->app->get('/user/:id', array($this, 'checkLoginOpt'), function ($id) {
             echo UserController::getUser($id);
         });
 
         // Rooms
-        $this->app->map('/rooms',array($this, 'getRoomList'))->via('GET');
-        $this->app->get('/room/:id', function ($id) {
+        $this->app->map('/rooms', array($this, 'checkLoginOpt'),array($this, 'getRoomList'))->via('GET');
+        $this->app->get('/room/:id', array($this, 'checkLoginOpt'), function ($id) {
             echo RoomController::getRoom($id);
         });
-        $this->app->get('/room/:id/users', function ($id) {
+        $this->app->get('/room/:id/users', array($this, 'checkLoginOpt'), function ($id) {
             echo RoomController::getUsers($id);
         });
-        $this->app->get('/room/:id/messages', function ($id) {
+        $this->app->get('/room/:id/messages', array($this, 'checkLoginOpt'), function ($id) {
             echo RoomController::getMessages($id);
         });
         $this->app->get('/room/:id/enter', array($this, 'checkLogin'), function ($id) {
@@ -77,6 +77,13 @@ class Router
 
     public function getRoomList () {
         echo RoomController::getRoomList();
+    }
+
+    // Configurable login requirement.
+    public function checkLoginOpt() {
+        if(ZC_AUTH_ALWAYS_REQUIRED) {
+            $this->checkLogin();
+        }
     }
 
     public function checkLogin() {

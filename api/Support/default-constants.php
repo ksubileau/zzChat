@@ -42,8 +42,11 @@ if ( ! function_exists('set_initial_constants'))
         set_constant( 'ZC_AUTH_PARAM_KEY', 'auth_token' );
         // ID string size
         set_constant( 'ZC_ID_LENGTH', 32 );
-        // Authentication token key. Must be a 36-character random string.
+        // Authentication token symetric key. Must be a 36-character random string.
+        // Please change this value in config.php before use !!
         set_constant( 'ZC_AUTH_TOKEN_KEY', '04b457d2b8c996fe57ae92bf779e2847' );
+        // If set to false, some non-critical API requests will be available without authentication.
+        set_constant( 'ZC_AUTH_ALWAYS_REQUIRED', true);
 
         /************************************
          * Validation constants
