@@ -25,11 +25,11 @@ if ( ! function_exists('set_initial_constants'))
         set_constant( 'ZC_DEBUG_LOG', false);
 
         /************************************
-         * Path constants
+         * Storage constants
          ************************************/
         set_constant( 'ZC_STORAGE_DIR', ABSPATH . '/Storage/');
         set_constant( 'ZC_STORAGE_DIR_PERM', 0777);
-        set_constant( 'ZC_STORAGE_JSON_PRETTY_PRINT', true);
+        set_constant( 'ZC_STORAGE_JSON_PRETTY_PRINT', false);
         // PHP < 5.4 does not support JSON pretty print. Define neutral constant to ignore the previous one.
         set_constant( 'JSON_PRETTY_PRINT', 0);
 
