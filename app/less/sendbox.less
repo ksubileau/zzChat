@@ -1,0 +1,30 @@
+/*!
+* zzChat - HTML5 Chat Application
+*
+* Send message box styles
+*
+* @author Kévin Subileau
+* @link https://github.com/ksubileau/zzChat
+* @license GNU GPLv3 (http://www.gnu.org/licenses/gpl-3.0.html also in /LICENSE)
+*/
+
+.sendbox {
+    position: absolute !important;
+    bottom: 0px;
+    height: @sendbox-height;
+    overflow: hidden;
+
+    .sendbox-inner {
+        width: 100%;
+        background-color: @sendbox-bg-color;
+        border-radius: 0px 0px 4px 4px;
+        height: 100%;
+        border-top: 1px solid rgb(205, 205, 205);
+        padding: 10px;
+    }
+
+    textarea {
+        height: 34px;
+        resize: none;
+    }
+}

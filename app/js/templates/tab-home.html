@@ -1,12 +1,12 @@
-<div class="row" style="height:100%; padding-top:15px; padding-bottom:15px;">
-    <div style="height: 100%;" class="col-md-6" id="home-room-list">
-        <div class="col-md-12" style="height: 100%; position: relative;">
-            <div style="height: 100%; width: 100%; position: relative;" class="panel panel-default">
+<div class="row tab-home-content">
+    <div id="home-room-list">
+        <div class="roomlist">
+            <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><%= i18n.t("room", { count: 10 }) %></h3>
+                    <h3 class="panel-title"><%= i18n.t("room", { count: rooms.length }) %></h3>
                 </div>
-                <div style="top: 40px; bottom: 0px; position: absolute; width: 100%;" class="scrollable" id="table-wrapper">
-                    <table style="cursor: pointer; width: 100%; max-height: 100%;" class="table-hover table-condensed" id="roomlist" >
+                <div class="scrollable table-wrapper">
+                    <table class="table-hover table-condensed" id="roomlist" >
                         <tbody>
                             <% rooms.each(function(room) { %>
                                 <tr data-room-id="<%= room.get("id") %>"><td><%= room.get("name") %></td></tr>
@@ -17,6 +17,7 @@
             </div>
         </div>
     </div>
-    <div style="height: 100%;" class="col-md-6" id="home-user-list">
+    <div id="home-user-list">
+
     </div>
 </div>

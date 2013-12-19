@@ -89,26 +89,32 @@
 		}
 	}
 
-	.userlist {
+	.userlist, .roomlist {
 		.make-md-column(12);
 		height: 100%;
 		position: relative;
+
 		.panel {
 			height: 100%;
 			width: 100%;
 			position: relative;
 		}
+
 		.table-wrapper {
 			top: 40px;
 			bottom: 0px;
 			position: absolute;
 			width: 100%;
+
 			table {
 				cursor: pointer;
 				width: 100%;
 				max-height: 100%;
 			}
 		}
+	}
+
+	.userlist {
 		td.sex-indicator {
 			width:15px;
 			line-height: inherit;
@@ -122,30 +128,46 @@
 		}
 	}
 
+	.tab-home {
+		.tab-home-content {
+			height:100%;
+			padding-top:15px;
+			padding-bottom:15px;
+		}
+
+		#home-room-list, #home-user-list {
+			.make-md-column(6);
+			height: 100%;
+		}
+	}
+
 	.tab-room {
-		#sendbox {
-			position: absolute;
-			bottom: 0px;
-			height: @sendbox-height;
-			overflow: hidden;
+		.sendbox {
+			.make-md-column(12);
 		}
 
 		#chatbox {
+			.make-row();
 		    height: 100%;
-		    /*overflow: hidden;*/
+		    // Bottom space for the send message box
 		    padding-bottom: @sendbox-height;
+
+		    .room-messages {
+				.make-md-column(9);
+				height: 100%;
+				padding: 20px 10px 20px 20px;
+		    }
+
+		    .room-user-list {
+				.make-md-column(3);
+				height: 100%;
+				padding: 20px 20px 20px 0px;
+		    }
 		}
 
-		#table-wrapper {
-		  position:relative;
-		}
-		#table-scroll {
-		  /*height:150px;
-		  overflow:auto;
-		  margin-top:20px;*/
-		}
-		#table-wrapper table {
-		  width:100%;
+		.sendbox-wrapper {
+			.make-row();
+			position: relative;
 		}
 	}
 

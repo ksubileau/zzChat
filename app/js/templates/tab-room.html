@@ -1,18 +1,18 @@
-<div class="row" id="chatbox">
-    <div class="col-md-9 room-messages" style="height: 100%; padding: 20px 10px 20px 20px;">
+<div id="chatbox">
+    <div class="room-messages">
 
     </div>
-    <div style="padding: 20px 20px 20px 0px; height: 100%;" class="col-md-3 room-user-list">
+    <div class="room-user-list">
 
     </div>
 </div>
-<div style="position: relative;" class="row">
-    <div class="col-md-12" id="sendbox">
-        <div style="width: 100%; background: none repeat scroll 0% 0% rgb(238, 238, 238); border-radius: 0px 0px 4px 4px; height: 100%; border-top: 1px solid rgb(205, 205, 205); padding: 10px;" id="sendbox-inner">
+<div class="row sendbox-wrapper">
+    <div class="sendbox">
+        <div class="sendbox-inner">
             <form role="form" class="form-inline">
                 <div class="form-group col-lg-11">
                     <label for="responsetext" class="sr-only">Votre réponse</label>
-                    <textarea style="height: 34px; resize: none;" id="responseText" placeholder="Votre réponse" class="form-control"></textarea>
+                    <textarea id="responseText" placeholder="Votre réponse" class="form-control"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary col-lg-1" id="sendResponse">Répondre</button>
              </form>
