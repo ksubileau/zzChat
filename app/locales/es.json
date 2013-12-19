@@ -14,5 +14,8 @@
     "online_users": "Usuarios en línea",
 
     "room": "Sala",
-    "room_plural": "Salas"
+    "room_plural": "Salas",
+
+    "reply": "Responder",
+    "write_a_reply": "Escribe una respuesta ..."
 }

@@ -14,5 +14,8 @@
     "online_users": "Online users",
 
     "room": "Room",
-    "room_plural": "Rooms"
+    "room_plural": "Rooms",
+
+    "reply": "Reply",
+    "write_a_reply": "Write a reply ..."
 }

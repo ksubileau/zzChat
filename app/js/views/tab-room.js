@@ -7,18 +7,24 @@
 * @link https://github.com/ksubileau/zzChat
 * @license GNU GPLv3 (http://www.gnu.org/licenses/gpl-3.0.html also in /LICENSE)
 */
-define(['jquery', 'underscore', 'backbone', 'i18next', 'views/tab', 'views/userlist', 'views/messagebox', 'text!templates/tab-room.html'],
-    function($, _, Backbone, i18n, TabItemView, UserListView, MessageBoxView, roomTabItem){
+define([
+        'jquery',
+        'underscore',
+        'backbone',
+        'i18next',
+        'views/tab',
+        'views/userlist',
+        'views/messagebox',
+        'views/sendbox',
+        'text!templates/tab-room.html'
+    ],
+    function($, _, Backbone, i18n, TabItemView, UserListView, MessageBoxView, SendBoxView, roomTabItem){
         'use strict';
 
         var RoomTabItem = TabItemView.extend({
             tabClassName: 'tab-room',
 
             template: _.template(roomTabItem),
-
-            events : {
-                "click #sendResponse": "sendMessage",
-            },
 
             // Tab properties
             closeable: true,
@@ -37,6 +43,7 @@ define(['jquery', 'underscore', 'backbone', 'i18next', 'views/tab', 'views/userl
                 this.room = room;
                 this.userlistview = new UserListView(this.room.users, i18n.t("online_users"));
                 this.messageboxview = new MessageBoxView(this.room.messages);
+                this.sendboxview = new SendBoxView();
 
                 this.on('tab:open', function() {
                     this.room.enter();
@@ -48,6 +55,8 @@ define(['jquery', 'underscore', 'backbone', 'i18next', 'views/tab', 'views/userl
                     this.userlistview.restoreScroll();
                     this.messageboxview.restoreScroll();
                 }, this);
+
+                this.listenTo(this.sendboxview, 'sendbox:message', this.sendMessage);
             },
 
             render: function() {
@@ -56,9 +65,6 @@ define(['jquery', 'underscore', 'backbone', 'i18next', 'views/tab', 'views/userl
                 }));
 
                 this.$el.attr('id', this.getId());
-
-                // Placeholder support for IE9 and others fu**ing browers.
-                $('input, textarea', this.$el).placeholder();
 
                 // Render users list
                 this.userlistview.setElement(this.$('.room-user-list')).render();
@@ -72,13 +78,17 @@ define(['jquery', 'underscore', 'backbone', 'i18next', 'views/tab', 'views/userl
                 // Delegate Events
                 this.messageboxview.delegateEvents();
 
+                // Render send box view
+                this.sendboxview.setElement(this.$('.sendbox-wrapper')).render();
+                this.rendered(this.sendboxview);
+                // Delegate Events
+                this.sendboxview.delegateEvents();
+
                 return this;
             },
 
-            sendMessage: function(e) {
-                e.preventDefault();
-                this.room.sendMessage($('#responseText').val());
-                $('#responseText').val('');
+            sendMessage: function(message) {
+                this.room.sendMessage(message);
             }
         });
         return RoomTabItem;
