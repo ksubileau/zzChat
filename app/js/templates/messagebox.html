@@ -1,6 +1,6 @@
 <div class="messagebox">
     <div class="panel panel-default">
-        <div class="messagebox-panel-inner">
+        <div class="messagebox-panel-inner scrollable">
         <% messages.each(function(message) { %>
             <div class="message <%= (me && message.getAuthorID()==me.id)?'message-by-me':'' %>">
                 <div class="message-sender"><%= message.getAuthorNick() %></div>

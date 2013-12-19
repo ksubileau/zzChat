@@ -20,6 +20,7 @@ define(['jquery', 'underscore', 'backbone', 'i18next', 'views/disposable', 'text
 
             title: "",
             activeOnly: true,
+            scrollPos: 0,
 
             initialize: function(users, title, activeOnly) {
                 this.users = users;
@@ -29,7 +30,7 @@ define(['jquery', 'underscore', 'backbone', 'i18next', 'views/disposable', 'text
                 if(activeOnly) {
                     this.activeOnly = activeOnly;
                 }
-                this.listenTo(this.users, 'all', _.debounce(this.render, 500, true));
+                this.listenTo(this.users, 'all', _.debounce(this.update, 500, true));
             },
 
             render: function() {
@@ -53,6 +54,20 @@ define(['jquery', 'underscore', 'backbone', 'i18next', 'views/disposable', 'text
             showPrivate : function(userId){
                 zzChat.router.navigate("private-" + userId, true);
             },
+
+            update: function() {
+                this.scrollPos = this.$(".scrollable").scrollTop();
+                this.render();
+                this.restoreScroll();
+            },
+
+            restoreScroll: function() {
+                this.$(".scrollable").scrollTop(this.scrollPos);
+            },
+
+            onDispose: function() {
+                this.scrollPos = this.$(".scrollable").scrollTop();
+            }
 
         });
         return UserListView;

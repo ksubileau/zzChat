@@ -21,10 +21,12 @@ define([
         var MessageBoxView = DisposableView.extend({
             template: _.template(messagebox),
 
+            scrollPos: 0,
+
             initialize: function(messagelist) {
                 this.messagelist = messagelist;
 
-                this.listenTo(this.messagelist, 'all', _.debounce(this.render, 500, true));
+                this.listenTo(this.messagelist, 'all', _.debounce(this.update, 500, true));
             },
 
             render: function() {
@@ -35,6 +37,24 @@ define([
                 }));
 
                 return this;
+            },
+
+            update: function() {
+                this.scrollPos = this.$(".scrollable").scrollTop();
+                var lockBottom = (this.$(".scrollable").prop('scrollHeight') - this.scrollPos == this.$(".scrollable").outerHeight());
+                this.render();
+                this.restoreScroll(lockBottom);
+            },
+
+            restoreScroll: function(lockBottom) {
+                if(lockBottom) {
+                    this.scrollPos = this.$(".scrollable").prop('scrollHeight');
+                }
+                this.$(".scrollable").scrollTop(this.scrollPos);
+            },
+
+            onDispose: function() {
+                this.scrollPos = this.$(".scrollable").scrollTop();
             },
 
         });

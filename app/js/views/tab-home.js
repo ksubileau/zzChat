@@ -29,9 +29,15 @@ define(['jquery', 'underscore', 'backbone', 'i18next', 'views/tab', 'views/userl
                 return i18n.t("home");
             },
 
+            scrollPos: 0,
+
             initialize: function() {
                 this.userlistview = new UserListView(zzChat.users, i18n.t("online_users"));
-                this.listenTo(zzChat.rooms, 'all', _.debounce(this.render, 500, true));
+                this.on('tab:show', function() {
+                    this.userlistview.restoreScroll();
+                    this.restoreScroll();
+                }, this);
+                this.listenTo(zzChat.rooms, 'all', _.debounce(this.update, 500, true));
             },
 
             render: function() {
@@ -59,6 +65,20 @@ define(['jquery', 'underscore', 'backbone', 'i18next', 'views/tab', 'views/userl
                 e.preventDefault();
                 var roomId = $(e.currentTarget).data('room-id');
                 zzChat.router.navigate("room-" + roomId, true);
+            },
+
+            update: function() {
+                this.scrollPos = this.$("#home-room-list .scrollable").scrollTop();
+                this.render();
+                this.restoreScroll();
+            },
+
+            restoreScroll: function() {
+                this.$("#home-room-list .scrollable").scrollTop(this.scrollPos);
+            },
+
+            onDispose: function() {
+                this.scrollPos = this.$("#home-room-list .scrollable").scrollTop();
             },
         });
         return HomeTabItem;

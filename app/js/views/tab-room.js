@@ -35,14 +35,19 @@ define(['jquery', 'underscore', 'backbone', 'i18next', 'views/tab', 'views/userl
 
             initialize : function (room) {
                 this.room = room;
+                this.userlistview = new UserListView(this.room.users, i18n.t("online_users"));
+                this.messageboxview = new MessageBoxView(this.room.messages);
+
                 this.on('tab:open', function() {
                     this.room.enter();
                 }, this);
                 this.on('tab:close', function() {
                     this.room.leave();
                 }, this);
-                this.userlistview = new UserListView(this.room.users, i18n.t("online_users"));
-                this.messageboxview = new MessageBoxView(this.room.messages);
+                this.on('tab:show', function() {
+                    this.userlistview.restoreScroll();
+                    this.messageboxview.restoreScroll();
+                }, this);
             },
 
             render: function() {
