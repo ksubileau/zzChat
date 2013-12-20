@@ -17,4 +17,4 @@ zzChat is released under the GPL v3 (or later) license, see [/LICENSE](/LICENSE)
   * A recent web browser (IE < 9 isn't supported)
 
 ## Code Status
-* Travis-CI: [![Build Status](https://api.travis-ci.com/ksubileau/zzChat.png?token=YeqZq44fjDx7gzspvUoV&branch=master)](https://magnum.travis-ci.com/ksubileau/zzChat)
+* Travis-CI: [![Build Status](https://travis-ci.org/ksubileau/zzChat.png?branch=master)](https://travis-ci.org/ksubileau/zzChat)
