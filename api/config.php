@@ -9,6 +9,6 @@
  */
 
 // Debug constants
-define( 'ZC_DEBUG', true );
-define( 'ZC_DEBUG_DISPLAY', true);
-define( 'ZC_DEBUG_LOG', false);
+//define( 'ZC_DEBUG', false );
+//define( 'ZC_DEBUG_DISPLAY', true);
+//define( 'ZC_DEBUG_LOG', false);
