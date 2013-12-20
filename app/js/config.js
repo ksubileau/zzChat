@@ -32,6 +32,9 @@ define({
     defaultLanguage : null,
     //defaultLanguage : "en",
 
+    // Stores user data and proposes them the next time.
+    enableRememberMe: true,
+
     api: {
         url: '/api',
 
