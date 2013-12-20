@@ -22,5 +22,6 @@
     "strikethrough": "Barré",
 
     "reply": "Répondre",
-    "write_a_reply": "Votre réponse ..."
+    "write_a_reply": "Votre réponse ...",
+    "press_enter_to_send" : "Appuyer sur Entrée pour envoyer"
 }

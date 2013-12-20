@@ -22,5 +22,6 @@
     "strikethrough": "Tachado",
 
     "reply": "Responder",
-    "write_a_reply": "Escribe una respuesta ..."
+    "write_a_reply": "Escribe una respuesta ...",
+    "press_enter_to_send" : "Pulsa \"Enter\" para enviar"
 }

@@ -22,5 +22,6 @@
     "strikethrough": "Strikethrough",
 
     "reply": "Reply",
-    "write_a_reply": "Write a reply ..."
+    "write_a_reply": "Write a reply ...",
+    "press_enter_to_send" : "Press Enter to send"
 }

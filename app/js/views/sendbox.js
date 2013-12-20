@@ -26,13 +26,16 @@ define([
                 "click .format-toolbar button": "formatBtnClick",
                 "keyup #responseText": "onKeyUp",
                 "keydown #responseText": "onKeyDown",
+                "change #enterToSend": "toggleEnterToSend",
             },
 
             currentText: '',
+            enterToSend: false,
 
             render: function() {
                 this.$el.html(this.template({
                     i18n: i18n,
+                    enterToSend: this.enterToSend
                 }));
 
                 // Placeholder support for IE9 and others fu**ing browers.
@@ -48,7 +51,10 @@ define([
                     }
                 });
 
+                // Restore state
                 this.$('#responseText').val(this.currentText);
+                this.$('#enterToSend').attr("checked", this.enterToSend);
+                this.$('#sendResponse').toggle(!this.enterToSend);
 
                 return this;
             },
@@ -58,7 +64,7 @@ define([
             },
 
             triggerMessage: function(e) {
-                e.preventDefault();
+                e && e.preventDefault();
                 // Signal message ready to send
                 this.trigger('sendbox:message', this.$('#responseText').val(), 'bbcode');
                 // Clear input value
@@ -110,7 +116,12 @@ define([
             },
 
             onKeyUp: function(e) {
-                if(e.which == 17) this.isCtrl=false;
+                if(e.which == 17)
+                    this.isCtrl=false;
+                else if (this.enterToSend && e.which == 13) {
+                    // Press Enter to send
+                    this.triggerMessage(e);
+                }
             },
 
             onKeyDown: function (e) {
@@ -131,6 +142,11 @@ define([
                     return false;
                 }
             },
+
+            toggleEnterToSend: function (e) {
+                this.enterToSend = $(e.currentTarget).is(":checked");
+                this.$("#sendResponse").toggle(!this.enterToSend);
+            }
 
         });
         return SendBoxView;
