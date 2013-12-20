@@ -16,6 +16,11 @@
     "room": "Salon",
     "room_plural": "Salons",
 
+    "bold": "Gras",
+    "italic": "Italique",
+    "underline": "Souligné",
+    "strikethrough": "Barré",
+
     "reply": "Répondre",
     "write_a_reply": "Votre réponse ..."
 }

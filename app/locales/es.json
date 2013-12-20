@@ -16,6 +16,11 @@
     "room": "Sala",
     "room_plural": "Salas",
 
+    "bold": "Negrita",
+    "italic": "Cursiva",
+    "underline": "Subrayado",
+    "strikethrough": "Tachado",
+
     "reply": "Responder",
     "write_a_reply": "Escribe una respuesta ..."
 }

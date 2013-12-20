@@ -16,6 +16,11 @@
     "room": "Room",
     "room_plural": "Rooms",
 
+    "bold": "Bold",
+    "italic": "Italic",
+    "underline": "Underline",
+    "strikethrough": "Strikethrough",
+
     "reply": "Reply",
     "write_a_reply": "Write a reply ..."
 }

@@ -13,10 +13,10 @@
                         <button class="btn btn-primary btn" type="submit" id="sendResponse"><%= i18n.t("reply") %></button>
                     </div>
                     <div class="btn-group format-toolbar">
-                        <button type="button" data-bbcode-tag="b" class="btn btn-default"><i class="fa fa-bold"></i></button>
-                        <button type="button" data-bbcode-tag="i" class="btn btn-default"><i class="fa fa-italic"></i></button>
-                        <button type="button" data-bbcode-tag="u" class="btn btn-default"><i class="fa fa-underline"></i></button>
-                        <button type="button" data-bbcode-tag="s" class="btn btn-default"><i class="fa fa-strikethrough"></i></button>
+                        <button type="button" data-toggle="tooltip" data-bbcode-tag="b" data-title="<%= i18n.t("bold") %> (Ctrl+B)" class="btn btn-default"><i class="fa fa-bold"></i></button>
+                        <button type="button" data-toggle="tooltip" data-bbcode-tag="i" data-title="<%= i18n.t("italic") %> (Ctrl+I)" class="btn btn-default"><i class="fa fa-italic"></i></button>
+                        <button type="button" data-toggle="tooltip" data-bbcode-tag="u" data-title="<%= i18n.t("underline") %> (Ctrl+U)" class="btn btn-default"><i class="fa fa-underline"></i></button>
+                        <button type="button" data-toggle="tooltip" data-bbcode-tag="s" data-title="<%= i18n.t("strikethrough") %>" class="btn btn-default"><i class="fa fa-strikethrough"></i></button>
                     </div>
                 </div>
             </div>

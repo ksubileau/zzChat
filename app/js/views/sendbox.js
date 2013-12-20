@@ -38,6 +38,16 @@ define([
                 // Placeholder support for IE9 and others fu**ing browers.
                 $('input, textarea', this.$el).placeholder();
 
+                // Tooltips on formatting buttons
+                this.$('.format-toolbar button').tooltip({
+                    placement:'top',
+                    container: 'body',
+                    delay: {
+                        show: 800,
+                        hide: 0
+                    }
+                });
+
                 this.$('#responseText').val(this.currentText);
 
                 return this;
