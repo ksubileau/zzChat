@@ -87,8 +87,8 @@ define([
                 return this;
             },
 
-            sendMessage: function(message) {
-                this.room.sendMessage(message);
+            sendMessage: function(message, format) {
+                this.room.sendMessage(message, format);
             }
         });
         return RoomTabItem;

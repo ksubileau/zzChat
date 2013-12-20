@@ -71,6 +71,9 @@ if ( ! function_exists('set_initial_constants'))
         // Must be greater than ZC_USER_AUTO_LOGOUT_TIME
         set_constant( 'ZC_USER_EXPIRE_TIME', 2 * 60 * 60);
 
+        // Allowed message formats, separated by a | (vertical bar)
+        set_constant( 'ZC_MESSAGE_ALLOWED_FORMAT', 'text|bbcode');
+
         /************************************
          * Server Sent Events constants
          ************************************/

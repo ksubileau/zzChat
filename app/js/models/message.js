@@ -20,6 +20,7 @@ define(['underscore', 'backbone'],
                 author: null,
                 text: '',
                 sent_time: null,
+                format: 'text'
             },
 
             getAuthor: function() {
@@ -49,6 +50,41 @@ define(['underscore', 'backbone'],
                 } else {
                     return options.defaultNick;
                 }
+            },
+
+            getFormattedText: function() {
+                if(this.get("format") == 'bbcode') {
+                    return this.bbcodeDecode();
+                }
+                else { //Simple text or unknown format
+                    return this.get("text");
+                }
+
+            },
+
+            bbcodeDecode: function() {
+                var message = this.get("text");
+                var format_search =  [
+                    /\[b\](.*?)\[\/b\]/ig,
+                    /\[i\](.*?)\[\/i\]/ig,
+                    /\[u\](.*?)\[\/u\]/ig,
+                    /\[s\](.*?)\[\/s\]/ig
+                ];
+
+                // The array of strings to replace matches with
+                var format_replace = [
+                    '<strong>$1</strong>',
+                    '<em>$1</em>',
+                    '<span style="text-decoration: underline;">$1</span>',
+                    '<span style="text-decoration: line-through">$1</span>'
+                ];
+
+                // Perform the conversion
+                for (var i =0;i<format_search.length;i++) {
+                  message = message.replace(format_search[i], format_replace[i]);
+                }
+
+                return message;
             },
 
             validate: function(attrs) {

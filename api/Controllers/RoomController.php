@@ -80,7 +80,14 @@ class RoomController extends Controller
 
     public static function postMessage($id, $postData) {
         if(empty($postData['text']))
-            throw new ApiException(400, "Invalid or incomplete input.");
+            throw new ApiException(400, "Message could not be empty.");
+
+        if(empty($postData['format'])) {
+            // Default value if not specified
+            $postData['format'] = 'text';
+        }
+        else if (!preg_match('/\A'.ZC_MESSAGE_ALLOWED_FORMAT.'\z/', $postData['format']))
+            throw new ApiException(400, "Invalid message format.");
 
         // Sanitize input
         $postData['text'] = htmlspecialchars($postData['text'], ENT_COMPAT, 'UTF-8');
@@ -95,7 +102,7 @@ class RoomController extends Controller
 
         //TODO check that the user is register on the room
 
-        $room->postMessages($uid, $postData['text']);
+        $room->postMessages($uid, $postData['text'], $postData['format']);
 
         // TODO return something
         //return json_encode($messages);

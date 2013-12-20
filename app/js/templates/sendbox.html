@@ -1,11 +1,25 @@
 <div class="sendbox">
     <div class="sendbox-inner">
-        <form role="form" class="form-inline">
-            <div class="form-group col-lg-11">
-                <label for="responseText" class="sr-only"><%= i18n.t("write_a_reply") %></label>
-                <textarea id="responseText" placeholder="<%= i18n.t("write_a_reply") %>" class="form-control"></textarea>
+        <form role="form" class="form">
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label for="responseText" class="sr-only"><%= i18n.t("write_a_reply") %></label>
+                    <textarea id="responseText" placeholder="<%= i18n.t("write_a_reply") %>" class="form-control"></textarea>
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary col-lg-1" id="sendResponse"><%= i18n.t("reply") %></button>
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <div class="pull-right">
+                        <button class="btn btn-primary btn" type="submit" id="sendResponse"><%= i18n.t("reply") %></button>
+                    </div>
+                    <div class="btn-group format-toolbar">
+                        <button type="button" data-bbcode-tag="b" class="btn btn-default"><i class="fa fa-bold"></i></button>
+                        <button type="button" data-bbcode-tag="i" class="btn btn-default"><i class="fa fa-italic"></i></button>
+                        <button type="button" data-bbcode-tag="u" class="btn btn-default"><i class="fa fa-underline"></i></button>
+                        <button type="button" data-bbcode-tag="s" class="btn btn-default"><i class="fa fa-strikethrough"></i></button>
+                    </div>
+                </div>
+            </div>
          </form>
     </div>
 </div>

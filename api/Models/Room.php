@@ -165,11 +165,12 @@ class Room extends Model
 	 *
 	 * @return array
 	 */
-	public function postMessages($author, $text, $sent_time = NULL) {
+	public function postMessages($author, $text, $format = 'text', $sent_time = NULL) {
 		$message = new \stdClass;
 		$message->author = is_object($author)?$author->getID():$author;
 		$message->text = $text;
 		$message->sent_time = $sent_time!=NULL?$sent_time:time();
+        $message->format = $format;
 
         $messages = $this->getMessages();
 

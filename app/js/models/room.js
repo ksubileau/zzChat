@@ -97,12 +97,15 @@ define([
                 this.users.fetch();
             },
 
-		    sendMessage: function(message) {
+		    sendMessage: function(message, format) {
 		    	var that = this;
 		    	// TODO Use Message model
+		    	if(!format) {
+		    		format = "text";
+		    	}
 		        $.ajax({
 				    contentType: 'application/json',
-				    data: JSON.stringify({"text":message}),
+				    data: JSON.stringify({"text":message, "format":format}),
 				    //dataType: 'json',
 		        	beforeSend: function(xhr) {
                         xhr.setRequestHeader(zzChat.options.api.authHeaderName, zzChat.getAuthToken());
