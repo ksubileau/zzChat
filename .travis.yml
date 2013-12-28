@@ -8,6 +8,6 @@ php:
 before_script:
   - uname -a
   - date
-  - cd tests
+  - cd tests/PHPUnit
 
 script: phpunit --coverage-text
