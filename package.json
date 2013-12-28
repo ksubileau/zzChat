@@ -1,0 +1,39 @@
+{
+    "name": "zzChat",
+    "version": "1.0.0-beta.1",
+    "description": "A multi-user chat client, using a REST JSON API and a Javascript client",
+    "author": {
+        "name": "Kevin Subileau"
+    },
+    "licenses": [{
+        "type": "GPL-3.0+",
+        "url": "http://www.gnu.org/licenses/gpl-3.0.html"
+    }],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ksubileau/zzChat.git"
+    },
+    "bugs": {
+        "url": "https://github.com/ksubileau/zzChat/issues"
+    },
+    "homepage": "https://github.com/ksubileau/zzChat",
+    "devDependencies": {
+        "grunt": "~0.4.1",
+        "grunt-contrib-requirejs": "~0.4.1",
+        "grunt-contrib-less": "~0.8.3",
+        "clean-css": "~2.0.0",
+        "grunt-contrib-jshint": "~0.8.0",
+        "grunt-contrib-clean": "~0.5.0",
+        "grunt-contrib-copy": "~0.5.0",
+        "grunt-contrib-compress": "~0.5.0",
+        "grunt-contrib-cssmin": "~0.7.0",
+        "grunt-regex-replace": "~0.2.5",
+        "grunt-phpunit": "~0.3.0",
+        "grunt-banner": "~0.2.0",
+        "matchdep": "~0.1.2"
+    },
+    "engines": {
+        "node": ">=0.8.0"
+    },
+    "readmeFilename": "README.md"
+}
