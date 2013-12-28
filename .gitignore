@@ -1,6 +1,10 @@
 /.local/
 /.settings/
 /app/css/*
-!/app/css/style.css
+#!/app/css/style.css
 koala-config.json
 Storage/
+node_modules
+.tmp
+build
+dist
