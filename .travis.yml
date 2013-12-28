@@ -24,5 +24,6 @@ before_script:
   - date
   - phantomjs --version
   - cd tests/
+  - chmod a+x travis.sh
 
 script: ./travis.sh
