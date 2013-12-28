@@ -26,10 +26,10 @@
 
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">../api</directory>
+            <directory suffix=".php">../../api</directory>
             <exclude>
-                <directory suffix=".php">../api/Vendor</directory>
-                <file>../api/Support/default-constants.php</file>
+                <directory suffix=".php">../../api/Vendor</directory>
+                <file>../../api/Support/default-constants.php</file>
             </exclude>
         </whitelist>
     </filter>
