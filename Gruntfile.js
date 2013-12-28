@@ -42,6 +42,13 @@ module.exports = function (grunt) {
             }
         },
 
+        qunit: {
+            options: {
+                timeout: 15000,
+            },
+            all: ['tests/javascript/index.html']
+        },
+
         jshint: {
             options: {
                 node: true,
@@ -232,7 +239,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('tests', [
         'phpunit',
-        //'jasmine'
+        'qunit'
     ]);
 
     grunt.registerTask('build', [
