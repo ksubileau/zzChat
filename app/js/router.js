@@ -20,14 +20,14 @@ define([
             currentView: null,
 
             routes: {
-              "": "loginView",
-              "home": "homeTab",
-              "room-:id": "openRoom" // Room tab
-              /*
-              // TODO Routes :
-              "private-:uid": // Private conversation with specified UID
-              "settings": // User settings
-              */
+                '': 'loginView',
+                'home': 'homeTab',
+                'room-:id': 'openRoom' // Room tab
+                /*
+                // TODO Routes :
+                'private-:uid': // Private conversation with specified UID
+                'settings': // User settings
+                */
             },
 
             // Constructor
@@ -38,30 +38,31 @@ define([
 
 
             changeView: function(view) {
-                if(null != this.currentView)
+                if(this.currentView !== null) {
                     this.currentView.dispose();
+                }
                 this.currentView = view;
                 this.currentView.render();
             },
 
             loginView: function(){
                 if(zzChat.isLogin()) {
-                    this.navigate("#/home", true);
+                    this.navigate('#/home', true);
                     return;
                 }
-                this.navigate("");
-                this.changeView(new HomeView);
+                this.navigate('');
+                this.changeView(new HomeView());
             },
 
             homeTab: function() {
                 // Redirect to login page if user is not logged in.
                 if(!zzChat.isLogin()) {
-                    this.navigate("", true);
+                    this.navigate('', true);
                     return;
                 }
                 if(this.currentView === null || !this.currentView.showTab) {
-                  var mainView = new MainView
-                  this.changeView(mainView);
+                    var mainView = new MainView();
+                    this.changeView(mainView);
                 }
                 this.currentView.showTab('home');
             },
@@ -69,12 +70,12 @@ define([
             openRoom: function(roomId) {
                 // Redirect to login page if user is not logged in.
                 if(!zzChat.isLogin()) {
-                    this.navigate("", true);
+                    this.navigate('', true);
                     return;
                 }
                 if(this.currentView === null || !this.currentView.showTab) {
-                  var mainView = new MainView
-                  this.changeView(mainView);
+                    var mainView = new MainView();
+                    this.changeView(mainView);
                 }
                 this.currentView.openRoom(roomId);
             }

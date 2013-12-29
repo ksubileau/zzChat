@@ -28,20 +28,20 @@ define([
 
             // Tab properties
             closeable: true,
-            icon: "comment",
+            icon: 'comment',
             room: null,
 
             title: function () {
-                return this.room.get("name");
+                return this.room.get('name');
             },
 
             href: function() {
-                return "room-" + this.getId();
+                return 'room-' + this.getId();
             },
 
             initialize : function (room) {
                 this.room = room;
-                this.userlistview = new UserListView(this.room.users, i18n.t("online_users"));
+                this.userlistview = new UserListView(this.room.users, i18n.t('online_users'));
                 this.messageboxview = new MessageBoxView(this.room.messages);
                 this.sendboxview = new SendBoxView();
 

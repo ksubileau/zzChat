@@ -44,6 +44,8 @@ require.config({
 
 require(['app'],
     function(ZZChat) {
+        'use strict';
+
         ZZChat.init();
     }
 );

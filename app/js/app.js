@@ -79,7 +79,7 @@ define([
 
                 var i18nOpts = zzChat.options.i18next;
                 // Configure default language if specified
-                if (this.options.defaultLanguage != null) {
+                if (this.options.defaultLanguage !== null) {
                     if (this.isValidLangCode(this.options.defaultLanguage)) {
                         i18nOpts = _.extend(i18nOpts, {lng:this.options.defaultLanguage});
                     }
@@ -89,7 +89,7 @@ define([
                 i18n.init(i18nOpts);
 
                 // Listen to succesfull login event
-                this.on("zzChat:loginSuccess", this.onLoginSuccess);
+                this.on('zzChat:loginSuccess', this.onLoginSuccess);
 
                 // Start application
                 this.router = new Router();
@@ -100,11 +100,11 @@ define([
                 var url = _.isFunction(model.url) ? model.url() : model.url;
 
                 if (url) {
-                    url = rootUrl + (rootUrl.charAt(rootUrl.length - 1) === '/' ? '' : '/')
-                                         + (url.charAt(0) === '/' ? url.substr(1) : url);
+                    url = rootUrl + (rootUrl.charAt(rootUrl.length - 1) === '/' ? '' : '/') +
+                                        (url.charAt(0) === '/' ? url.substr(1) : url);
                     if(extension) {
-                        url = url + (url.charAt(url.length - 1) === '/' ? '' : '/')
-                                         + (extension.charAt(0) === '/' ? extension.substr(1) : extension);
+                        url = url + (url.charAt(url.length - 1) === '/' ? '' : '/') +
+                                        (extension.charAt(0) === '/' ? extension.substr(1) : extension);
                     }
                 }
                 return url;
@@ -115,7 +115,7 @@ define([
             },
 
             isLogin: function() {
-                return this.getCurrentUser() != null && this.getAuthToken() != null;
+                return this.getCurrentUser() !== null && this.getAuthToken() !== null;
             },
 
             setAuthToken: function(value) {
@@ -138,19 +138,21 @@ define([
                 // Get the current language of i18next.
                 var selectedLng = i18n.lng();
                 // Check that it corresponds to a valid language code.
-                if(this.isValidLangCode(selectedLng))
+                if(this.isValidLangCode(selectedLng)) {
                     return selectedLng;
+                }
                 // Else try to remove the second part of the language code.
                 if(_.contains(selectedLng, '-')) {
                     selectedLng = selectedLng.split('-')[0];
-                    if(this.isValidLangCode(selectedLng))
+                    if(this.isValidLangCode(selectedLng)) {
                         return selectedLng;
+                    }
                 }
                 return null;
             },
 
             isValidLangCode: function(langCode) {
-                return _.contains(_.pluck(this.options.langAvailable, "langcode"), langCode);
+                return _.contains(_.pluck(this.options.langAvailable, 'langcode'), langCode);
             },
 
             onLoginSuccess: function(loginInfo) {
@@ -167,18 +169,20 @@ define([
                 this.poller.start();
 
                 // Open Home tab
-                this.router.navigate("/home", {trigger : true});
+                this.router.navigate('/home', {trigger : true});
             },
 
-            onUsersChanged: function(data) {
+            onUsersChanged: function() {
                 this.users.fetch();
             },
 
-            onNewRoom: function(data) {
+            onNewRoom: function() {
                 this.rooms.fetch();
             }
-        }
+        };
+
         _.extend(zzChat, Backbone.Events);
+
         return zzChat;
     }
 );

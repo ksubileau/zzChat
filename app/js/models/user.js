@@ -8,28 +8,29 @@
 * @license GNU GPLv3 (http://www.gnu.org/licenses/gpl-3.0.html also in /LICENSE)
 */
 define(['underscore', 'backbone'],
-	function(_, Backbone){
-    	'use strict';
+    function(_, Backbone){
+        'use strict';
 
-		var UserModel = Backbone.Model.extend({
-			idAttribute: 'id',
+        var UserModel = Backbone.Model.extend({
+            idAttribute: 'id',
 
-			urlRoot: '/user',
+            urlRoot: '/user',
 
-		    defaults: {
-		        nick: '',
-				age: '',
-				sex: '',
-				isActive: true,
-		    },
+            defaults: {
+                nick: '',
+                age: '',
+                sex: '',
+                isActive: true,
+            },
 
-		    validate: function(attrs) {
-		        errors = [];
+            validate: function(/* attrs */) {
+                var errors = [];
 
-		        if(errors.length > 0)
-		           return errors;
-		        }
-		});
-		return UserModel;
-	}
+                if(errors.length > 0) {
+                    return errors;
+                }
+            }
+        });
+        return UserModel;
+    }
 );

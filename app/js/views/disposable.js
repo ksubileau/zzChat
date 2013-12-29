@@ -23,8 +23,9 @@ define(['jquery', 'underscore', 'backbone'],
                     this.renderedSubViews.push(subView);
                 }
 
-                if (subView.onRendered)
+                if (subView.onRendered) {
                     subView.onRendered();
+                }
 
                 return subView;
             },
@@ -36,12 +37,14 @@ define(['jquery', 'underscore', 'backbone'],
 
             // Cleanly disposes this view and all of it's rendered subviews
             dispose: function() {
-                if (this.onDispose)
+                if (this.onDispose) {
                     this.onDispose();
+                }
 
                 if (this.renderedSubViews) {
-                    for (var i = 0; i < this.renderedSubViews.length; i++)
+                    for (var i = 0; i < this.renderedSubViews.length; i++) {
                         this.renderedSubViews[i].dispose();
+                    }
                 }
 
                 this.$el.empty();

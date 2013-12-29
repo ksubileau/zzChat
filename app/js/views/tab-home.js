@@ -17,22 +17,22 @@ define(['jquery', 'underscore', 'backbone', 'i18next', 'views/tab', 'views/userl
             template: _.template(homeTabItem),
 
             events : {
-                "click #roomlist tr": "showRoom",
+                'click #roomlist tr': 'showRoom',
             },
 
             // Tab properties
-            id:"home",
-            href:"home",
+            id:'home',
+            href:'home',
             closeable: false,
-            icon: "home",
+            icon: 'home',
             title: function() {
-                return i18n.t("home");
+                return i18n.t('home');
             },
 
             scrollPos: 0,
 
             initialize: function() {
-                this.userlistview = new UserListView(zzChat.users, i18n.t("online_users"));
+                this.userlistview = new UserListView(zzChat.users, i18n.t('online_users'));
                 this.on('tab:show', function() {
                     this.userlistview.restoreScroll();
                     this.restoreScroll();
@@ -64,21 +64,21 @@ define(['jquery', 'underscore', 'backbone', 'i18next', 'views/tab', 'views/userl
             showRoom : function(e){
                 e.preventDefault();
                 var roomId = $(e.currentTarget).data('room-id');
-                zzChat.router.navigate("room-" + roomId, true);
+                zzChat.router.navigate('room-' + roomId, true);
             },
 
             update: function() {
-                this.scrollPos = this.$("#home-room-list .scrollable").scrollTop();
+                this.scrollPos = this.$('#home-room-list .scrollable').scrollTop();
                 this.render();
                 this.restoreScroll();
             },
 
             restoreScroll: function() {
-                this.$("#home-room-list .scrollable").scrollTop(this.scrollPos);
+                this.$('#home-room-list .scrollable').scrollTop(this.scrollPos);
             },
 
             onDispose: function() {
-                this.scrollPos = this.$("#home-room-list .scrollable").scrollTop();
+                this.scrollPos = this.$('#home-room-list .scrollable').scrollTop();
             },
         });
         return HomeTabItem;

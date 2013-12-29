@@ -15,10 +15,10 @@ define(['jquery', 'underscore', 'backbone', 'i18next', 'views/disposable', 'text
             template: _.template(userlist),
 
             events : {
-                "click .userlist tr": "rowClick",
+                'click .userlist tr': 'rowClick',
             },
 
-            title: "",
+            title: '',
             activeOnly: true,
             scrollPos: 0,
 
@@ -52,21 +52,21 @@ define(['jquery', 'underscore', 'backbone', 'i18next', 'views/disposable', 'text
 
             // Triggered when the user wants to chat in private with another user.
             showPrivate : function(userId){
-                zzChat.router.navigate("private-" + userId, true);
+                zzChat.router.navigate('private-' + userId, true);
             },
 
             update: function() {
-                this.scrollPos = this.$(".scrollable").scrollTop();
+                this.scrollPos = this.$('.scrollable').scrollTop();
                 this.render();
                 this.restoreScroll();
             },
 
             restoreScroll: function() {
-                this.$(".scrollable").scrollTop(this.scrollPos);
+                this.$('.scrollable').scrollTop(this.scrollPos);
             },
 
             onDispose: function() {
-                this.scrollPos = this.$(".scrollable").scrollTop();
+                this.scrollPos = this.$('.scrollable').scrollTop();
             }
 
         });

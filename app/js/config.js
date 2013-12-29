@@ -12,25 +12,25 @@ define({
     // Otherwise take the array as it.
     langAvailable : [
         {
-            "langcode": "en",
-            "fullname":"English",
-            "flagcode":"gb",
+            'langcode': 'en',
+            'fullname':'English',
+            'flagcode':'gb',
         },
         {
-            "langcode": "fr",
-            "fullname":"Français",
-            "flagcode":"fr",
+            'langcode': 'fr',
+            'fullname':'Français',
+            'flagcode':'fr',
         },
         {
-            "langcode": "es",
-            "fullname":"Español",
-            "flagcode":"es",
+            'langcode': 'es',
+            'fullname':'Español',
+            'flagcode':'es',
         },
     ],
 
     // Choose the starting language or enable autodetection if null.
     defaultLanguage : null,
-    //defaultLanguage : "en",
+    //defaultLanguage : 'en',
 
     // Stores user data and proposes them the next time.
     enableRememberMe: true,

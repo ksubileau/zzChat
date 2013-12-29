@@ -40,21 +40,21 @@ define([
             },
 
             update: function() {
-                this.scrollPos = this.$(".scrollable").scrollTop();
-                var lockBottom = (this.$(".scrollable").prop('scrollHeight') - this.scrollPos == this.$(".scrollable").outerHeight());
+                this.scrollPos = this.$('.scrollable').scrollTop();
+                var lockBottom = (this.$('.scrollable').prop('scrollHeight') - this.scrollPos === this.$('.scrollable').outerHeight());
                 this.render();
                 this.restoreScroll(lockBottom);
             },
 
             restoreScroll: function(lockBottom) {
                 if(lockBottom) {
-                    this.scrollPos = this.$(".scrollable").prop('scrollHeight');
+                    this.scrollPos = this.$('.scrollable').prop('scrollHeight');
                 }
-                this.$(".scrollable").scrollTop(this.scrollPos);
+                this.$('.scrollable').scrollTop(this.scrollPos);
             },
 
             onDispose: function() {
-                this.scrollPos = this.$(".scrollable").scrollTop();
+                this.scrollPos = this.$('.scrollable').scrollTop();
             },
 
         });

@@ -28,22 +28,22 @@ define([
 
                     $.eventsource({
                         // Assign a label to this event source
-                        label: "zzchat-poller",
+                        label: 'zzchat-poller',
 
                         // Set the file to receive data from the server
                         url: zzChat.options.api.url + '/events?auth_token=' + zzChat.getAuthToken(),
 
                         // Set the type of data you expect to be returned
-                        dataType: "json",
+                        dataType: 'json',
 
                         // Set a callback to fire when the event source is opened
-                        open: function( data ) {
+                        open: function( /* data */ ) {
                             options && options.silent || that.trigger('poller:opened');
                         },
 
                         // Trigger a Backbone event when a message is received
                         message: function( data ) {
-                            that.trigger("api:" + (_.has(data, 'event')?data.event:'message'), data.data);
+                            that.trigger('api:' + (_.has(data, 'event')?data.event:'message'), data.data);
                         }
                     });
                 }
@@ -53,11 +53,13 @@ define([
             stop: function (options) {
                 options && options.silent || this.trigger('poller:stop');
                 this.active = false;
-                $.eventsource("close", "zzchat-poller");
+                $.eventsource('close', 'zzchat-poller');
                 return this;
             },
-        }
+        };
+
         _.extend(poller, Backbone.Events);
+
         return poller;
     }
 );

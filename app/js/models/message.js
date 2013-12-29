@@ -24,18 +24,18 @@ define(['underscore', 'backbone'],
             },
 
             getAuthor: function() {
-                if(_.isObject(this.get("author"))) {
-                    return this.get("author");
+                if(_.isObject(this.get('author'))) {
+                    return this.get('author');
                 } else {
-                    return zzChat.users.get(this.get("author"));
+                    return zzChat.users.get(this.get('author'));
                 }
             },
 
             getAuthorID: function() {
-                if(_.isObject(this.get("author"))) {
-                    return this.get("author").id;
+                if(_.isObject(this.get('author'))) {
+                    return this.get('author').id;
                 } else {
-                    return this.get("author");
+                    return this.get('author');
                 }
             },
 
@@ -45,7 +45,7 @@ define(['underscore', 'backbone'],
 
                 var author = this.getAuthor();
                 if(author) {
-                    return author.get("nick");
+                    return author.get('nick');
                     //TODO Try feching user from server
                 } else {
                     return options.defaultNick;
@@ -53,18 +53,18 @@ define(['underscore', 'backbone'],
             },
 
             getFormattedText: function() {
-                if(this.get("format") == 'bbcode') {
+                if(this.get('format') === 'bbcode') {
                     return this.bbcodeDecode();
                 }
                 else { //Simple text or unknown format
-                    return this.get("text");
+                    return this.get('text');
                 }
 
             },
 
             bbcodeDecode: function() {
-                var message = this.get("text");
-                var format_search =  [
+                var message = this.get('text');
+                var formatSearch =  [
                     /\[b\](.*?)\[\/b\]/ig,
                     /\[i\](.*?)\[\/i\]/ig,
                     /\[u\](.*?)\[\/u\]/ig,
@@ -72,7 +72,7 @@ define(['underscore', 'backbone'],
                 ];
 
                 // The array of strings to replace matches with
-                var format_replace = [
+                var formatReplace = [
                     '<strong>$1</strong>',
                     '<em>$1</em>',
                     '<span style="text-decoration: underline;">$1</span>',
@@ -80,19 +80,20 @@ define(['underscore', 'backbone'],
                 ];
 
                 // Perform the conversion
-                for (var i =0;i<format_search.length;i++) {
-                  message = message.replace(format_search[i], format_replace[i]);
+                for (var i = 0; i < formatSearch.length; i++) {
+                    message = message.replace(formatSearch[i], formatReplace[i]);
                 }
 
                 return message;
             },
 
-            validate: function(attrs) {
-                errors = [];
+            validate: function(/* attrs */) {
+                var errors = [];
 
-                if(errors.length > 0)
-                   return errors;
+                if(errors.length > 0) {
+                    return errors;
                 }
+            }
         });
         return MessageModel;
     }

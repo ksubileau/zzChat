@@ -1,5 +1,5 @@
 require.config({
-    baseUrl: "../../app/js/",
+    baseUrl: '../../app/js/',
     urlArgs: 'cb=' + Math.random(),
     paths: {
         jquery: 'libs/jquery/jquery.min',
@@ -31,28 +31,30 @@ require.config({
             deps: ['jquery'],
         },
         sinon: {
-            exports: "sinon"
+            exports: 'sinon'
         }
     },
     deps: ['bootstrap']
 });
 
 require([
-    'underscore',
-    'jquery',
-    'backbone',
-    'sinon'
-], function(_, $, Backbone, sinon) {
+        'jquery',
+        'underscore',
+        'backbone',
+        'sinon'
+    ],
+    function($) {
+        'use strict';
+        var tests = [];
 
-    var tests = [];
+        tests.push('tests/models/UserTest');
 
-    tests.push('tests/models/UserTest');
-
-    $(function(){
-        require(tests, function() {
-            // Start tests
-            QUnit.start();
+        $(function(){
+            require(tests, function() {
+                // Start tests
+                QUnit.start();
+            });
         });
-    });
 
-});
+    }
+);
