@@ -31,14 +31,14 @@ module.exports = function (grunt) {
 
         phpunit: {
             all: {
-                dir: 'tests/'
+                dir: 'tests/PHPUnit/'
             },
             options: {
                 bin: 'phpunit',
                 colors: true,
                 coverage: true,
                 followOutput: true,
-                configuration: 'tests/phpunit.xml.dist'
+                configuration: 'tests/PHPUnit/phpunit.xml.dist'
             }
         },
 
@@ -70,14 +70,40 @@ module.exports = function (grunt) {
                 strict: true,
                 trailing: true,
                 smarttabs: true,
+                //maxlen: 80,
+                /* Relaxing options */
+                expr: true,
                 globals: {
-                    zzChat: true
+                    zzChat: true,
+                    require: false,
+                    define: false,
+
+                    // QUnit globals
+                    asyncTest      : false,
+                    deepEqual      : false,
+                    equal          : false,
+                    expect         : false,
+                    module         : false,
+                    notDeepEqual   : false,
+                    notEqual       : false,
+                    notStrictEqual : false,
+                    ok             : false,
+                    QUnit          : false,
+                    raises         : false,
+                    start          : false,
+                    stop           : false,
+                    strictEqual    : false,
+                    test           : false
                 },
-                ignores: ['<%= paths.app %>/js/libs/**/*.js']
+                ignores: [
+                    '**/libs/**/*.js',
+                    'tests/javascript/testrunner.js'
+                ]
             },
             all: [
                 'Gruntfile.js',
-                '<%= paths.app %>/js/**/*.js'
+                '<%= paths.app %>/js/**/*.js',
+                'tests/javascript/**/*.js',
             ]
         },
 
