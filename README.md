@@ -1,4 +1,7 @@
 <p align="center"><img src="/app/img/logo.png" alt="zzChat" width="300px"/></p>
+## Notice
+**This project was conducted as part of a practical work** during my engineering courses, and is not intended to be used in production as is. I don't know yet if I'll continue the development of this project. However, if you have any suggestions or bugs to report, you can still do so.
+
 ## Description
 zzChat is a multi-user chat client, using a REST JSON API and a Javascript client. It provides several bases features, including :
   * Multiple chat rooms
